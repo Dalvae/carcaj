@@ -35,7 +35,11 @@
     body {
         @apply font-alegreya;
     }
-
+    html, body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+    }
     .wp-block-image .size-full {
         width: auto;
         height: auto;
@@ -139,6 +143,7 @@
     }
   }
   @layer components {
+    // Estilos base compartidos para menu items
     .menu-item {
         color: #47586A;
         
@@ -146,52 +151,46 @@
             text-decoration: none;
             transition: color 0.2s ease;
             
-            &:hover {
-                color: #9A7A14;
+            &:hover { color: #9A7A14; }
+        }
+
+        &.current-menu-item a {
+            color: #9A7A14;
+            border-bottom: 1px solid #9A7A14;
+        }
+    }
+
+    // Estilos específicos del header
+    header {
+        .menu-item-has-children {
+            position: relative;
+
+            &:hover > .sub-menu {
+                display: block;
+                opacity: 1;
+                visibility: visible;
             }
         }
 
-        // Clase para el ítem activo
-        &.current-menu-item {
-          a {
-              color: #9A7A14;
-              border-bottom: 1px solid #9A7A14;
-          }
-      }
-    }
+        .sub-menu {
+            position: absolute;
+            left: 0;
+            top: 100%;
+            min-width: 200px;
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.375rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 0;
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
 
-    .menu-item-has-children {
-        position: relative;
-        &:hover > .sub-menu {
-            display: block;
-            opacity: 1;
-            visibility: visible;
-        }
-    }
-
-    .sub-menu {
-        position: absolute;
-        left: 0;
-        top: 100%;
-        min-width: 200px;
-        background-color: white;
-        border: 1px solid #e5e7eb;
-        border-radius: 0.375rem;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        padding: 0.5rem 0;
-        z-index: 50;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.2s ease, visibility 0.2s ease;
-
-        .menu-item {
-            display: block;
-            
-            a {
+            .menu-item a {
                 display: block;
                 padding: 8px 16px;
                 font-size: 1.25rem;
-                color: #47586A;
                 
                 &:hover {
                     background-color: #f8f9fa;
@@ -201,27 +200,29 @@
         }
     }
 
+
     // Estilos móviles
     @media (max-width: 1024px) {
-        .sub-menu {
-            position: relative;
-            opacity: 1;
-            visibility: visible;
-            display: block;
-            box-shadow: none;
-            border: 0;
-            padding-left: 1rem;
-            min-width: 100%;
-            margin-top: 0;
-            padding-top: 0;
-            .menu-item a {
-                font-size: 1rem;
-            }
-        }
+        header {
+            .sub-menu {
+                position: relative;
+                opacity: 1;
+                visibility: visible;
+                display: block;
+                box-shadow: none;
+                border: 0;
+                padding-left: 1rem;
+                min-width: 100%;
+                margin-top: 0;
+                padding-top: 0;
 
-        .menu-item {
-            display: block;
-            padding: 8px 0;
+                .menu-item a { font-size: 1rem; }
+            }
+
+            .menu-item { 
+                display: block;
+                padding: 8px 0;
+            }
         }
     }
 }

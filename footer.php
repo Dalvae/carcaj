@@ -5,7 +5,7 @@
 </div>
 
 <!-- Footer -->
-<footer class="bg-[#585858]  text-white pt-16">
+<footer class="bg-[#585858] text-white pt-16 bottom-0">
     <div class="container mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-[2fr,3fr] gap-12 lg:gap-16">
             <!-- Columna Logos -->
@@ -26,14 +26,14 @@
             <!-- Columna Contenido -->
             <div class="space-y-12 flex flex-col justify-around">
                 <!-- Navegación -->
-                <nav class="w-full border-b border-white/30 pb-8 relative before:absolute before:bottom-0 before:left-0 before:w-1/4 before:h-[2px] hidden lg:flex"
-                    x-data="{ openSubmenu: null }">
+                <nav class="w-full border-b border-white/30 pb-8 relative before:absolute before:bottom-0 before:left-0 before:w-1/4 before:h-[2px] hidden lg:flex  justify-between">
                     <?php
                     wp_nav_menu(array(
                         'menu' => 'Menu Superior',
                         'container' => false,
-                        'menu_class' => 'flex flex-col lg:flex-row flex-wrap gap-4 lg:gap-x-10 lg:gap-y-6 font-bold footer-nav justify-between',
+                        'menu_class' => 'flex flex-col lg:flex-row flex-wrap gap-4 lg:gap-x-5 lg:gap-y-6 font-bold footer-nav justify-between w-full',
                         'theme_location' => 'footer-menu',
+                        'depth' => 1,
                     ));
                     ?>
                 </nav>
@@ -41,20 +41,13 @@
                 <!-- Búsqueda y Social -->
                 <div class="flex flex-col lg:flex-row gap-8 lg:gap-16 items-baseline w-full justify-between">
                     <!-- Búsqueda -->
-                    <form class="w-full lg:w-auto relative group">
-                        <input type="text"
-                            class="w-full lg:w-64 bg-white/10 rounded-lg px-4 py-3 border-2 border-transparent outline-none text-white text-lg font-alegreya-sans placeholder:font-alegreya placeholder:italic placeholder:text-white/70 transition-all duration-300 focus:border-[#EA6060] focus:bg-white/15"
-                            placeholder="Buscar">
-                        <button class="absolute right-3 top-1/2 -translate-y-1/2 text-white/70 hover:text-[#EA6060] transition-colors p-2">
-                            <svg class="w-5 h-5 fill-current">
-                                <use xlink:href="#icon-search" />
-                            </svg>
-                        </button>
-                    </form>
+                    <div class="text-black">
+                        <?php get_template_part('template-parts/search-form'); ?>
+                    </div>
 
                     <!-- Social -->
                     <div class="flex flex-row items-end lg:items-center gap-6 justify-between"> <!-- Cambiado a items-end -->
-                        <p class="font-alegreya text-lg italic text-white/90">síguenos como @revistacarcaj</p>
+                        <p class="font-alegreya text-lg font-semibold italic text-white/90">síguenos como @revistacarcaj</p>
                         <div class="flex items-center gap-6">
                             <a href="https://www.facebook.com/revistacarcaj/"
                                 target="_blank"
