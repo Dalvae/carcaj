@@ -1,0 +1,15 @@
+/* Puedes añadir esto a tu archivo de estilos o en un bloque de style si prefieres */
+.article-card .categories a {
+    display: block;
+    color: #fff;
+    padding: 0.25rem 0.5rem;
+    transition: all 0.3s ease;
+}
+
+
+/* Si necesitas resetear algunos estilos de WordPress para las categorías */
+.article-card .categories {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}

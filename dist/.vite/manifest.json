@@ -1,0 +1,23 @@
+{
+  "src/fonts/Alegreya-Italic-VariableFont_wght.ttf": {
+    "file": "assets/fonts/Alegreya-Italic-VariableFont_wght.ttf",
+    "src": "src/fonts/Alegreya-Italic-VariableFont_wght.ttf"
+  },
+  "src/fonts/Alegreya-VariableFont_wght.ttf": {
+    "file": "assets/fonts/Alegreya-VariableFont_wght.ttf",
+    "src": "src/fonts/Alegreya-VariableFont_wght.ttf"
+  },
+  "src/theme.js": {
+    "file": "assets/theme-BLJINLtv.js",
+    "name": "theme",
+    "src": "src/theme.js",
+    "isEntry": true,
+    "css": [
+      "assets/theme-CngvPm8V.css"
+    ],
+    "assets": [
+      "assets/fonts/Alegreya-VariableFont_wght.ttf",
+      "assets/fonts/Alegreya-Italic-VariableFont_wght.ttf"
+    ]
+  }
+}

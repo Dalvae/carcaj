@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Environment and Config
+.env
+.aider.*
+
+# WordPress
+wp-data/*
+debug.log
+error_log
+
+# Backup and temp files
+/backup/*
+!/backup/.gitkeep
+/temp/
+*.tar.gz
+*~
+
+# IDE and OS files
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+_notes
+
+.aider*

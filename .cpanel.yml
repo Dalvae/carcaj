@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home2/carcajcl/public_html/wp-content/themes/carcaj
+    - /bin/cp -R ./* $DEPLOYPATH
