@@ -18,7 +18,7 @@ require 'inc/blog.php';
 require 'inc/cleanup.php';
 // require 'inc/comments.php';
 require 'inc/general.php';
-require 'inc/gutenberg.php';
+// require 'inc/gutenberg.php';
 require 'inc/login.php';
 require 'inc/nav_walker.php';
 require 'inc/post-types.php';
