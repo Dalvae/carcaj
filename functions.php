@@ -5,9 +5,7 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 // If you specify a DEVELOPMENT_IP constant, the frontend assets will be loaded from the Vite dev server only for the IP specified
 // it is recommended to move it into wp-config.php
 
-if (!defined('IS_VITE_DEVELOPMENT')) {
-    define('IS_VITE_DEVELOPMENT', true);
-}
+const IS_VITE_DEVELOPMENT = false;
 //const DEVELOPMENT_IP = '123.123.123.123';
 
 require 'vendor/autoload.php';
