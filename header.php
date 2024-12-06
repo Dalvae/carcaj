@@ -67,7 +67,7 @@
     <?php wp_head(); ?>
 </head>
 
-<body <?php body_class('bg-white font-alegreya'); ?>>
+<body <?php body_class('bg-white font-alegreya min-h-screen'); ?>>
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TQLBVTPB"
             height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
