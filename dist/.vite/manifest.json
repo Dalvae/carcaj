@@ -8,12 +8,12 @@
     "src": "src/fonts/Alegreya-VariableFont_wght.ttf"
   },
   "src/theme.js": {
-    "file": "assets/theme-BLJINLtv.js",
+    "file": "assets/theme-Bn6NBv4d.js",
     "name": "theme",
     "src": "src/theme.js",
     "isEntry": true,
     "css": [
-      "assets/theme-CngvPm8V.css"
+      "assets/theme-DqacH-wL.css"
     ],
     "assets": [
       "assets/fonts/Alegreya-VariableFont_wght.ttf",
