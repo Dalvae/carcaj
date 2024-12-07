@@ -108,7 +108,7 @@
                                 <?php echo $coauthor->display_name; ?>
                             </a>
                         </h2>
-                        <div class="text-gris font-semibold text-2xl leading-tight container text-center">
+                        <div class="text-gris font-semibold text-2xl leading-tight container text-justify">
                             <?php echo $coauthor->description; ?>
                         </div>
                     </div>

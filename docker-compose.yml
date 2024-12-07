@@ -15,7 +15,7 @@ services:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u${DB_USER}", "-p${DB_PASSWORD}"]
       timeout: 5s
       retries: 10
-    restart: always
+    restart: no
 
   wordpress:
     depends_on:
@@ -42,7 +42,7 @@ services:
         define('WP_DEBUG_DISPLAY', true);
         define('SCRIPT_DEBUG', true);
         define('WP_DEBUG_LOG', __DIR__ . '/wp-content/debug.log');
-    restart: always
+    restart: no
 
 volumes:
   db_data: {}
