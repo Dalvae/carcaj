@@ -36,11 +36,13 @@ function display_articles_grid($args = array())
                         <a href="<?php the_permalink(); ?>" class="absolute inset-0 z-10"></a>
 
                         <div class="thumb relative">
-                            <?php if (has_post_thumbnail()) : ?>
-                                <div class="article-image h-60 overflow-hidden">
+                            <div class="article-image h-60 overflow-hidden">
+                                <?php if (has_post_thumbnail()) : ?>
                                     <?php the_post_thumbnail('medium', array('class' => 'w-full h-full object-cover transition-brightness duration-300 group-hover:brightness-50')); ?>
-                                </div>
-                            <?php endif; ?>
+                                <?php else : ?>
+                                    <img src="<?php bloginfo('template_url'); ?>/img/thumb.png" class="w-full h-full object-cover transition-brightness duration-300 group-hover:brightness-50" alt="Imagen por defecto">
+                                <?php endif; ?>
+                            </div>
                             <div class="categories absolute bottom-0 right-0 font-medium text-4xl flex flex-col items-end opacity-0 transform translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 z-20">
                                 <div class="relative z-20">
                                     <?php the_category(' '); ?>
