@@ -5,8 +5,8 @@
 </div>
 
 <!-- Footer -->
-<footer class="bg-[#585858] text-white pt-16 bottom-0 px-4">
-    <div class="container mx-auto">
+<footer class="bg-[#585858] text-white pt-16 bottom-0 ">
+    <div class="container mx-auto px-4">
         <div class="grid grid-cols-1 lg:grid-cols-[2fr,3fr] gap-12 lg:gap-16">
             <!-- Columna Logos -->
             <div class="grid grid-cols-2 gap-8 items-start">
