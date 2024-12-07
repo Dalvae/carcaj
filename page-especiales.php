@@ -10,7 +10,7 @@
             $args = array(
                 'post_type' => 'page',
                 'post_parent' => 7729,
-                'posts_per_page' => 24,
+                'posts_per_page' => 72,
             );
             $query = new WP_Query($args);
 
