@@ -118,7 +118,7 @@
     }
   }
   .expanded-footnote {
-    font-size: 1.6rem;
+    @apply prose;
     // color: $grey;
     background-color: #f9f9f9;
     padding: 15px;

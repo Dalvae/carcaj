@@ -51,7 +51,7 @@ module.exports = {
             p: {
               marginTop: "1.5em",
               marginBottom: "1.5em",
-              fontSize: "1.7rem",
+
               lineHeight: "1.5",
               fontWeight: "400",
               "::selection": {
@@ -61,21 +61,17 @@ module.exports = {
             },
             h1: {
               color: theme("colors.rojo"),
-              fontSize: "4rem",
               fontWeight: "500",
             },
             h2: {
               color: theme("colors.rojo"),
-              fontSize: "2.4rem",
               fontWeight: "400",
             },
             h3: {
               color: theme("colors.rojo"),
-              fontSize: "2.8rem",
               fontWeight: "500",
             },
             h4: {
-              fontSize: "2.8rem",
               fontWeight: "500",
             },
             a: {
@@ -89,7 +85,13 @@ module.exports = {
               textDecoration: "none",
             },
             sup: {
-              fontSize: "1.5rem",
+              fontSize: [
+                "1.2rem",
+                {
+                  md: "1.5rem", // Tablet
+                  lg: "1.7rem", // Desktop
+                },
+              ],
               verticalAlign: "baseline",
               position: "relative",
               bottom: "0.1em",
