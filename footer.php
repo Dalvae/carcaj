@@ -5,7 +5,7 @@
 </div>
 
 <!-- Footer -->
-<footer class="bg-[#585858] text-white pt-16 bottom-0">
+<footer class="bg-[#585858] text-white pt-16 bottom-0 px-4">
     <div class="container mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-[2fr,3fr] gap-12 lg:gap-16">
             <!-- Columna Logos -->
