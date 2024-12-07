@@ -40,7 +40,7 @@
         x-init="startAutoPlay()"
         @mouseenter="stopAutoPlay()"
         @mouseleave="startAutoPlay()"
-        class="relative overflow-hidden">
+        class="relative ">
 
         <div class="relative lg:h-[60vh] h-[90vh] max-w-[1286px] mx-auto px-4 lg:px-0 lg:min-h-[450px]">
             <!-- Slider container -->
