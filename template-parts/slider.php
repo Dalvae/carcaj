@@ -59,15 +59,15 @@
                             <!-- Flechas -->
                             <div class="absolute inset-0 pointer-events-none hidden lg:block">
                                 <!-- Flecha superior (más arriba) -->
-                                <img src="<?php bloginfo('template_url'); ?>/img/flechahorizontal.webp"
+                                <img src="<?php bloginfo('template_url'); ?>/img/flechahorizontal.png"
                                     class="absolute z-10 top-[20%] left-[25%] transform -translate-x-1/2 -translate-y-1/2" alt="Flecha Superior">
 
                                 <!-- Flecha del medio (centrada) -->
-                                <img src="<?php bloginfo('template_url'); ?>/img/flechahorizontal.webp"
+                                <img src="<?php bloginfo('template_url'); ?>/img/flechahorizontal.png"
                                     class="absolute z-10 top-1/2 left-[20%] transform -translate-x-1/2 -translate-y-1/2" alt="Flecha Central">
 
                                 <!-- Flecha inferior (más abajo) -->
-                                <img src="<?php bloginfo('template_url'); ?>/img/flechahorizontal.webp"
+                                <img src="<?php bloginfo('template_url'); ?>/img/flechahorizontal.png"
                                     class="absolute z-10 bottom-[20%] left-[25%] transform -translate-x-1/2 translate-y-1/2" alt="Flecha Inferior">
                             </div>
 
