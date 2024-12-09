@@ -17,7 +17,7 @@
                 <?php if (has_post_thumbnail()): ?>
                     <div class=" mb-8">
                         <div class="w-full">
-                            <?php the_post_thumbnail('large', ['class' => 'w-full h-auto lg:max-h-[600px] object-cover']); ?>
+                            <?php the_post_thumbnail('large', ['class' => 'w-full h-auto lg:max-h-[650px] object-cover']); ?>
                         </div>
                         <?php if (get_field('creditos_imagen')): ?>
                             <p class="text-gray-500 text-right text-base pt-2"><?php the_field('creditos_imagen'); ?></p>
