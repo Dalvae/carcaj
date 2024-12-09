@@ -18,23 +18,24 @@
            slides: window.sliderData,
            currentSlide: 0,
            intervalId: null,
+           isInView: false,
            next() {
-               if (!$store.header.isOpen) {  // Solo avanza si el menú está cerrado
+               if (!$store.header.isOpen && this.isInView) {
                    this.currentSlide = (this.currentSlide + 1) % this.slides.length
                }
            },
            prev() {
-               if (!$store.header.isOpen) {  // Solo retrocede si el menú está cerrado
+               if (!$store.header.isOpen && this.isInView) {
                    this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length
                }
            },
            goToSlide(index) {
-               if (!$store.header.isOpen) {  // Solo cambia si el menú está cerrado
+               if (!$store.header.isOpen && this.isInView) {
                    this.currentSlide = index
                }
            },
            startAutoPlay() {
-               if (!$store.header.isOpen) {  // Solo inicia si el menú está cerrado
+               if (!$store.header.isOpen && this.isInView) {
                    this.intervalId = setInterval(() => this.next(), 4000)
                }
            },
@@ -42,9 +43,25 @@
                if (this.intervalId) {
                    clearInterval(this.intervalId)
                }
+           },
+           observeIntersection() {
+               const observer = new IntersectionObserver((entries) => {
+                   entries.forEach(entry => {
+                       this.isInView = entry.isIntersecting;
+                       if (entry.isIntersecting) {
+                           this.startAutoPlay();
+                       } else {
+                           this.stopAutoPlay();
+                       }
+                   });
+               }, {
+                   threshold: 0.2 // El slider debe estar al menos 20% visible
+               });
+               
+               observer.observe(this.$el);
            }
        }"
-        x-init="startAutoPlay()"
+        x-init="observeIntersection()"
         @mouseenter="stopAutoPlay()"
         @mouseleave="startAutoPlay()"
         class="relative isolation">

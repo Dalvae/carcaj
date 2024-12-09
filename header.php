@@ -234,5 +234,6 @@
                     </div>
                 </div>
             </div>
-            <div id="content" class="site-content flex-grow">
-                <main>
+        </div>
+        <div id="content" class="site-content flex-grow">
+            <main>
