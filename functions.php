@@ -198,7 +198,7 @@ add_action('after_setup_theme', function () {
     register_nav_menu('mobile-menu', 'Navigation (Mobile)');
 
     /* `Add Support for Post thumbnail */
-    //    add_theme_support('post-thumbnails');
+    add_theme_support('post-thumbnails');
     //    set_post_thumbnail_size( 800, 800 );
 
     /* `Custom image sizes */
