@@ -15,7 +15,8 @@ get_header(); ?>
               <img
                 src="<?php echo esc_url($image['sizes']['large']); ?>"
                 alt="<?php echo esc_attr($image['alt']); ?>"
-                class="w-full h-[65vh] object-cover" />
+                class="w-full h-auto lg:aspect-[2/3] lg:max-h-[650px] object-cover" />
+
               <?php if (get_field('creditos_imagen_superior')): ?>
                 <p class="text-sm text-gray-600 mt-2 text-right italic">
                   <?php echo esc_html(get_field('creditos_imagen_superior')); ?>
