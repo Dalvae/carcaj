@@ -178,7 +178,7 @@
                 x-transition:leave-end="opacity-0 scale-95"
                 class="lg:hidden fixed inset-0 bg-white z-50 overflow-y-auto">
 
-                <div class="container mx-auto px-4 py-8 font-bold">
+                <div class="container mx-auto px-4 py-8 font-bold italic">
                     <!-- Buscador integrado en el menú -->
                     <div class="mt-8 mb-4">
                         <?php get_template_part('template-parts/search-form'); ?>
@@ -186,6 +186,7 @@
 
                     <nav class="space-y-6">
                         <?php
+                        // Modificar wp_nav_menu para incluir Alpine.js en los submenús
                         wp_nav_menu(array(
                             'menu' => 'Menú Superior',
                             'container' => false,
@@ -193,7 +194,7 @@
                             'theme_location' => 'header-menu',
                             'depth' => 2,
                             'fallback_cb' => 'wp_page_menu',
-                            'link_class' => 'text-xl font-bold block py-2 hover:text-[#EA6060] transition-colors duration-200'
+                            'link_class' => 'text-xl font-bold italic block py-2 hover:text-[#EA6060] transition-colors duration-200',
                         ));
                         ?>
                     </nav>
