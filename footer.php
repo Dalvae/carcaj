@@ -39,7 +39,7 @@
                 </nav>
 
                 <!-- Búsqueda y Social -->
-                <div class="flex flex-col lg:flex-row gap-8 lg:gap-16 items-baseline w-full justify-between">
+                <div class="flex flex-col items-center lg:flex-row gap-8 lg:gap-16 w-full justify-between">
                     <!-- Búsqueda -->
                     <div class="text-black">
                         <?php get_template_part('template-parts/search-form'); ?>
