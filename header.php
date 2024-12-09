@@ -44,14 +44,24 @@
     </script>
     <script>
         document.addEventListener('alpine:init', () => {
-            Alpine.data('header', () => ({
+            Alpine.store('header', {
                 isOpen: false,
                 isSearchOpen: false,
                 currentCategory: null,
-                hasScrolled: false,
+                hasScrolled: false
+            });
+
+            Alpine.data('header', () => ({
                 init() {
-                    this.$watch('isOpen', value => {
+                    this.$watch('$store.header.isOpen', value => {
                         document.body.style.overflow = value ? 'hidden' : '';
+                        if (value) {
+                            // Detener el slider cuando el menú se abre
+                            window.dispatchEvent(new Event('stopSlider'));
+                        } else {
+                            // Reanudar el slider cuando el menú se cierra
+                            window.dispatchEvent(new Event('startSlider'));
+                        }
                     });
                 }
             }))
@@ -132,16 +142,16 @@
                     </div>
                 </div>
                 <!-- Botón menú móvil con animación -->
-                <button @click="isOpen = !isOpen"
-                    class="lg:hidden relative w-10 h-10 focus:outline-none z-[60]"
+                <button @click="$store.header.isOpen = !$store.header.isOpen"
+                    class="lg:hidden relative w-10 h-10 focus:outline-none z-[999]"
                     aria-label="Menu">
                     <div class="absolute w-6 transform left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
                         <span class="absolute h-0.5 w-6 bg-black transform transition duration-300 ease-in-out"
-                            :class="{'rotate-45': isOpen, '-translate-y-2': !isOpen}"></span>
+                            :class="{'rotate-45': $store.header.isOpen, '-translate-y-2': !$store.header.isOpen}"></span>
                         <span class="absolute h-0.5 w-6 bg-black transform transition duration-300 ease-in-out"
-                            :class="{'opacity-0': isOpen, 'translate-y-0': !isOpen}"></span>
+                            :class="{'opacity-0': $store.header.isOpen, 'translate-y-0': !$store.header.isOpen}"></span>
                         <span class="absolute h-0.5 w-6 bg-black transform transition duration-300 ease-in-out"
-                            :class="{'-rotate-45': isOpen, 'translate-y-2': !isOpen}"></span>
+                            :class="{'-rotate-45': $store.header.isOpen, 'translate-y-2': !$store.header.isOpen}"></span>
                     </div>
                 </button>
             </div>
@@ -168,33 +178,39 @@
                     </div>
                 </div>
             </div>
+            <template x-if="$store.header.isOpen">
+                <div class="fixed inset-0 bg-black bg-opacity-50 z-[968]"
+                    @click="$store.header.isOpen = false"></div>
+            </template>
             <!-- Menú Móvil Mejorado -->
-            <div x-show="isOpen"
+
+            <div x-show="$store.header.isOpen"
                 x-transition:enter="transition ease-out duration-300"
                 x-transition:enter-start="opacity-0 scale-95"
                 x-transition:enter-end="opacity-100 scale-100"
                 x-transition:leave="transition ease-in duration-200"
                 x-transition:leave-start="opacity-100 scale-100"
                 x-transition:leave-end="opacity-0 scale-95"
-                class="lg:hidden fixed inset-0 bg-white z-50 overflow-y-auto">
+                class="lg:hidden fixed inset-0 bg-white z-[979] overflow-y-auto"
+                @click.away="$store.header.isOpen = false"
+                style="position: fixed;">
 
-                <div class="container mx-auto px-4 py-8 font-bold italic">
-                    <!-- Buscador integrado en el menú -->
+                <div class="container mx-auto px-4 py-8 font-bold italic text-sm">
+                    <!-- Buscador integrado -->
                     <div class="mt-8 mb-4">
                         <?php get_template_part('template-parts/search-form'); ?>
                     </div>
 
                     <nav class="space-y-6">
                         <?php
-                        // Modificar wp_nav_menu para incluir Alpine.js en los submenús
                         wp_nav_menu(array(
                             'menu' => 'Menú Superior',
                             'container' => false,
                             'menu_class' => 'space-y-4',
                             'theme_location' => 'header-menu',
                             'depth' => 2,
+                            'walker' => new Walker_Nav_Menu_Tailwind(),
                             'fallback_cb' => 'wp_page_menu',
-                            'link_class' => 'text-xl font-bold italic block py-2 hover:text-[#EA6060] transition-colors duration-200',
                         ));
                         ?>
                     </nav>
@@ -218,7 +234,5 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </header>
-    <div id="content" class="site-content flex-grow">
-        <main>
+            <div id="content" class="site-content flex-grow">
+                <main>

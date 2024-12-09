@@ -1,4 +1,4 @@
-<section class="destacados mb-12">
+<section class="destacados mb-12 relative z-0 isolate">
     <?php
     $slides = get_field('slider') ?: [];
     $slider_data = array_map(function ($slide) {
@@ -14,22 +14,29 @@
     <script>
         window.sliderData = <?php echo json_encode($slider_data); ?>;
     </script>
-
     <div x-data="{
            slides: window.sliderData,
            currentSlide: 0,
            intervalId: null,
            next() {
-               this.currentSlide = (this.currentSlide + 1) % this.slides.length
+               if (!$store.header.isOpen) {  // Solo avanza si el menú está cerrado
+                   this.currentSlide = (this.currentSlide + 1) % this.slides.length
+               }
            },
            prev() {
-               this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length
+               if (!$store.header.isOpen) {  // Solo retrocede si el menú está cerrado
+                   this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length
+               }
            },
            goToSlide(index) {
-               this.currentSlide = index
+               if (!$store.header.isOpen) {  // Solo cambia si el menú está cerrado
+                   this.currentSlide = index
+               }
            },
            startAutoPlay() {
-               this.intervalId = setInterval(() => this.next(), 4000)
+               if (!$store.header.isOpen) {  // Solo inicia si el menú está cerrado
+                   this.intervalId = setInterval(() => this.next(), 4000)
+               }
            },
            stopAutoPlay() {
                if (this.intervalId) {
@@ -40,8 +47,7 @@
         x-init="startAutoPlay()"
         @mouseenter="stopAutoPlay()"
         @mouseleave="startAutoPlay()"
-        class="relative ">
-
+        class="relative isolation">
         <div class="relative lg:h-[60vh] h-[90vh] max-w-[1286px] mx-auto px-4 lg:px-0 lg:min-h-[450px]">
             <!-- Slider container -->
             <template x-for="(slide, index) in slides" :key="index">
@@ -52,7 +58,7 @@
                     x-transition:leave="transition ease-in duration-300"
                     x-transition:leave-start="opacity-100 transform translate-x-0"
                     x-transition:leave-end="opacity-0 transform -translate-x-full"
-                    class="absolute inset-0">
+                    class="absolute inset-0 will-change-transform">
                     <div class="flex flex-col lg:flex-row items-center w-full py-4">
                         <!-- Contenedor del slider con las flechas -->
                         <div class="w-full lg:w-1/2 lg:ml-44 flex justify-center items-center relative">

@@ -166,13 +166,12 @@ function html5blank_nav()
         'theme_location' => 'header-menu',
         'menu' => 'Menú Superior',
         'container' => 'nav',
-        'container_class' => 'hidden lg:block',
-        'menu_class' => 'flex space-x-8',
-        'items_wrap' => '<ul class="flex flex-col lg:flex-row lg:items-center lg:space-x-8">%3$s</ul>',
+        'container_class' => 'space-y-6',
+        'menu_class' => 'flex flex-col',
+        'walker' => new Walker_Nav_Menu_Tailwind(),
         'depth' => 2,
     ));
 }
-
 add_action('init', 'year_post', 0);
 add_action('after_setup_theme', function () {
 
