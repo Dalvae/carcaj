@@ -109,12 +109,19 @@ module.exports = {
               color: "#000",
             },
             blockquote: {
+              quotes: "none",
+              fontStyle: "normal",
               borderLeftWidth: "0",
               borderLeftColor: "transparent",
               paddingLeft: "2em",
-              fontStyle: "italic",
               marginLeft: 0,
               marginRight: 0,
+              "&::before": {
+                content: "none",
+              },
+              "&::after": {
+                content: "none",
+              },
             },
             img: {
               marginTop: "2em",
