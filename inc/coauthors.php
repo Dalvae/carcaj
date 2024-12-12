@@ -10,22 +10,7 @@ function add_coauthor_role_meta()
 }
 add_action('init', 'add_coauthor_role_meta');
 
-// 2. Hook para actualizar roles cuando se actualizan coautores
-function update_coauthor_roles($post_id, $coauthors)
-{
-    // Obtener roles actuales
-    $current_roles = [];
-    foreach ($coauthors as $coauthor) {
-        $role = get_post_meta($post_id, '_coauthor_role_' . $coauthor->ID, true);
-        if (!$role) {
-            // Si no tiene rol asignado, establecer por defecto como autor
-            update_post_meta($post_id, '_coauthor_role_' . $coauthor->ID, 'author');
-        }
-    }
-}
-add_action('coauthors_updated_post', 'update_coauthor_roles', 10, 2);
-
-// 3. Metabox para roles
+// 2. Metabox para roles
 function add_coauthor_role_metabox()
 {
     add_meta_box(
@@ -39,21 +24,64 @@ function add_coauthor_role_metabox()
 }
 add_action('add_meta_boxes', 'add_coauthor_role_metabox');
 
+// 3. Renderizar metabox con soporte para actualización dinámica
 function render_coauthor_role_metabox($post)
 {
     wp_nonce_field('coauthor_role_nonce', 'coauthor_role_nonce');
+?>
+    <div id="coauthor-roles-wrapper" class="coauthor-roles-wrapper">
+        <?php render_coauthor_roles($post->ID); ?>
+    </div>
 
-    $coauthors = get_coauthors($post->ID);
+    <script>
+        jQuery(document).ready(function($) {
+            // Observar cambios en la lista de coautores
+            var coauthorsList = document.getElementById('coauthors-list');
+            if (coauthorsList) {
+                var observer = new MutationObserver(function(mutations) {
+                    updateRolesMetabox();
+                });
+
+                observer.observe(coauthorsList, {
+                    childList: true,
+                    subtree: true
+                });
+            }
+
+            // Función para actualizar el metabox de roles
+            function updateRolesMetabox() {
+                var post_id = $('#post_ID').val();
+                $.post(ajaxurl, {
+                    action: 'refresh_coauthor_roles',
+                    post_id: post_id,
+                    nonce: '<?php echo wp_create_nonce("refresh_coauthor_roles"); ?>'
+                }, function(response) {
+                    $('#coauthor-roles-wrapper').html(response);
+                });
+            }
+
+            // También actualizar cuando se complete un drag & drop
+            $('#coauthors-list').on('sortupdate', function() {
+                updateRolesMetabox();
+            });
+        });
+    </script>
+    <?php
+}
+
+// 4. Función auxiliar para renderizar roles
+function render_coauthor_roles($post_id)
+{
+    $coauthors = get_coauthors($post_id);
 
     if (empty($coauthors)) {
         echo '<p>No hay coautores asignados</p>';
         return;
     }
 
-    echo '<div class="coauthor-roles-wrapper">';
     foreach ($coauthors as $coauthor) {
-        $role = get_post_meta($post->ID, '_coauthor_role_' . $coauthor->ID, true) ?: 'author';
-?>
+        $role = get_post_meta($post_id, '_coauthor_role_' . $coauthor->ID, true) ?: 'author';
+    ?>
         <div class="coauthor-role-select" style="margin-bottom: 10px;">
             <label style="display: block; margin-bottom: 5px;">
                 <?php echo esc_html($coauthor->display_name); ?>:
@@ -69,10 +97,23 @@ function render_coauthor_role_metabox($post)
         </div>
 <?php
     }
-    echo '</div>';
 }
 
-// 4. Guardar roles
+// 5. Endpoint AJAX para actualizar roles
+function refresh_coauthor_roles_callback()
+{
+    check_ajax_referer('refresh_coauthor_roles', 'nonce');
+
+    if (!isset($_POST['post_id'])) {
+        wp_die();
+    }
+
+    render_coauthor_roles($_POST['post_id']);
+    wp_die();
+}
+add_action('wp_ajax_refresh_coauthor_roles', 'refresh_coauthor_roles_callback');
+
+// 6. Guardar roles
 function save_coauthor_role($post_id)
 {
     if (
@@ -92,7 +133,7 @@ function save_coauthor_role($post_id)
 }
 add_action('save_post', 'save_coauthor_role');
 
-// 5. Función para mostrar autores con sus roles
+// 7. Función para mostrar autores con roles en el frontend
 function get_coauthors_with_roles($post_id = null)
 {
     if (!$post_id) {
