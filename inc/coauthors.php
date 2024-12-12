@@ -123,7 +123,7 @@ function get_coauthors_with_roles($post_id = null)
     }
 
     if (!empty($translators)) {
-        echo '<div class="mt-1">';
+        echo '<div class="text-md mt-1">';
         echo 'Traducido por: ' . implode(', ', $translators);
         echo '</div>';
     }
