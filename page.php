@@ -9,12 +9,11 @@
             the_post();
         ?>
 
-            <div class="flex flex-col">
+            <div class="flex flex-col container">
                 <h1 class="mx-auto container text-center"><?php the_title(); ?></h1>
 
-                <div class="container">
+                <div class="mt-12 text-2xl font-al leading-relaxed prose max-w-none content-full text-justify ">
                     <?php the_content(); ?>
-
                 </div>
             </div>
 

@@ -4,18 +4,17 @@
 
 	<?php get_template_part('template-parts/breadcrumbs'); ?>
 
-	<section class="prose">
+	<section class="">
 
 		<h1 class="text-5xl text-rojo font-semibold text-center"><?php the_title(); ?></h1>
 
 		<?php if (have_posts()): while (have_posts()) : the_post(); ?>
 
 				<!-- article -->
-				<article class="flex">
+				<article class="flex prose">
 
-					<div class="content-empty"></div>
 
-					<div class="content-text">
+					<div class="mt-12 text-2xl font-al leading-relaxed prose max-w-none content-full text-justify">
 						<?php the_content(); ?>
 					</div>
 
