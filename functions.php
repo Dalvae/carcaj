@@ -27,6 +27,7 @@ require 'inc/svg.php';
 require 'inc/updates.php';
 require 'inc/useful.php';
 require 'inc/widgets.php';
+require 'inc/coauthors.php';
 /* Comments Support
 ----------------------------------------------------------------------------------------------------*/
 class ThemeComments
@@ -173,15 +174,6 @@ function html5blank_nav()
     ));
 }
 add_action('init', 'year_post', 0);
-// Añadir un rol personalizado al plugin Co-Authors Plus
-function add_coauthor_custom_roles($types)
-{
-    // Añadir el tipo "Traductor"
-    $types['translator'] = __('Traductor', 'textdomain');
-    return $types;
-}
-add_filter('coauthors_plus_guest_author_fields', 'add_coauthor_custom_roles');
-
 
 add_action('after_setup_theme', function () {
 
