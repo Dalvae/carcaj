@@ -46,26 +46,24 @@
         document.addEventListener('alpine:init', () => {
             Alpine.store('header', {
                 isOpen: false,
-                isSearchOpen: false,
                 currentCategory: null,
                 hasScrolled: false
             });
 
             Alpine.data('header', () => ({
+                isSearchOpen: false, // Movido aquí
                 init() {
                     this.$watch('$store.header.isOpen', value => {
                         document.body.style.overflow = value ? 'hidden' : '';
                         if (value) {
-                            // Detener el slider cuando el menú se abre
                             window.dispatchEvent(new Event('stopSlider'));
                         } else {
-                            // Reanudar el slider cuando el menú se cierra
                             window.dispatchEvent(new Event('startSlider'));
                         }
                     });
                 }
             }))
-        })
+        });
     </script>
 
     <?php include_once('img/sprite.svg'); ?>
@@ -164,7 +162,7 @@
                 <div class="container mx-auto px-4 lg:-mt-8">
                     <!-- Contenedor más específico para alineación -->
                     <div class="flex justify-end">
-                        <div class="w-full lg:w-[65%] lg:pb-2">
+                        <div class="w-full lg:w-[65%] lg:pb-2 lg:block">
                             <div class="relative">
                                 <button @click="isSearchOpen = false"
                                     class="absolute right-2 top-2 p-2 text-gray-500 hover:text-[#EA6060] md:hidden">
