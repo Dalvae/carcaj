@@ -35,44 +35,73 @@ function render_coauthor_role_metabox($post)
 
     <script>
         jQuery(document).ready(function($) {
-            // Observar cambios en la lista de coautores
-            var coauthorsList = document.getElementById('coauthors-list');
-            if (coauthorsList) {
-                var observer = new MutationObserver(function(mutations) {
-                    updateRolesMetabox();
-                });
+            // Sobreescribir la función original de selección del plugin
+            var originalAutosuggestSelect = window.coauthors_autosuggest_select;
 
-                observer.observe(coauthorsList, {
-                    childList: true,
-                    subtree: true
-                });
-            }
+            window.coauthors_autosuggest_select = function() {
+                // Llamar a la función original primero
+                originalAutosuggestSelect.apply(this, arguments);
 
-            // Función para actualizar el metabox de roles
-            function updateRolesMetabox() {
-                var post_id = $('#post_ID').val();
-                $.post(ajaxurl, {
-                    action: 'refresh_coauthor_roles',
-                    post_id: post_id,
-                    nonce: '<?php echo wp_create_nonce("refresh_coauthor_roles"); ?>'
-                }, function(response) {
-                    $('#coauthor-roles-wrapper').html(response);
-                });
-            }
+                // Esperar un momento para que se actualice el DOM
+                setTimeout(function() {
+                    var post_id = $('#post_ID').val();
+                    $.post(ajaxurl, {
+                        action: 'refresh_coauthor_roles',
+                        post_id: post_id,
+                        nonce: '<?php echo wp_create_nonce("refresh_coauthor_roles"); ?>'
+                    }, function(response) {
+                        $('#coauthor-roles-wrapper').html(response);
+                    });
+                }, 500);
+            };
 
-            // También actualizar cuando se complete un drag & drop
-            $('#coauthors-list').on('sortupdate', function() {
-                updateRolesMetabox();
+            // Manejar el evento de eliminación
+            $(document).on('click', '.delete-coauthor', function() {
+                setTimeout(function() {
+                    var post_id = $('#post_ID').val();
+                    $.post(ajaxurl, {
+                        action: 'refresh_coauthor_roles',
+                        post_id: post_id,
+                        nonce: '<?php echo wp_create_nonce("refresh_coauthor_roles"); ?>'
+                    }, function(response) {
+                        $('#coauthor-roles-wrapper').html(response);
+                    });
+                }, 500);
+            });
+
+            // Manejar el evento de reordenamiento
+            $('#coauthors-list').sortable({
+                stop: function(event, ui) {
+                    setTimeout(function() {
+                        var post_id = $('#post_ID').val();
+                        $.post(ajaxurl, {
+                            action: 'refresh_coauthor_roles',
+                            post_id: post_id,
+                            nonce: '<?php echo wp_create_nonce("refresh_coauthor_roles"); ?>'
+                        }, function(response) {
+                            $('#coauthor-roles-wrapper').html(response);
+                        });
+                    }, 500);
+                }
             });
         });
     </script>
     <?php
 }
-
 // 4. Función auxiliar para renderizar roles
 function render_coauthor_roles($post_id)
 {
     $coauthors = get_coauthors($post_id);
+
+    if (empty($coauthors)) {
+        $post = get_post($post_id);
+        if ($post) {
+            $author = get_user_by('ID', $post->post_author);
+            if ($author) {
+                $coauthors = array($author);
+            }
+        }
+    }
 
     if (empty($coauthors)) {
         echo '<p>No hay coautores asignados</p>';
@@ -86,7 +115,10 @@ function render_coauthor_roles($post_id)
             <label style="display: block; margin-bottom: 5px;">
                 <?php echo esc_html($coauthor->display_name); ?>:
             </label>
-            <select name="coauthor_role[<?php echo esc_attr($coauthor->ID); ?>]" style="width: 100%;">
+            <select name="coauthor_role[<?php echo esc_attr($coauthor->ID); ?>]"
+                class="coauthor-role-select-input"
+                data-author-id="<?php echo esc_attr($coauthor->ID); ?>"
+                style="width: 100%;">
                 <option value="author" <?php selected($role, 'author'); ?>>
                     <?php _e('Autor', 'textdomain'); ?>
                 </option>
@@ -108,7 +140,21 @@ function refresh_coauthor_roles_callback()
         wp_die();
     }
 
-    render_coauthor_roles($_POST['post_id']);
+    $post_id = intval($_POST['post_id']);
+    $coauthors = get_coauthors($post_id);
+
+    // Si no hay coautores guardados aún, obtener del autor principal
+    if (empty($coauthors)) {
+        $post = get_post($post_id);
+        if ($post) {
+            $author = get_user_by('ID', $post->post_author);
+            if ($author) {
+                $coauthors = array($author);
+            }
+        }
+    }
+
+    render_coauthor_roles($post_id);
     wp_die();
 }
 add_action('wp_ajax_refresh_coauthor_roles', 'refresh_coauthor_roles_callback');
