@@ -1,5 +1,5 @@
 <?php
-// 1. Agregar campo personalizado para el rol de coautor
+// 1. Registro de meta
 function add_coauthor_role_meta()
 {
     register_meta('post', '_coauthor_role', [
@@ -10,7 +10,7 @@ function add_coauthor_role_meta()
 }
 add_action('init', 'add_coauthor_role_meta');
 
-// 2. Agregar el metabox para seleccionar el rol
+// 2. Configuración del metabox
 function add_coauthor_role_metabox()
 {
     add_meta_box(
@@ -24,12 +24,17 @@ function add_coauthor_role_metabox()
 }
 add_action('add_meta_boxes', 'add_coauthor_role_metabox');
 
-// 3. Renderizar el metabox
+// 3. Renderizado del metabox
 function render_coauthor_role_metabox($post)
 {
     wp_nonce_field('coauthor_role_nonce', 'coauthor_role_nonce');
+    render_coauthor_roles($post->ID);
+}
 
-    $coauthors = get_coauthors($post->ID);
+// 4. Función auxiliar para renderizar roles
+function render_coauthor_roles($post_id)
+{
+    $coauthors = get_coauthors($post_id);
 
     if (empty($coauthors)) {
         echo '<p>No hay coautores asignados</p>';
@@ -38,7 +43,7 @@ function render_coauthor_role_metabox($post)
 
     echo '<div class="coauthor-roles-wrapper">';
     foreach ($coauthors as $coauthor) {
-        $role = get_post_meta($post->ID, '_coauthor_role_' . $coauthor->ID, true);
+        $role = get_post_meta($post_id, '_coauthor_role_' . $coauthor->ID, true);
 ?>
         <div class="coauthor-role-select" style="margin-bottom: 10px;">
             <label style="display: block; margin-bottom: 5px;">
@@ -58,21 +63,53 @@ function render_coauthor_role_metabox($post)
     echo '</div>';
 }
 
-// 4. Guardar los roles seleccionados
+// 5. Manejo de AJAX para reactividad
+function refresh_coauthor_metabox_callback()
+{
+    check_ajax_referer('refresh_coauthor_metabox', 'nonce');
+    render_coauthor_roles($_POST['post_id']);
+    wp_die();
+}
+add_action('wp_ajax_refresh_coauthor_metabox', 'refresh_coauthor_metabox_callback');
+
+// 6. Script para reactividad
+function add_coauthor_metabox_script()
+{
+    ?>
+    <script>
+        jQuery(document).ready(function($) {
+            const observer = new MutationObserver(function() {
+                $.post(ajaxurl, {
+                    action: 'refresh_coauthor_metabox',
+                    post_id: '<?php echo get_the_ID(); ?>',
+                    nonce: '<?php echo wp_create_nonce("refresh_coauthor_metabox"); ?>'
+                }, function(response) {
+                    $('.coauthor-roles-wrapper').html(response);
+                });
+            });
+
+            const coauthorsPanel = document.querySelector('.coauthors');
+            if (coauthorsPanel) {
+                observer.observe(coauthorsPanel, {
+                    childList: true,
+                    subtree: true
+                });
+            }
+        });
+    </script>
+<?php
+}
+add_action('admin_footer', 'add_coauthor_metabox_script');
+
+// 7. Guardar roles
 function save_coauthor_role($post_id)
 {
     if (
         !isset($_POST['coauthor_role_nonce']) ||
-        !wp_verify_nonce($_POST['coauthor_role_nonce'], 'coauthor_role_nonce')
+        !wp_verify_nonce($_POST['coauthor_role_nonce'], 'coauthor_role_nonce') ||
+        defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ||
+        !current_user_can('edit_post', $post_id)
     ) {
-        return;
-    }
-
-    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-        return;
-    }
-
-    if (!current_user_can('edit_post', $post_id)) {
         return;
     }
 
@@ -84,8 +121,8 @@ function save_coauthor_role($post_id)
 }
 add_action('save_post', 'save_coauthor_role');
 
-// 5. Función para mostrar los créditos en el frontend
-function display_post_credits($post_id = null)
+// 8. Función principal para mostrar autores y traductores
+function get_coauthors_with_roles($post_id = null)
 {
     if (!$post_id) {
         $post_id = get_the_ID();
@@ -97,70 +134,33 @@ function display_post_credits($post_id = null)
 
     foreach ($coauthors as $coauthor) {
         $role = get_post_meta($post_id, '_coauthor_role_' . $coauthor->ID, true);
+        $link = sprintf(
+            '<a href="%s" class="author-link">%s</a>',
+            get_author_posts_url($coauthor->ID, $coauthor->user_nicename),
+            $coauthor->display_name
+        );
 
         if ($role === 'translator') {
-            $translators[] = sprintf(
-                '<a href="%s">%s</a>',
-                get_author_posts_url($coauthor->ID, $coauthor->user_nicename),
-                $coauthor->display_name
-            );
+            $translators[] = $link;
         } else {
-            $authors[] = sprintf(
-                '<a href="%s">%s</a>',
-                get_author_posts_url($coauthor->ID, $coauthor->user_nicename),
-                $coauthor->display_name
-            );
+            $authors[] = $link;
         }
     }
 
-    $output = '<div class="post-credits">';
-
+    echo '<div class="text-gris tracking-tighter text-2xl font-semibold text-center">';
     if (!empty($authors)) {
-        $output .= '<div class="post-authors">';
-        $output .= '<span class="label">' . __('Por', 'textdomain') . '</span> ';
-        $output .= implode(', ', $authors);
-        $output .= '</div>';
+        echo implode(', ', $authors);
     }
-
     if (!empty($translators)) {
-        $output .= '<div class="post-translators">';
-        $output .= '<span class="label">' . __('Traducido por', 'textdomain') . '</span> ';
-        $output .= implode(', ', $translators);
-        $output .= '</div>';
+        echo '<div class="translators text-sm mt-1">';
+        echo 'Traducido por: ' . implode(', ', $translators);
+        echo '</div>';
     }
-
-    $output .= '</div>';
-
-    return $output;
+    echo '</div>';
 }
 
-// 6. Agregar estilos CSS
-function add_coauthor_styles()
+// 9. Función alternativa para mostrar créditos (mantener compatibilidad)
+function display_post_credits($post_id = null)
 {
-    ?>
-    <style>
-        .post-credits {
-            margin: 1.5em 0;
-            font-size: 0.9em;
-        }
-
-        .post-authors,
-        .post-translators {
-            margin-bottom: 0.5em;
-        }
-
-        .post-credits .label {
-            font-weight: bold;
-        }
-
-        .post-credits a {
-            text-decoration: none;
-        }
-
-        .post-credits a:hover {
-            text-decoration: underline;
-        }
-    </style>
-<?php
+    get_coauthors_with_roles($post_id);
 }
-add_action('wp_head', 'add_coauthor_styles');

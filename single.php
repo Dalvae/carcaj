@@ -42,7 +42,7 @@
                     <div class="text-gris tracking-tighter text-2xl font-semibold text-center">
                         <?php
                         if (function_exists('coauthors_posts_links')) {
-                            coauthors_posts_links();
+                            get_coauthors_with_roles();
                         } else {
                             the_author_posts_link();
                         }
