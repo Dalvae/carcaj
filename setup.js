@@ -90,13 +90,14 @@ async function setup() {
     wpConfigContent = wpConfigContent.replace(
       "/* That's all, stop editing! Happy publishing. */",
       `
-/* Configuraciones adicionales para desarrollo local */
-define('WP_DEBUG', true);
-define('WP_DEBUG_LOG', true);
-define('WP_DEBUG_DISPLAY', true);
-define('SCRIPT_DEBUG', true);
-define('CONCATENATE_SCRIPTS', false);
-/* That's all, stop editing! Happy publishing. */`
+    /* Configuraciones adicionales para desarrollo local */
+    define('WP_DEBUG', true);
+    define('WP_DEBUG_LOG', true);
+    define('WP_DEBUG_DISPLAY', true);
+    define('SCRIPT_DEBUG', true);
+    define('CONCATENATE_SCRIPTS', false);
+    define('IS_VITE_DEVELOPMENT', true);
+    /* That's all, stop editing! Happy publishing. */`
     );
 
     // Guardar wp-config.php modificado
@@ -136,7 +137,7 @@ DB_PREFIX=wpyl_
 WP_DEBUG=true
 WP_PORT=8888
 # Docker
-COMPOSE_PROJECT_NAME=carcaj_theme
+COMPOSE_PROJECT_NAME=carcaj
 `.trim();
 
     // Guardar .env

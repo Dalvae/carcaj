@@ -29,7 +29,7 @@ services:
     volumes:
       - ${WP_ROOT}/wp-content:/var/www/html/wp-content
       - ${WP_CONFIG}:/var/www/html/wp-config.php
-      - ${THEME_DIR}:/var/www/html/wp-content/themes/carcaj_theme
+      - ${THEME_DIR}:/var/www/html/wp-content/themes/carcaj
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: ${DB_USER}
