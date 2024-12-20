@@ -27,7 +27,7 @@ function display_articles_grid($args = array())
     }
 ?>
 
-    <section id="articles-section" class="articles-section">
+    <section id="articles-section" class="articles-section scroll-mt-[200px]">
 
         <div class="articles grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <?php if ($query->have_posts()) :
@@ -164,8 +164,12 @@ function display_articles_grid($args = array())
         document.querySelectorAll('.pagination a').forEach(link => {
             link.addEventListener('click', async function(e) {
                 const href = this.getAttribute('href');
+                // Obtener la posición del elemento articles-section
+                const articlesSection = document.getElementById('articles-section');
+                const position = articlesSection.getBoundingClientRect().top + window.scrollY;
+
                 window.scrollTo({
-                    top: 0,
+                    top: position - 500,
                     behavior: 'smooth'
                 });
             });
