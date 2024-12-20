@@ -263,11 +263,10 @@
     }
 }
 
-//contact form
 
 /* Contenedor del formulario */
 .wpcf7-form {
-    @apply  mx-auto p-6 bg-white max-w-3xl;
+    @apply  mx-auto p-6 bg-white max-w-3xl font-bold;
   }
   
   /* Campos de entrada */
@@ -279,15 +278,23 @@
   
   /* Etiquetas */
   .wpcf7-form label {
-    @apply block text-gray-700 text-sm font-bold mb-2;
+    @apply block text-gray-700 text-sm font-bold ;
   }
   
 /* Botón de envío */
 .wpcf7-submit {
-    @apply bg-rosado hover:bg-rojo text-white font-bold py-4 w-full text-center focus:outline-none focus:ring-2 focus:ring-rosado;
+    @apply bg-rosado hover:bg-rojo text-white font-bold py-4 w-full text-center focus:outline-none focus:ring-2 focus:ring-rosado mt-2;
   }
   
   /* Contenedor de cada campo */
   .wpcf7-form p {
-    @apply mb-4;
+    @apply m-0 p-0;
   }
+  /* imagen de contacto*/
+  .wp-image-8219 {
+    max-width: 48rem !important;
+    // width: auto !important;
+    height: auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}

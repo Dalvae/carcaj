@@ -40,6 +40,7 @@
                     </h1>
 
                     <div class="text-gris tracking-tighter text-2xl font-semibold text-center">
+                        <span class="italic">por</span>
                         <?php
                         if (function_exists('coauthors_posts_links')) {
                             get_coauthors_with_roles();

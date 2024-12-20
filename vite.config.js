@@ -49,7 +49,7 @@ export default defineConfig({
     cors: true,
     strictPort: true,
     port: 3000,
-    host: "0.0.0.0", // Add this to allow external access
+    host: "localhost", // Cambia a localhost en lugar de 0.0.0.0 // Add this to allow external access
     // serve over http
     https: false,
 

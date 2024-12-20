@@ -1,6 +1,5 @@
 <?php get_header(); ?>
-<div class="container mx-auto px-4">
-    <?php get_template_part('template-parts/breadcrumbs'); ?>
+<div class="container mx-auto px-4 mb-16">
 
     <section>
         <h1 class="text-5xl font-bold text-center text-rojo text-bold my-8">Archivo de especiales</h1>

@@ -1,12 +1,12 @@
 <?php get_header(); ?>
-<main class="container mx-auto px-4 py-8 mb-8">
+<main class="container mx-auto px-4 mb-16 ">
   <section class="w-full max-w-xl mx-auto" style="max-width: 900px;">
     <?php if (have_posts()): while (have_posts()) : the_post(); ?>
 
         <article class="bg-white ">
           <!-- Barra de título -->
-          <div class="flex items-center justify-center  p-6">
-            <h1 class="text-5xl font-semibold text-rojo">Búsqueda</h1>
+          <div class="flex items-center justify-center flex-col">
+            <h1 class="text-5xl font-semibold my-8 text-rojo">Búsqueda</h1>
             <img src="<?php bloginfo('template_url'); ?>/img/search.png" alt="Search" style="height: 62px;">
           </div>
 

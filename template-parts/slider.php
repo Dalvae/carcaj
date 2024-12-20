@@ -108,7 +108,7 @@
                                 <a :href="slide.enlace" x-text="slide.titulo" class="bg-rojo text-white px-2 leading-normal"></a>
                             </h2>
                             <div class="mt-6 bg-white shadow-md p-4 lg:p-5 lg:mr-20">
-                                <p x-html="slide.bajada" class="text-lg text-black"></p>
+                                <p x-html="slide.bajada" class="text-lg text-black font-medium"></p>
                             </div>
                         </div>
                     </div>

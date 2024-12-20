@@ -1,12 +1,9 @@
 <?php /* Template Name: Pagina con Imagen */ get_header(); ?>
 
 <main class="container">
-
-	<?php get_template_part('template-parts/breadcrumbs'); ?>
-
 	<section class="">
 
-		<h1 class="text-5xl text-rojo font-semibold text-center"><?php the_title(); ?></h1>
+		<h1 class="text-5xl text-rojo font-semibold text-center my-8"><?php the_title(); ?></h1>
 
 		<?php if (have_posts()): while (have_posts()) : the_post(); ?>
 
