@@ -174,6 +174,33 @@ function html5blank_nav()
     ));
 }
 add_action('init', 'year_post', 0);
+function add_opengraph_tags() {
+    if (is_single()) {  // Solo para posts individuales
+        global $post;
+        
+        // Obtener la imagen destacada
+        $thumbnail = get_the_post_thumbnail_url($post->ID, 'large');
+        if (!$thumbnail) {
+            // Imagen por defecto si no hay thumbnail
+            $thumbnail = get_template_directory_uri() . '/img/thumb.png';
+        }
+        
+        // Metaetiquetas OpenGraph básicas
+        echo '<meta property="og:type" content="article" />';
+        echo '<meta property="og:title" content="' . esc_attr(get_the_title()) . '" />';
+        echo '<meta property="og:description" content="' . esc_attr(get_the_excerpt()) . '" />';
+        echo '<meta property="og:url" content="' . esc_url(get_permalink()) . '" />';
+        echo '<meta property="og:image" content="' . esc_url($thumbnail) . '" />';
+        echo '<meta property="og:site_name" content="' . esc_attr(get_bloginfo('name')) . '" />';
+        
+        // Twitter Cards
+        echo '<meta name="twitter:card" content="summary_large_image" />';
+        echo '<meta name="twitter:title" content="' . esc_attr(get_the_title()) . '" />';
+        echo '<meta name="twitter:description" content="' . esc_attr(get_the_excerpt()) . '" />';
+        echo '<meta name="twitter:image" content="' . esc_url($thumbnail) . '" />';
+    }
+}
+add_action('wp_head', 'add_opengraph_tags');
 
 add_action('after_setup_theme', function () {
 
