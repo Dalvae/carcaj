@@ -49,7 +49,7 @@
                         }
                         ?>
                     </div>
-                    <div class="mt-12 text-2xl font-al leading-relaxed prose max-w-none content-full text-justify">
+                    <div class="mt-12 text-2xl font-al leading-relaxed prose max-w-none content-full">
                         <?php the_content(); ?>
                     </div>
 
