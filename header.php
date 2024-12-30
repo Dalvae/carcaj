@@ -17,6 +17,12 @@
     </script>
     <!-- End Google Tag Manager -->
     <meta charset="<?php bloginfo('charset'); ?>">
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="<?php the_title(); ?>">
+    <meta property="og:description" content="<?php echo get_the_excerpt(); ?>">
+    <meta property="og:image" content="<?php echo get_the_post_thumbnail_url(); ?>">
+    <meta property="og:url" content="<?php echo get_permalink(); ?>">
+    <meta property="og:type" content="article">
     <title><?php wp_title(''); ?><?php if (wp_title('', false)) {
                                         echo ' : ';
                                     } ?><?php bloginfo('name'); ?></title>
@@ -65,12 +71,7 @@
             }))
         });
     </script>
-<!-- Open Graph Meta Tags -->
-<meta property="og:title" content="<?php the_title(); ?>">
-<meta property="og:description" content="<?php echo get_the_excerpt(); ?>">
-<meta property="og:image" content="<?php echo get_the_post_thumbnail_url(); ?>">
-<meta property="og:url" content="<?php echo get_permalink(); ?>">
-<meta property="og:type" content="article">
+
     <?php include_once('img/sprite.svg'); ?>
     <?php wp_head(); ?>
 </head>
