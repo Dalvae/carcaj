@@ -49,17 +49,20 @@
                         }
                         ?>
                     </div>
-                    <div class="mt-12 text-2xl font-al leading-relaxed prose max-w-none content-full">
+                    <div class="my-12 text-2xl font-al leading-relaxed prose max-w-none content-full">
                         <?php the_content(); ?>
                     </div>
 
-                    <div class="prose prose-lg mx-auto my-8 [&_a]:hover:bg-rojo [&_a]:hover:text-white [&_a]:p-2">
-                        <?php if (function_exists('pf_show_link')) {
-                            echo pf_show_link();
-                        } ?>
-                    </div>
+                
 
-                    <div class="flex justify-center items-center gap-8 mt-12">
+                <div class="flex justify-center items-center gap-8 my-24">
+                    <div class="text-rojo">
+                        <?php 
+                        if (function_exists('pf_show_link')) {
+                            echo pf_show_link();
+                        }
+                        ?>
+                    </div>
                         <img class="firma" src="<?php bloginfo('template_url'); ?>/img/diana.svg" alt="">
 
                         <div class="relative" x-data="{ isOpen: false }" @click.away="isOpen = false">
