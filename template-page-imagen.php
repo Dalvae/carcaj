@@ -8,7 +8,7 @@
 		<?php if (have_posts()): while (have_posts()) : the_post(); ?>
 
 				<!-- article -->
-				<article class="flex prose">
+				<article class="flex prose flex-col md:flex-row">
 
 
 					<div class="mt-12 text-2xl font-al leading-relaxed prose max-w-none content-full text-justify">

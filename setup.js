@@ -17,8 +17,25 @@ function getConfigValue(content, key) {
 
 // Función para actualizar valores en wp-config.php
 function updateConfigValue(content, key, value) {
-  const regex = new RegExp(`(define\\(['"]${key}['"],\\s*['"])(.+?)(['"]\\))`);
-  return content.replace(regex, `$1${value}$3`);
+  // Si el valor es una cadena, lo envolvemos en comillas
+  const formattedValue = typeof value === "string" ? `'${value}'` : value;
+
+  // Primero intentamos buscar si ya existe la definición
+  const existingDefineRegex = new RegExp(
+    `define\\(['"]${key}['"],\\s*(.+?)\\);`
+  );
+  if (content.match(existingDefineRegex)) {
+    // Si existe, la actualizamos
+    return content.replace(
+      existingDefineRegex,
+      `define('${key}', ${formattedValue});`
+    );
+  }
+  // Si no existe, la añadimos antes del cierre
+  return content.replace(
+    "/* That's all, stop editing! Happy publishing. */",
+    `define('${key}', ${formattedValue});\n/* That's all, stop editing! Happy publishing. */`
+  );
 }
 
 async function setup() {
@@ -85,6 +102,12 @@ async function setup() {
     // Modificar valores en wp-config.php
     console.log("📝 Actualizando wp-config.php para desarrollo local");
     wpConfigContent = updateConfigValue(wpConfigContent, "DB_HOST", "db");
+    wpConfigContent = updateConfigValue(wpConfigContent, "WP_DEBUG", false); // sin comillas porque es booleano
+    wpConfigContent = updateConfigValue(
+      wpConfigContent,
+      "IS_VITE_DEVELOPMENT",
+      true
+    ); // sin comillas porque es booleano
 
     // Agregar configuraciones útiles para desarrollo
     wpConfigContent = wpConfigContent.replace(
@@ -96,10 +119,9 @@ async function setup() {
     define('WP_DEBUG_DISPLAY', true);
     define('SCRIPT_DEBUG', true);
     define('CONCATENATE_SCRIPTS', false);
-    define('IS_VITE_DEVELOPMENT', true);
+    define('IS_VITE_DEVELOPMENT', true); 
     /* That's all, stop editing! Happy publishing. */`
     );
-
     // Guardar wp-config.php modificado
     const modifiedWpConfigPath = path.join(configTempDir, "wp-config.php");
     fs.writeFileSync(modifiedWpConfigPath, wpConfigContent);
@@ -136,6 +158,7 @@ DB_PREFIX=wpyl_
 # WordPress
 WP_DEBUG=true
 WP_PORT=8888
+IS_VITE_DEVELOPMENT=true 
 # Docker
 COMPOSE_PROJECT_NAME=carcaj
 `.trim();
