@@ -17,6 +17,17 @@
     </script>
     <!-- End Google Tag Manager -->
     <meta charset="<?php bloginfo('charset'); ?>">
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="<?php echo esc_attr(get_the_title()); ?>">
+    <meta property="og:description" content="<?php echo esc_attr(wp_strip_all_tags(get_the_excerpt())); ?>">
+    <?php if (has_post_thumbnail()): ?>
+        <meta property="og:image" content="<?php echo esc_url(get_the_post_thumbnail_url(null, 'large')); ?>">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+    <?php endif; ?>
+    <meta property="og:url" content="<?php echo esc_url(get_permalink()); ?>">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="<?php echo esc_attr(get_bloginfo('name')); ?>">
     <title><?php wp_title(''); ?><?php if (wp_title('', false)) {
                                         echo ' : ';
                                     } ?><?php bloginfo('name'); ?></title>
