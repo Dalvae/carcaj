@@ -76,7 +76,7 @@ if (post_password_required()) {
         'title_reply_after'    => '</h3>',
         'comment_notes_before' => '<p class="comment-notes text-sm text-gray-500 mb-4">Tu dirección de correo electrónico no será publicada. Los campos obligatorios están marcados con <span class="required text-red-500">*</span></p>',
         'comment_field'        => '<div class="comment-form-comment mb-4"><textarea id="comment" name="comment" class="w-full p-4 bg-white border border-gray-200  focus:outline-none focus:ring-0" rows="8" placeholder="Mensaje" required></textarea></div>',
-        'show_cookies_consent' => false,  // Añade esta línea
+        'show_cookies_consent' => false,
         'fields'               => array(
             'author' => '<div class="comment-form-author mb-4"><input id="author" name="author" type="text" class="w-full p-4 bg-white border border-gray-200  focus:outline-none focus:ring-0" placeholder="Nombre" required /></div>',
             'email'  => '<div class="comment-form-email mb-4"><input id="email" name="email" type="email" class="w-full p-4 bg-white border border-gray-200  focus:outline-none focus:ring-0" placeholder="Email" required /></div>',

@@ -2,25 +2,9 @@
 @use "tailwindcss/components";
 @use "tailwindcss/utilities";
 @use "scss/articles.scss";
+@use "scss/fonts.scss";
 
 @layer base {
-    @font-face {
-        font-family: 'Alegreya';
-        src: url('@/fonts/Alegreya-VariableFont_wght.ttf') format('truetype');
-        font-weight: normal; 
-        font-style: normal;
-        font-display: swap;
-    }
-    
-    
-    @font-face {
-        font-family: 'Alegreya';
-        src: url('@/fonts/Alegreya-Italic-VariableFont_wght.ttf') format('truetype');
-        font-weight: normal; 
-        font-style: italic;
-        font-display: swap;
-    }
-
     :root {
         font-family: 'Alegreya', serif;
     }
@@ -45,103 +29,25 @@
         height: auto;
         margin: 0 auto;
       }
-    /* Estilos para el tooltip */
-.footnote-tooltip {
-    @apply bg-white border border-gray-200 p-4 rounded-lg shadow-lg;
-    max-width: 300px;
-    z-index: 1000;
 }
 
-/* Estilos para notas expandidas en mobile */
 .expanded-footnote {
-    @apply bg-white border border-gray-200 p-4 rounded-lg shadow-lg my-2;
-    max-height: 0;
-    overflow: hidden;
-    transition: all 0.2s ease-out;
-}
-
-.expanded-footnote.entering {
-    max-height: 1000px;
-}
-
-.expanded-footnote.removing {
-    max-height: 0;
-}
-
-}
-.tooltip {
-  position: absolute;
-  background-color: #333;
-  color: #fff;
-  padding: 5px 10px;
-  border-radius: 4px;
-  white-space: nowrap;
-  z-index: 1000;
-}
-// Estilos para el tooltip
-.footnote-tooltip {
-    position: absolute;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 15px;
-    max-width: 600px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    @apply prose;
-    line-height: 1.4;
-    // color: $grey;
-    z-index: 1000;
-    display: none;
-    transition: opacity 0.2s ease-out;
-    margin: 5px;
-  
-  
-  
-    // Asegurarnos que sea visible en móvil
-    @media screen and (max-width: 768px) {
-      position: fixed;
-      bottom: 20px;
-      left: 20px !important;
-      right: 20px !important;
-      top: auto !important;
-      width: auto;
-      max-width: none;
-      margin: 0;
-    }
-  }
-  .cited-text {
-    cursor: pointer;
-    color: inherit;
-    &:hover {
-    //   color: $blue; // O el color que prefieras
-      text-decoration: underline;
-    }
-  }
-  .expanded-footnote {
-    @apply prose;
-    // color: $grey;
-    background-color: #f9f9f9;
-    padding: 15px;
-    border-radius: 4px;
-    margin: 15px 0;
-    border-left: 3px solid #D22800;
+    @apply prose bg-gray-50 p-4 rounded-md my-4 border-l-4 border-rojo;
     overflow: hidden;
     opacity: 0;
     max-height: 0;
-  
-    // Clase para la animación de entrada
+    transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+
     &.entering {
-      transition: max-height 0.2s ease-in-out, opacity 0.3s ease-out;
-      opacity: 1;
+        opacity: 1;
     }
-  
-    // Clase para la salida instantánea
+
     &.removing {
-      transition: opacity 0.2s ease-out;
-      opacity: 0;
-      max-height: 0;
+        opacity: 0;
+        max-height: 0;
+        transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
     }
-  }
+}
   @layer components {
     // Estilos base compartidos para menu items
     .menu-item {

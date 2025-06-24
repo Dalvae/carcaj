@@ -234,9 +234,4 @@ add_action('after_setup_theme', function () {
     //    add_image_size( 'category-thumb', 300 ); // 300 pixels wide (and unlimited height)
     //    add_image_size( 'custom-size', 220, 180 ); // 220 pixels wide by 180 pixels tall, soft proportional crop mode
     //    add_image_size( 'homepage-thumb', 220, 180, true ); // (cropped)
-    function enqueue_theme_assets()
-    {
-        wp_enqueue_style('theme-fonts', get_template_directory_uri() . '/assets/fonts/fonts.css');
-    }
-    add_action('wp_enqueue_scripts', 'enqueue_theme_assets');
 });
