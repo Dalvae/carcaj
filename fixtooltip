@@ -1,0 +1,7 @@
+/drop
+/add       inc/vite.php
+/add       single.php
+/add       src/js/footnotes.js
+/add       src/theme.js
+/add       tailwind.config.js
+/add       vite.config.js
