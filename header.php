@@ -160,7 +160,7 @@
                          x-transition:leave-start="opacity-100 translate-y-0"
                          x-transition:leave-end="opacity-0 -translate-y-2"
                          @click.away="isSearchOpen = false"
-                         class="absolute top-full w-full bg-white shadow-sm rounded-b-lg p-4 z-20">
+                         class="absolute top-full w-full bg-white shadow-sm rounded-b-lg mt-4 z-20">
                         <?php get_template_part('template-parts/search-form'); ?>
                     </div>
                 </div>
