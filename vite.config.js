@@ -16,7 +16,7 @@ export default defineConfig({
   },
   // config
   root: "",
-  base: process.env.NODE_ENV === "development" ? "/" : "/dist/",
+  base: process.env.NODE_ENV === "development" ? "/" : "./dist/",
 
   build: {
     // output dir for production build
