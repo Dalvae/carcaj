@@ -43,19 +43,60 @@ function register_all_taxonomies()
 }
 add_action('init', 'register_all_taxonomies', 0);
 
-function handle_year_archive($query)
+function carcaj_handle_search_and_archive_filters($query)
 {
-    if (!is_admin() && $query->is_main_query()) {
-        $year = get_query_var('anho');
-        if ($year) {
-            $query->set('tax_query', array(
-                array(
-                    'taxonomy' => 'anho',
-                    'field'    => 'slug',
-                    'terms'    => $year
-                )
-            ));
+    if (is_admin() || !$query->is_main_query()) {
+        return;
+    }
+
+    // We are only interested in search and archive pages
+    if (!$query->is_search() && !$query->is_archive()) {
+        return;
+    }
+
+    $tax_query_updates = [];
+
+    // Handle 'anho' filter from search or archive pages
+    $year_slug = get_query_var('anho');
+    if (!empty($year_slug) && $year_slug != '-1') {
+        $tax_query_updates[] = [
+            'taxonomy' => 'anho',
+            'field'    => 'slug',
+            'terms'    => $year_slug,
+        ];
+    }
+
+    // Handle search-specific filters
+    if ($query->is_search()) {
+        // Handle category filter
+        $cat_id = get_query_var('cat');
+        if (!empty($cat_id) && $cat_id > 0) {
+            $tax_query_updates[] = [
+                'taxonomy' => 'category',
+                'field'    => 'term_id',
+                'terms'    => $cat_id,
+            ];
+        }
+
+        // Handle author filter
+        $author_id = get_query_var('author');
+        if (isset($author_id) && $author_id < 1) {
+            unset($query->query_vars['author']);
         }
     }
+
+    if (!empty($tax_query_updates)) {
+        $existing_tax_query = $query->get('tax_query') ?: [];
+        if (!is_array($existing_tax_query)) {
+            $existing_tax_query = [];
+        }
+        
+        $final_tax_query = array_merge($existing_tax_query, $tax_query_updates);
+
+        if (count($final_tax_query) > 1 && !isset($final_tax_query['relation'])) {
+            $final_tax_query['relation'] = 'AND';
+        }
+        $query->set('tax_query', $final_tax_query);
+    }
 }
-add_action('pre_get_posts', 'handle_year_archive');
+add_action('pre_get_posts', 'carcaj_handle_search_and_archive_filters');

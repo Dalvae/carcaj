@@ -67,18 +67,29 @@
         </form>
 
         <script>
-            document.addEventListener('turbo:load', function() {
+            document.addEventListener('DOMContentLoaded', function() {
                 const form = document.getElementById('advanced-search-form');
                 if (form) {
-                    form.querySelectorAll('select').forEach(select => {
-                        select.addEventListener('change', () => {
-                            if (select.value) {
-                                // Redirige si se selecciona algo, excepto para el autor que puede necesitar el botón
-                                if (select.name !== 'author') {
-                                    window.location = `<?php echo esc_url(home_url('/')); ?>?${select.name}=${select.value}`;
-                                }
+                    form.addEventListener('submit', function(event) {
+                        event.preventDefault();
+                        
+                        const searchParams = new URLSearchParams();
+                        const searchInput = form.querySelector('input[name="s"]');
+                        
+                        // Always include the search term, even if empty, as WordPress expects it.
+                        if (searchInput) {
+                            searchParams.set('s', searchInput.value);
+                        }
+
+                        // Include other filters only if they have a valid selection.
+                        form.querySelectorAll('select').forEach(select => {
+                            // A value of -1 or 0 typically means no selection.
+                            if (select.value && select.value !== '-1' && select.value !== '0') {
+                                searchParams.set(select.name, select.value);
                             }
                         });
+
+                        window.location.href = form.action + '?' + searchParams.toString();
                     });
                 }
             });
