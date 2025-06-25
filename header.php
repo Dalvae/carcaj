@@ -39,8 +39,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="<?php bloginfo('template_url'); ?>/img/icons/favicon-16x16.png">
     <link rel="manifest" href="<?php bloginfo('template_url'); ?>/img/icons/manifest.json">
     <meta name="theme-color" content="#ffffff">
-    <link rel="preload" href="<?php echo get_template_directory_uri(); ?>/dist/assets/fonts/Alegreya-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
-    <link rel="preload" href="<?php echo get_template_directory_uri(); ?>/dist/assets/fonts/Alegreya-Italic-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142230775-1"></script>

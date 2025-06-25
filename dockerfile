@@ -13,7 +13,7 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
     && wp --info
 
 # Copiar script personalizado
-COPY docker-entrypoint-custom.sh /usr/local/bin/
+COPY docker-entrypoint-custom.sh /usr/local/bin/docker-entrypoint-custom.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint-custom.sh
 
 # Mantener el ENTRYPOINT original pero cambiar el CMD

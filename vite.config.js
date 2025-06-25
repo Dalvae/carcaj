@@ -34,7 +34,7 @@ export default defineConfig({
       input: [resolve(__dirname + "/src/theme.js")],
       output: {
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name.endsWith(".ttf")) {
+          if (assetInfo.name.endsWith(".woff2")) {
             return "assets/fonts/[name][extname]";
           }
           return "assets/[name]-[hash][extname]";
@@ -44,6 +44,9 @@ export default defineConfig({
     minify: true,
     write: true,
   },
+  optimizeDeps: {
+    include: ["@hotwired/turbo", "alpinejs"],
+  },
 
   server: {
     cors: true,
@@ -52,19 +55,11 @@ export default defineConfig({
     host: "localhost", // Cambia a localhost en lugar de 0.0.0.0 // Add this to allow external access
     // serve over http
     https: false,
-
-    // serve over httpS
-    // to generate localhost certificate follow the link:
-    // https://github.com/FiloSottile/mkcert - Windows, MacOS and Linux supported - Browsers Chrome, Chromium and Firefox (FF MacOS and Linux only)
-    // installation example on Windows 10:
-    // > choco install mkcert (this will install mkcert)
-    // > mkcert -install (global one time install)
-    // > mkcert localhost (in project folder files localhost-key.pem & localhost.pem will be created)
-    // uncomment below to enable https
-    //https: {
-    //  key: fs.readFileSync('localhost-key.pem'),
-    //  cert: fs.readFileSync('localhost.pem'),
-    //},
+    origin: "http://localhost:3000",
+    fs: {
+      strict: false,
+      allow: [".."],
+    },
 
     hmr: {
       host: "localhost",

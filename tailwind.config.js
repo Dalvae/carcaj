@@ -3,10 +3,11 @@ module.exports = {
     // https://tailwindcss.com/docs/content-configuration
     "./*.php",
     "./**/*.php",
+    "./src/**/*.js",
   ],
   theme: {
     container: {
-      center: true, // Mantiene el contenedor centrado
+      center: true,
       padding: {
         DEFAULT: "1rem",
         sm: "2rem",
@@ -37,7 +38,8 @@ module.exports = {
       },
       fontFamily: {
         alegreya: ["Alegreya", "serif"],
-        sans: ["Alegreya", "system-ui", "sans-serif"],
+        "alegreya-sc": ["Alegreya SC", "serif"],
+        sans: ["Alegreya Sans", "system-ui", "sans-serif"],
       },
       typography: (theme) => ({
         DEFAULT: {
