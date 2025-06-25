@@ -3,7 +3,7 @@ import "./theme.scss";
 // Turbo SPA
 import * as Turbo from "@hotwired/turbo";
 
-Turbo.setProgressBarDelay(500);
+Turbo.config.drive.progressBarDelay = 500;
 
 // Alpine JS
 import Alpine from "alpinejs";

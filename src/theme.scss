@@ -33,24 +33,21 @@
 }
 
 .expanded-footnote {
-  @apply prose bg-gray-50 p-4 rounded-md my-4 border-l-4 border-rojo;
-  overflow: hidden;
-  opacity: 0;
+  @apply bg-swhite rounded-lg mt-4 block overflow-hidden px-6;
+  box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
   max-height: 0;
-  transition:
-    max-height 0.3s ease-in-out,
-    opacity 0.3s ease-in-out;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
 
   &.entering {
-    opacity: 1;
+    @apply py-4;
   }
 
   &.removing {
-    opacity: 0;
-    max-height: 0;
-    transition:
-      max-height 0.3s ease-out,
-      opacity 0.3s ease-out;
+    @apply py-0;
+    max-height: 0 !important;
+    transition: max-height 0.3s ease-in, padding 0.3s ease-in;
   }
 }
 @layer components {

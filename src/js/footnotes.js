@@ -1,162 +1,200 @@
-function initializeFootnotes() {
-  const tooltip = document.createElement("div");
-  tooltip.className =
-    "footnote-tooltip bg-white border border-gray-200 p-4 rounded-lg shadow-lg fixed text-lg leading-relaxed";
-  document.body.appendChild(tooltip);
+function footnotes() {
+  return {
+    tooltipVisible: false,
+    tooltipContent: "",
+    tooltipStyle: { top: "0px", left: "0px" },
+    hideTimer: null,
 
-  function isMobile() {
-    return window.innerWidth <= 1000;
-  }
+    isMobile() {
+      return window.innerWidth <= 1000;
+    },
 
-  function getFootnoteText(element) {
-    const clone = element.parentNode.cloneNode(true);
-    clone.querySelector(`a[id^="sdfootnote"], a[id^="_ftn"]`)?.remove();
-    clone
-      .querySelectorAll(`a[href^="#sdfootnote"], a[href^="#_ftnref"]`)
-      .forEach((link) => link.remove());
-    clone.querySelector("sup")?.remove();
+    getFootnoteText(element) {
+      const clone = element.parentNode.cloneNode(true);
+      clone.querySelector(`a[id^="sdfootnote"], a[id^="_ftn"]`)?.remove();
+      clone
+        .querySelectorAll(`a[href^="#sdfootnote"], a[href^="#_ftnref"]`)
+        .forEach((link) => link.remove());
+      clone.querySelector("sup")?.remove();
 
-    return clone.innerHTML
-      .trim()
-      .replace(/^\s*\[\d+\]\s*/, "")
-      .replace(/^\s*\d+\s*/, "");
-  }
+      return clone.innerHTML
+        .trim()
+        .replace(/^\s*\[\d+\]\s*/, "")
+        .replace(/^\s*\d+\s*/, "");
+    },
 
-  function positionTooltip(element, tooltip) {
-    const rect = element.getBoundingClientRect();
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
+    initialize() {
+      const footnoteSeparator = this.$el.querySelector(".wp-block-separator");
+      const isInFootnotes = (element) =>
+        footnoteSeparator?.compareDocumentPosition(element) &
+        Node.DOCUMENT_POSITION_FOLLOWING;
 
-    let left = Math.max(
-      10,
-      Math.min(rect.left, viewportWidth - tooltip.offsetWidth - 20)
-    );
-    let top = rect.bottom + scrollTop + 5;
-
-    if (
-      rect.bottom + tooltip.offsetHeight > viewportHeight &&
-      rect.top > tooltip.offsetHeight
-    ) {
-      top = rect.top + scrollTop - tooltip.offsetHeight - 5;
-    }
-
-    Object.assign(tooltip.style, { left: `${left}px`, top: `${top}px` });
-  }
-
-  function insertExpandedNote(eventTarget, expandedNote) {
-    const supElement =
-      eventTarget.closest("sup") || eventTarget.querySelector("sup");
-    const nextNode = (supElement || eventTarget).nextSibling;
-
-    if (
-      nextNode?.nodeType === Node.TEXT_NODE &&
-      (nextNode.textContent.startsWith(".") ||
-        nextNode.textContent.startsWith(",") ||
-        nextNode.textContent.startsWith(" "))
-    ) {
-      const [firstChar, ...rest] = nextNode.textContent;
-      const charNode = document.createTextNode(firstChar);
-      const restNode = document.createTextNode(rest.join(""));
-
-      nextNode.parentNode.replaceChild(charNode, nextNode);
-      charNode.parentNode.insertBefore(expandedNote, charNode.nextSibling);
-      expandedNote.parentNode.insertBefore(restNode, expandedNote.nextSibling);
-    } else {
-      (supElement || eventTarget).insertAdjacentElement(
-        "afterend",
-        expandedNote
+      const links = this.$el.querySelectorAll(
+        'a[href*="_ftn"], a[href*="sdfootnote"]',
       );
-    }
-  }
 
-  // Verificar si el elemento está después del separador de notas
-  const footnoteSeparator = document.querySelector(".wp-block-separator");
-  const isInFootnotes = (element) =>
-    footnoteSeparator?.compareDocumentPosition(element) &
-    Node.DOCUMENT_POSITION_FOLLOWING;
+      links.forEach((link, index) => {
+        const href = link.getAttribute("href");
+        const targetId = href
+          .substring(1)
+          .replace(/^sdfootnoteanc/, "sdfootnotesym");
+        const footnoteContent = document.getElementById(targetId);
 
-  document
-    .querySelectorAll('a[href*="_ftn"], a[href*="sdfootnote"]')
-    .forEach((link) => {
-      const href = link.getAttribute("href");
-      const targetId = href
-        .substring(1)
-        .replace(/^sdfootnoteanc/, "sdfootnotesym");
-      const footnoteContent = document.getElementById(targetId);
-      if (!footnoteContent) return;
+        if (!footnoteContent) {
+          return;
+        }
 
-      let isExpanded = false;
-
-      // Links en la sección de notas al pie - funciona igual en mobile y desktop
-      if (isInFootnotes(link)) {
-        link.addEventListener("click", (e) => {
-          const targetRef = document.getElementById(
-            href.replace("_ftn", "_ftnref").substring(1)
-          );
-          targetRef?.scrollIntoView({ behavior: "smooth" });
-        });
-        return;
-      }
-      if (isMobile()) {
-        link.addEventListener("click", (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-
-          if (isExpanded) {
-            const note = document.querySelector(".expanded-footnote");
-            if (note) {
-              note.classList.add("removing");
-              note.classList.remove("entering");
-              setTimeout(() => note.remove(), 200);
-            }
-            isExpanded = false;
+        if (isInFootnotes(link)) {
+            link.addEventListener("click", (e) => {
+              e.preventDefault();
+              const targetRef = document.getElementById(
+                href.replace("_ftn", "_ftnref").substring(1),
+              );
+              targetRef?.scrollIntoView({ behavior: "smooth" });
+            });
             return;
           }
 
-          document.querySelectorAll(".expanded-footnote").forEach((el) => {
-            el.classList.add("removing");
-            el.classList.remove("entering");
-            setTimeout(() => el.remove(), 200);
-          });
+          const footnoteText = this.getFootnoteText(footnoteContent);
 
-          const expandedNote = document.createElement("div");
-          expandedNote.className = "expanded-footnote";
-          expandedNote.innerHTML = getFootnoteText(footnoteContent);
-
-          insertExpandedNote(link, expandedNote);
-          isExpanded = true;
-
-          requestAnimationFrame(() => {
-            expandedNote.classList.add("entering");
-            expandedNote.style.maxHeight = expandedNote.scrollHeight + "px";
-          });
-
-          expandedNote.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            expandedNote.classList.add("removing");
-            expandedNote.classList.remove("entering");
-            setTimeout(() => expandedNote.remove(), 200);
-            isExpanded = false;
-          });
+          if (this.isMobile()) {
+            link.dataset.footnoteId = index;
+            link.addEventListener("click", (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              console.log("Mobile footnote link clicked.");
+              this.toggleMobileFootnote(link, footnoteText);
+            });
+          } else {
+            link.addEventListener("mouseover", (e) => {
+              this.showTooltip(e.currentTarget, footnoteText);
+            });
+            link.addEventListener("mouseout", () => {
+              this.hideTooltip();
+            });
+            link.addEventListener("click", (e) => {
+              e.preventDefault();
+              footnoteContent.scrollIntoView({ behavior: "smooth" });
+            });
+          }
         });
-      } else {
-        Object.assign(link, {
-          onmouseover: (e) => {
-            tooltip.innerHTML = getFootnoteText(footnoteContent);
-            tooltip.style.display = "block";
-            positionTooltip(link, tooltip);
-          },
-          onmouseout: () => (tooltip.style.display = "none"),
-          onclick: (e) => {
-            e.preventDefault();
-            footnoteContent.scrollIntoView({ behavior: "smooth" });
-          },
-        });
+    },
+
+    showTooltip(element, content) {
+      clearTimeout(this.hideTimer);
+      this.tooltipContent = content;
+      this.tooltipVisible = true;
+      this.$nextTick(() => {
+        const tooltipEl = this.$refs.tooltip;
+        if (!tooltipEl) {
+          return;
+        }
+        const rect = element.getBoundingClientRect();
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+
+        tooltipEl.style.left = "0px"; // reset for width calculation
+        let left = Math.max(
+          10,
+          Math.min(rect.left, viewportWidth - tooltipEl.offsetWidth - 20),
+        );
+        let top = rect.bottom + 5;
+
+        if (
+          rect.bottom + tooltipEl.offsetHeight > viewportHeight &&
+          rect.top > tooltipEl.offsetHeight
+        ) {
+          top = rect.top - tooltipEl.offsetHeight - 5;
+        }
+
+        this.tooltipStyle = { left: `${left}px`, top: `${top}px` };
+      });
+    },
+
+    hideTooltip() {
+      this.hideTimer = setTimeout(() => {
+        this.tooltipVisible = false;
+      }, 200);
+    },
+
+    toggleMobileFootnote(link, content) {
+      console.log("Toggling mobile footnote for:", link);
+      const footnoteId = link.dataset.footnoteId;
+      const existingNote = document.getElementById(
+        `expanded-footnote-${footnoteId}`,
+      );
+      console.log("Existing note:", existingNote);
+
+      document.querySelectorAll(".expanded-footnote").forEach((el) => {
+        if (el.id !== `expanded-footnote-${footnoteId}`) {
+          el.classList.add("removing");
+          el.classList.remove("entering");
+          setTimeout(() => el.remove(), 200);
+        }
+      });
+
+      if (existingNote) {
+        console.log("Removing existing note.");
+        existingNote.classList.add("removing");
+        existingNote.classList.remove("entering");
+        setTimeout(() => existingNote.remove(), 200);
+        return;
       }
-    });
+
+      console.log("Creating new expanded note.");
+      const expandedNote = document.createElement("div");
+      expandedNote.id = `expanded-footnote-${footnoteId}`;
+      expandedNote.className = "expanded-footnote";
+      expandedNote.innerHTML = content;
+
+      this.insertExpandedNote(link, expandedNote);
+
+      requestAnimationFrame(() => {
+        console.log("Note inserted. Animating open.");
+        expandedNote.classList.add("entering");
+        expandedNote.style.maxHeight = expandedNote.scrollHeight + "px";
+      });
+
+      expandedNote.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        expandedNote.classList.add("removing");
+        expandedNote.classList.remove("entering");
+        setTimeout(() => expandedNote.remove(), 200);
+      });
+    },
+
+    insertExpandedNote(eventTarget, expandedNote) {
+      const supElement =
+        eventTarget.closest("sup") || eventTarget.querySelector("sup");
+      const nextNode = (supElement || eventTarget).nextSibling;
+
+      if (
+        nextNode?.nodeType === Node.TEXT_NODE &&
+        (nextNode.textContent.startsWith(".") ||
+          nextNode.textContent.startsWith(",") ||
+          nextNode.textContent.startsWith(" "))
+      ) {
+        const [firstChar, ...rest] = nextNode.textContent;
+        const charNode = document.createTextNode(firstChar);
+        const restNode = document.createTextNode(rest.join(""));
+
+        nextNode.parentNode.replaceChild(charNode, nextNode);
+        charNode.parentNode.insertBefore(expandedNote, charNode.nextSibling);
+        expandedNote.parentNode.insertBefore(
+          restNode,
+          expandedNote.nextSibling,
+        );
+      } else {
+        (supElement || eventTarget).insertAdjacentElement(
+          "afterend",
+          expandedNote,
+        );
+      }
+    },
+  };
 }
 
-document.addEventListener("DOMContentLoaded", initializeFootnotes);
-document.addEventListener("turbo:load", initializeFootnotes);
+document.addEventListener("alpine:init", () => {
+  Alpine.data("footnotes", footnotes);
+});

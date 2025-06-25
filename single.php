@@ -10,7 +10,24 @@
     </div>
 </div>
 
-<section>
+<section x-data="footnotes()" x-init="initialize()">
+    <template x-teleport="body">
+        <div
+            x-ref="tooltip"
+            x-show="tooltipVisible"
+            @mouseover="clearTimeout(hideTimer)"
+            @mouseleave="hideTooltip()"
+            x-html="tooltipContent"
+            :style="tooltipStyle"
+            class="footnote-tooltip bg-white border border-gray-200 p-4 rounded-lg shadow-lg fixed text-lg leading-relaxed z-50 max-w-md"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 transform scale-95"
+            x-transition:enter-end="opacity-100 transform scale-100"
+            x-transition:leave="transition ease-in duration-100"
+            x-transition:leave-start="opacity-100 transform scale-100"
+            x-transition:leave-end="opacity-0 transform scale-95">
+        </div>
+    </template>
     <?php if (have_posts()): while (have_posts()) : the_post(); ?>
             <article class="container mx-auto px-4">
                 <?php get_template_part('template-parts/breadcrumbs'); ?>
