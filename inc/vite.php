@@ -51,24 +51,42 @@ add_action(HOOK_PREFIX . '_enqueue_scripts', function () {
         // ----------
 
         // read manifest.json to figure out what to enqueue
-        $manifest = json_decode(file_get_contents(DIST_PATH . '/.vite/manifest.json'), true);
+        $manifest_path = DIST_PATH . '/.vite/manifest.json';
+
+        if (!file_exists($manifest_path)) {
+            return;
+        }
+
+        $manifest = json_decode(file_get_contents($manifest_path), true);
 
         // is ok
         if (is_array($manifest)) {
 
-            if (isset($manifest[VITE_ENTRY_POINT]) && !empty($manifest[VITE_ENTRY_POINT]['css'])) {
+            $entry_point_manifest = isset($manifest[VITE_ENTRY_POINT]) ? $manifest[VITE_ENTRY_POINT] : null;
 
+            if ($entry_point_manifest) {
                 // enqueue CSS files
-                foreach ($manifest[VITE_ENTRY_POINT]['css'] as $css_file) {
-                    wp_enqueue_style('theme', DIST_URI . '/' . $css_file);
+                if (!empty($entry_point_manifest['css'])) {
+                    foreach ($entry_point_manifest['css'] as $css_file) {
+                        wp_enqueue_style('theme', DIST_URI . '/' . $css_file);
+                    }
                 }
 
                 // enqueue theme JS file
-                $js_file = $manifest[VITE_ENTRY_POINT]['file'];
-                if (!empty($js_file)) {
+                if (!empty($entry_point_manifest['file'])) {
+                    $js_file = $entry_point_manifest['file'];
                     wp_enqueue_script('theme', DIST_URI . '/' . $js_file, JS_DEPENDENCY, '', JS_LOAD_IN_FOOTER);
                 }
             }
+
+            // Preload fonts
+            add_action('wp_head', function () use ($manifest) {
+                foreach ($manifest as $chunk) {
+                    if (isset($chunk['file']) && pathinfo($chunk['file'], PATHINFO_EXTENSION) === 'woff2') {
+                        echo '<link rel="preload" href="' . esc_url(DIST_URI . '/' . $chunk['file']) . '" as="font" type="font/woff2" crossorigin>' . "\n";
+                    }
+                }
+            });
         }
     }
 });
