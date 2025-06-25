@@ -98,54 +98,70 @@
                             class="h-10 lg:h-20 w-auto">
                     </a>
                 </div>
-                <!-- Navegación Desktop -->
-                <div class="hidden md:space-x-0 lg:flex lg:items-center lg:space-x-8">
-                    <nav class="font-bold  lg:text-md xl:text-xl italic">
-                        <?php
-                        wp_nav_menu(array(
-                            'menu' => 'Menú Superior',
-                            'container' => false,
-                            'menu_class' => 'flex md:space-x-4 lg:space-x-8 ',
-                            'theme_location' => 'header-menu',
-                            'depth' => 2,
-                            'fallback_cb' => 'wp_page_menu',
-                            'link_class' => 'relative hover:text-[#EA6060] transition-colors duration-200
-                                      after:content-[""] after:absolute after:bottom-0 after:left-0 
-                                      after:w-full after:h-0.5 after:bg-[#EA6060] after:scale-x-0 
-                                      after:transition-transform after:duration-300
-                                      hover:after:scale-x-100'
-                        ));
-                        ?>
-                    </nav>
+                <!-- Right side content: Nav and Search -->
+                <div class="hidden lg:block relative">
+                    <!-- Navegación Desktop -->
+                    <div class="flex items-center space-x-8">
+                        <nav class="font-bold lg:text-md xl:text-xl italic">
+                            <?php
+                            wp_nav_menu(array(
+                                'menu' => 'Menú Superior',
+                                'container' => false,
+                                'menu_class' => 'flex space-x-8',
+                                'theme_location' => 'header-menu',
+                                'depth' => 2,
+                                'fallback_cb' => 'wp_page_menu',
+                                'link_class' => 'relative hover:text-[#EA6060] transition-colors duration-200
+                                          after:content-[""] after:absolute after:bottom-0 after:left-0 
+                                          after:w-full after:h-0.5 after:bg-[#EA6060] after:scale-x-0 
+                                          after:transition-transform after:duration-300
+                                          hover:after:scale-x-100'
+                            ));
+                            ?>
+                        </nav>
 
-                    <!-- Iconos de acción -->
-                    <div class="flex items-center space-x-6">
-                        <!-- Botón de búsqueda -->
-                        <button @click="isSearchOpen = !isSearchOpen"
-                            class="p-2 hover:text-[#EA6060] transition-colors duration-200">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
-                        </button>
+                        <!-- Iconos de acción -->
+                        <div class="flex items-center space-x-6">
+                            <!-- Botón de búsqueda -->
+                            <button @click="isSearchOpen = !isSearchOpen"
+                                class="p-2 hover:text-[#EA6060] transition-colors duration-200">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </button>
 
-                        <!-- Social Icons con hover effects -->
-                        <div class="flex items-center space-x-4">
-                            <a href="https://www.facebook.com/revistacarcaj/"
-                                target="_blank"
-                                class="group">
-                                <svg class="h-5 w-5 fill-[#EA6060] transition-transform duration-300 group-hover:scale-110">
-                                    <use xlink:href="#icon-facebook" />
-                                </svg>
-                            </a>
-                            <a href="https://www.instagram.com/revista.carcaj/"
-                                target="_blank"
-                                class="group">
-                                <svg class="h-5 w-5 fill-[#EA6060] transition-transform duration-300 group-hover:scale-110">
-                                    <use xlink:href="#icon-instagram" />
-                                </svg>
-                            </a>
+                            <!-- Social Icons con hover effects -->
+                            <div class="flex items-center space-x-4">
+                                <a href="https://www.facebook.com/revistacarcaj/"
+                                    target="_blank"
+                                    class="group">
+                                    <svg class="h-5 w-5 fill-[#EA6060] transition-transform duration-300 group-hover:scale-110">
+                                        <use xlink:href="#icon-facebook" />
+                                    </svg>
+                                </a>
+                                <a href="https://www.instagram.com/revista.carcaj/"
+                                    target="_blank"
+                                    class="group">
+                                    <svg class="h-5 w-5 fill-[#EA6060] transition-transform duration-300 group-hover:scale-110">
+                                        <use xlink:href="#icon-instagram" />
+                                    </svg>
+                                </a>
+                            </div>
                         </div>
+                    </div>
+
+                    <!-- Barra de búsqueda -->
+                    <div x-show="isSearchOpen"
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 -translate-y-2"
+                         x-transition:enter-end="opacity-100 translate-y-0"
+                         x-transition:leave="transition ease-in duration-200"
+                         x-transition:leave-start="opacity-100 translate-y-0"
+                         x-transition:leave-end="opacity-0 -translate-y-2"
+                         @click.away="isSearchOpen = false"
+                         class="absolute top-full w-full bg-white shadow-sm rounded-b-lg p-4 z-20">
+                        <?php get_template_part('template-parts/search-form'); ?>
                     </div>
                 </div>
                 <!-- Botón menú móvil con animación -->
@@ -161,29 +177,6 @@
                             :class="{'-rotate-45': $store.header.isOpen, 'translate-y-2': !$store.header.isOpen}"></span>
                     </div>
                 </button>
-            </div>
-            <!-- Barra de búsqueda expandible -->
-            <div x-show="isSearchOpen"
-                x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 -translate-y-4"
-                x-transition:enter-end="opacity-100 translate-y-0"
-                class="absolute left-0 right-0 bg-white shadow-lg z-[70]">
-                <div class="container mx-auto px-4 lg:-mt-8">
-                    <!-- Contenedor más específico para alineación -->
-                    <div class="flex justify-end">
-                        <div class="w-full lg:w-[65%] lg:pb-2 lg:block">
-                            <div class="relative">
-                                <button @click="isSearchOpen = false"
-                                    class="absolute right-2 top-2 p-2 text-gray-500 hover:text-[#EA6060] md:hidden">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                </button>
-                                <?php get_template_part('template-parts/search-form'); ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <template x-if="$store.header.isOpen">
                 <div class="fixed inset-0 bg-black bg-opacity-50 z-[968]"

@@ -1,153 +1,113 @@
 {
-  "src/fonts/alegreya-sans-italic-latin-100.woff2": {
-    "file": "assets/fonts/alegreya-sans-italic-latin-100.woff2",
-    "src": "src/fonts/alegreya-sans-italic-latin-100.woff2"
+  "src/fonts/Alegreya-Black.woff2": {
+    "file": "assets/fonts/Alegreya-Black.woff2",
+    "src": "src/fonts/Alegreya-Black.woff2"
   },
-  "src/fonts/alegreya-sans-italic-latin-300.woff2": {
-    "file": "assets/fonts/alegreya-sans-italic-latin-300.woff2",
-    "src": "src/fonts/alegreya-sans-italic-latin-300.woff2"
+  "src/fonts/Alegreya-BlackItalic.woff2": {
+    "file": "assets/fonts/Alegreya-BlackItalic.woff2",
+    "src": "src/fonts/Alegreya-BlackItalic.woff2"
   },
-  "src/fonts/alegreya-sans-italic-latin-400.woff2": {
-    "file": "assets/fonts/alegreya-sans-italic-latin-400.woff2",
-    "src": "src/fonts/alegreya-sans-italic-latin-400.woff2"
+  "src/fonts/Alegreya-Bold.woff2": {
+    "file": "assets/fonts/Alegreya-Bold.woff2",
+    "src": "src/fonts/Alegreya-Bold.woff2"
   },
-  "src/fonts/alegreya-sans-italic-latin-500.woff2": {
-    "file": "assets/fonts/alegreya-sans-italic-latin-500.woff2",
-    "src": "src/fonts/alegreya-sans-italic-latin-500.woff2"
+  "src/fonts/Alegreya-BoldItalic.woff2": {
+    "file": "assets/fonts/Alegreya-BoldItalic.woff2",
+    "src": "src/fonts/Alegreya-BoldItalic.woff2"
   },
-  "src/fonts/alegreya-sans-italic-latin-700.woff2": {
-    "file": "assets/fonts/alegreya-sans-italic-latin-700.woff2",
-    "src": "src/fonts/alegreya-sans-italic-latin-700.woff2"
+  "src/fonts/Alegreya-ExtraBold.woff2": {
+    "file": "assets/fonts/Alegreya-ExtraBold.woff2",
+    "src": "src/fonts/Alegreya-ExtraBold.woff2"
   },
-  "src/fonts/alegreya-sans-italic-latin-800.woff2": {
-    "file": "assets/fonts/alegreya-sans-italic-latin-800.woff2",
-    "src": "src/fonts/alegreya-sans-italic-latin-800.woff2"
+  "src/fonts/Alegreya-ExtraBoldItalic.woff2": {
+    "file": "assets/fonts/Alegreya-ExtraBoldItalic.woff2",
+    "src": "src/fonts/Alegreya-ExtraBoldItalic.woff2"
   },
-  "src/fonts/alegreya-sans-italic-latin-900.woff2": {
-    "file": "assets/fonts/alegreya-sans-italic-latin-900.woff2",
-    "src": "src/fonts/alegreya-sans-italic-latin-900.woff2"
+  "src/fonts/Alegreya-Italic.woff2": {
+    "file": "assets/fonts/Alegreya-Italic.woff2",
+    "src": "src/fonts/Alegreya-Italic.woff2"
   },
-  "src/fonts/alegreya-sans-italic-latin-ext-100.woff2": {
-    "file": "assets/fonts/alegreya-sans-italic-latin-ext-100.woff2",
-    "src": "src/fonts/alegreya-sans-italic-latin-ext-100.woff2"
+  "src/fonts/Alegreya-Medium.woff2": {
+    "file": "assets/fonts/Alegreya-Medium.woff2",
+    "src": "src/fonts/Alegreya-Medium.woff2"
   },
-  "src/fonts/alegreya-sans-italic-latin-ext-300.woff2": {
-    "file": "assets/fonts/alegreya-sans-italic-latin-ext-300.woff2",
-    "src": "src/fonts/alegreya-sans-italic-latin-ext-300.woff2"
+  "src/fonts/Alegreya-MediumItalic.woff2": {
+    "file": "assets/fonts/Alegreya-MediumItalic.woff2",
+    "src": "src/fonts/Alegreya-MediumItalic.woff2"
   },
-  "src/fonts/alegreya-sans-italic-latin-ext-400.woff2": {
-    "file": "assets/fonts/alegreya-sans-italic-latin-ext-400.woff2",
-    "src": "src/fonts/alegreya-sans-italic-latin-ext-400.woff2"
+  "src/fonts/Alegreya-Regular.woff2": {
+    "file": "assets/fonts/Alegreya-Regular.woff2",
+    "src": "src/fonts/Alegreya-Regular.woff2"
   },
-  "src/fonts/alegreya-sans-italic-latin-ext-500.woff2": {
-    "file": "assets/fonts/alegreya-sans-italic-latin-ext-500.woff2",
-    "src": "src/fonts/alegreya-sans-italic-latin-ext-500.woff2"
+  "src/fonts/AlegreyaSC-Black.woff2": {
+    "file": "assets/fonts/AlegreyaSC-Black.woff2",
+    "src": "src/fonts/AlegreyaSC-Black.woff2"
   },
-  "src/fonts/alegreya-sans-italic-latin-ext-700.woff2": {
-    "file": "assets/fonts/alegreya-sans-italic-latin-ext-700.woff2",
-    "src": "src/fonts/alegreya-sans-italic-latin-ext-700.woff2"
+  "src/fonts/AlegreyaSC-BlackItalic.woff2": {
+    "file": "assets/fonts/AlegreyaSC-BlackItalic.woff2",
+    "src": "src/fonts/AlegreyaSC-BlackItalic.woff2"
   },
-  "src/fonts/alegreya-sans-italic-latin-ext-800.woff2": {
-    "file": "assets/fonts/alegreya-sans-italic-latin-ext-800.woff2",
-    "src": "src/fonts/alegreya-sans-italic-latin-ext-800.woff2"
+  "src/fonts/AlegreyaSC-Bold.woff2": {
+    "file": "assets/fonts/AlegreyaSC-Bold.woff2",
+    "src": "src/fonts/AlegreyaSC-Bold.woff2"
   },
-  "src/fonts/alegreya-sans-italic-latin-ext-900.woff2": {
-    "file": "assets/fonts/alegreya-sans-italic-latin-ext-900.woff2",
-    "src": "src/fonts/alegreya-sans-italic-latin-ext-900.woff2"
+  "src/fonts/AlegreyaSC-BoldItalic.woff2": {
+    "file": "assets/fonts/AlegreyaSC-BoldItalic.woff2",
+    "src": "src/fonts/AlegreyaSC-BoldItalic.woff2"
   },
-  "src/fonts/alegreya-sans-normal-latin-100.woff2": {
-    "file": "assets/fonts/alegreya-sans-normal-latin-100.woff2",
-    "src": "src/fonts/alegreya-sans-normal-latin-100.woff2"
+  "src/fonts/AlegreyaSC-ExtraBold.woff2": {
+    "file": "assets/fonts/AlegreyaSC-ExtraBold.woff2",
+    "src": "src/fonts/AlegreyaSC-ExtraBold.woff2"
   },
-  "src/fonts/alegreya-sans-normal-latin-300.woff2": {
-    "file": "assets/fonts/alegreya-sans-normal-latin-300.woff2",
-    "src": "src/fonts/alegreya-sans-normal-latin-300.woff2"
+  "src/fonts/AlegreyaSC-ExtraBoldItalic.woff2": {
+    "file": "assets/fonts/AlegreyaSC-ExtraBoldItalic.woff2",
+    "src": "src/fonts/AlegreyaSC-ExtraBoldItalic.woff2"
   },
-  "src/fonts/alegreya-sans-normal-latin-400.woff2": {
-    "file": "assets/fonts/alegreya-sans-normal-latin-400.woff2",
-    "src": "src/fonts/alegreya-sans-normal-latin-400.woff2"
+  "src/fonts/AlegreyaSC-Italic.woff2": {
+    "file": "assets/fonts/AlegreyaSC-Italic.woff2",
+    "src": "src/fonts/AlegreyaSC-Italic.woff2"
   },
-  "src/fonts/alegreya-sans-normal-latin-500.woff2": {
-    "file": "assets/fonts/alegreya-sans-normal-latin-500.woff2",
-    "src": "src/fonts/alegreya-sans-normal-latin-500.woff2"
+  "src/fonts/AlegreyaSC-Medium.woff2": {
+    "file": "assets/fonts/AlegreyaSC-Medium.woff2",
+    "src": "src/fonts/AlegreyaSC-Medium.woff2"
   },
-  "src/fonts/alegreya-sans-normal-latin-700.woff2": {
-    "file": "assets/fonts/alegreya-sans-normal-latin-700.woff2",
-    "src": "src/fonts/alegreya-sans-normal-latin-700.woff2"
+  "src/fonts/AlegreyaSC-MediumItalic.woff2": {
+    "file": "assets/fonts/AlegreyaSC-MediumItalic.woff2",
+    "src": "src/fonts/AlegreyaSC-MediumItalic.woff2"
   },
-  "src/fonts/alegreya-sans-normal-latin-800.woff2": {
-    "file": "assets/fonts/alegreya-sans-normal-latin-800.woff2",
-    "src": "src/fonts/alegreya-sans-normal-latin-800.woff2"
-  },
-  "src/fonts/alegreya-sans-normal-latin-900.woff2": {
-    "file": "assets/fonts/alegreya-sans-normal-latin-900.woff2",
-    "src": "src/fonts/alegreya-sans-normal-latin-900.woff2"
-  },
-  "src/fonts/alegreya-sans-normal-latin-ext-100.woff2": {
-    "file": "assets/fonts/alegreya-sans-normal-latin-ext-100.woff2",
-    "src": "src/fonts/alegreya-sans-normal-latin-ext-100.woff2"
-  },
-  "src/fonts/alegreya-sans-normal-latin-ext-300.woff2": {
-    "file": "assets/fonts/alegreya-sans-normal-latin-ext-300.woff2",
-    "src": "src/fonts/alegreya-sans-normal-latin-ext-300.woff2"
-  },
-  "src/fonts/alegreya-sans-normal-latin-ext-400.woff2": {
-    "file": "assets/fonts/alegreya-sans-normal-latin-ext-400.woff2",
-    "src": "src/fonts/alegreya-sans-normal-latin-ext-400.woff2"
-  },
-  "src/fonts/alegreya-sans-normal-latin-ext-500.woff2": {
-    "file": "assets/fonts/alegreya-sans-normal-latin-ext-500.woff2",
-    "src": "src/fonts/alegreya-sans-normal-latin-ext-500.woff2"
-  },
-  "src/fonts/alegreya-sans-normal-latin-ext-700.woff2": {
-    "file": "assets/fonts/alegreya-sans-normal-latin-ext-700.woff2",
-    "src": "src/fonts/alegreya-sans-normal-latin-ext-700.woff2"
-  },
-  "src/fonts/alegreya-sans-normal-latin-ext-800.woff2": {
-    "file": "assets/fonts/alegreya-sans-normal-latin-ext-800.woff2",
-    "src": "src/fonts/alegreya-sans-normal-latin-ext-800.woff2"
-  },
-  "src/fonts/alegreya-sans-normal-latin-ext-900.woff2": {
-    "file": "assets/fonts/alegreya-sans-normal-latin-ext-900.woff2",
-    "src": "src/fonts/alegreya-sans-normal-latin-ext-900.woff2"
+  "src/fonts/AlegreyaSC-Regular.woff2": {
+    "file": "assets/fonts/AlegreyaSC-Regular.woff2",
+    "src": "src/fonts/AlegreyaSC-Regular.woff2"
   },
   "src/theme.js": {
-    "file": "assets/theme-8i6E7yKE.js",
+    "file": "assets/theme-DljH-rHR.js",
     "name": "theme",
     "src": "src/theme.js",
     "isEntry": true,
     "css": [
-      "assets/theme-CLIfje8y.css"
+      "assets/theme-Bs2dqwTh.css"
     ],
     "assets": [
-      "assets/fonts/alegreya-sans-italic-latin-100.woff2",
-      "assets/fonts/alegreya-sans-italic-latin-300.woff2",
-      "assets/fonts/alegreya-sans-italic-latin-400.woff2",
-      "assets/fonts/alegreya-sans-italic-latin-500.woff2",
-      "assets/fonts/alegreya-sans-italic-latin-700.woff2",
-      "assets/fonts/alegreya-sans-italic-latin-800.woff2",
-      "assets/fonts/alegreya-sans-italic-latin-900.woff2",
-      "assets/fonts/alegreya-sans-italic-latin-ext-100.woff2",
-      "assets/fonts/alegreya-sans-italic-latin-ext-300.woff2",
-      "assets/fonts/alegreya-sans-italic-latin-ext-400.woff2",
-      "assets/fonts/alegreya-sans-italic-latin-ext-500.woff2",
-      "assets/fonts/alegreya-sans-italic-latin-ext-700.woff2",
-      "assets/fonts/alegreya-sans-italic-latin-ext-800.woff2",
-      "assets/fonts/alegreya-sans-italic-latin-ext-900.woff2",
-      "assets/fonts/alegreya-sans-normal-latin-100.woff2",
-      "assets/fonts/alegreya-sans-normal-latin-300.woff2",
-      "assets/fonts/alegreya-sans-normal-latin-400.woff2",
-      "assets/fonts/alegreya-sans-normal-latin-500.woff2",
-      "assets/fonts/alegreya-sans-normal-latin-700.woff2",
-      "assets/fonts/alegreya-sans-normal-latin-800.woff2",
-      "assets/fonts/alegreya-sans-normal-latin-900.woff2",
-      "assets/fonts/alegreya-sans-normal-latin-ext-100.woff2",
-      "assets/fonts/alegreya-sans-normal-latin-ext-300.woff2",
-      "assets/fonts/alegreya-sans-normal-latin-ext-400.woff2",
-      "assets/fonts/alegreya-sans-normal-latin-ext-500.woff2",
-      "assets/fonts/alegreya-sans-normal-latin-ext-700.woff2",
-      "assets/fonts/alegreya-sans-normal-latin-ext-800.woff2",
-      "assets/fonts/alegreya-sans-normal-latin-ext-900.woff2"
+      "assets/fonts/Alegreya-Regular.woff2",
+      "assets/fonts/Alegreya-Medium.woff2",
+      "assets/fonts/Alegreya-Bold.woff2",
+      "assets/fonts/Alegreya-ExtraBold.woff2",
+      "assets/fonts/Alegreya-Black.woff2",
+      "assets/fonts/Alegreya-Italic.woff2",
+      "assets/fonts/Alegreya-MediumItalic.woff2",
+      "assets/fonts/Alegreya-BoldItalic.woff2",
+      "assets/fonts/Alegreya-ExtraBoldItalic.woff2",
+      "assets/fonts/Alegreya-BlackItalic.woff2",
+      "assets/fonts/AlegreyaSC-Regular.woff2",
+      "assets/fonts/AlegreyaSC-Medium.woff2",
+      "assets/fonts/AlegreyaSC-Bold.woff2",
+      "assets/fonts/AlegreyaSC-ExtraBold.woff2",
+      "assets/fonts/AlegreyaSC-Black.woff2",
+      "assets/fonts/AlegreyaSC-Italic.woff2",
+      "assets/fonts/AlegreyaSC-MediumItalic.woff2",
+      "assets/fonts/AlegreyaSC-BoldItalic.woff2",
+      "assets/fonts/AlegreyaSC-ExtraBoldItalic.woff2",
+      "assets/fonts/AlegreyaSC-BlackItalic.woff2"
     ]
   }
 }
