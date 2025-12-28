@@ -7,9 +7,9 @@
         'theme_location' => 'header-menu',
         'depth' => 2,
         'fallback_cb' => 'wp_page_menu',
-        'link_class' => 'relative hover:text-[#EA6060] transition-colors duration-200
+        'link_class' => 'relative hover:text-rosado transition-colors duration-200
                                   after:content-[""] after:absolute after:bottom-0 after:left-0 
-                                  after:w-full after:h-0.5 after:bg-[#EA6060] after:scale-x-0 
+                                  after:w-full after:h-0.5 after:bg-rosado after:scale-x-0 
                                   after:transition-transform after:duration-300
                                   hover:after:scale-x-100'
     ));

@@ -2,24 +2,26 @@
 <html <?php language_attributes(); ?> class="no-js">
 
 <head>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LDH31X2HDV"></script>
+    <!-- Google Tag Manager -->
     <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-
-        gtag('config', 'G-LDH31X2HDV');
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-TQLBVTPB');
     </script>
     <!-- End Google Tag Manager -->
+
     <meta charset="<?php bloginfo('charset'); ?>">
-    <title><?php wp_title(''); ?><?php if (wp_title('', false)) {
-                                        echo ' : ';
-                                    } ?><?php bloginfo('name'); ?></title>
+    <title><?php echo wp_get_document_title(); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- FAVICONS -->
@@ -29,17 +31,6 @@
     <link rel="manifest" href="<?php bloginfo('template_url'); ?>/img/icons/site.webmanifest">
     <meta name="theme-color" content="#ffffff">
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142230775-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-        gtag('config', 'UA-142230775-1');
-    </script>
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.store('header', {

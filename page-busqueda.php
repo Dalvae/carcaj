@@ -12,7 +12,7 @@
           <!-- Búsqueda por término -->
           <div class="relative">
             <input
-              class="w-full px-4 py-2 border border-gray-300 focus:ring-2 focus:ring-rojo focus:border-transparent"
+              class="w-full px-4 py-2 bg-white border border-gray-300 focus:ring-2 focus:ring-rojo focus:border-transparent"
               type="search"
               name="s"
               value="<?php echo get_search_query(); ?>"

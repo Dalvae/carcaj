@@ -1,49 +1,45 @@
 import { defineConfig } from "vite";
+import { resolve } from "path";
 import liveReload from "vite-plugin-live-reload";
-const { resolve } = require("path");
-const fs = require("fs");
+import tailwindcss from "@tailwindcss/vite";
 
-// https://vitejs.dev/config
 export default defineConfig({
   plugins: [
-    //vue(),
-    liveReload(__dirname + "/**/*.php"),
+    tailwindcss(),
+    liveReload("./**/*.php"),
   ],
+
   resolve: {
     alias: {
-      "@": resolve(__dirname, "./src"),
+      "@": resolve(import.meta.dirname, "./src"),
     },
   },
-  // config
+
   root: "",
   base: process.env.NODE_ENV === "development" ? "/" : "./",
 
   build: {
-    // output dir for production build
-    outDir: resolve(__dirname, "./dist"),
+    outDir: resolve(import.meta.dirname, "./dist"),
     emptyOutDir: true,
-
-    // emit manifest so PHP can find the hashed files
     manifest: true,
-
-    // esbuild target
     target: "es2018",
 
-    // our entry
     rollupOptions: {
-      input: [resolve(__dirname + "/src/theme.js")],
+      input: [resolve(import.meta.dirname, "/src/theme.js")],
       output: {
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name.endsWith(".woff2")) {
+          if (assetInfo.names?.[0]?.endsWith(".woff2")) {
             return "assets/fonts/[name][extname]";
           }
           return "assets/[name]-[hash][extname]";
         },
       },
     },
+
     minify: true,
     write: true,
   },
+
   optimizeDeps: {
     include: ["@hotwired/turbo", "alpinejs"],
   },
@@ -52,10 +48,10 @@ export default defineConfig({
     cors: true,
     strictPort: true,
     port: 3000,
-    host: "localhost", // Cambia a localhost en lugar de 0.0.0.0 // Add this to allow external access
-    // serve over http
+    host: "localhost",
     https: false,
     origin: "http://localhost:3000",
+
     fs: {
       strict: false,
       allow: [".."],
@@ -63,8 +59,7 @@ export default defineConfig({
 
     hmr: {
       host: "localhost",
-      //port: 443
-      protocol: "ws", // Add websocket protocol
+      protocol: "ws",
     },
   },
 });

@@ -53,7 +53,7 @@ class Walker_Nav_Menu_Tailwind extends \Walker_Nav_Menu
         $atts['href']   = !empty($item->url) ? $item->url : '#';
 
         // Agregar clases de estilo consistentes con tu diseño
-        $atts['class'] = 'text-sm font-bold italic block py-2 hover:text-[#EA6060] transition-colors duration-200';
+        $atts['class'] = 'text-sm font-bold italic block py-2 hover:text-rosado transition-colors duration-200';
         if ($has_children) {
             $atts['@click.prevent'] = 'if(window.innerWidth < 1024) { open = !open } else { window.location.href = \'' . $item->url . '\' }';
         } else {
@@ -80,7 +80,7 @@ class Walker_Nav_Menu_Tailwind extends \Walker_Nav_Menu
         // Agregar botón desplegable solo si tiene submenús
         if ($has_children) {
             $item_output .= '<button @click="open = !open" 
-            class="lg:hidden absolute right-0 top-2 p-2 hover:text-[#EA6060] transition-colors duration-200">
+            class="lg:hidden absolute right-0 top-2 p-2 hover:text-rosado transition-colors duration-200">
                 <svg class="w-5 h-5 transform transition-transform" 
                     :class="{\'rotate-180\': open}"
                     fill="none" 

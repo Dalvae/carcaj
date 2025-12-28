@@ -1,7 +1,8 @@
-const { execSync } = require("child_process");
-const fs = require("fs");
-const path = require("path");
-const tar = require("tar");
+import { execSync } from "child_process";
+import fs from "fs";
+import path from "path";
+import tar from "tar";
+
 const CONFIG = {
   backupDir: "./backup",
   tempDir: "./temp",
@@ -41,6 +42,7 @@ function updateConfigValue(content, key, value) {
 async function setup() {
   try {
     console.log("🚀 Iniciando setup del entorno de desarrollo...");
+    
     // Detener y limpiar contenedores Docker existentes
     console.log("🔄 Deteniendo y limpiando contenedores Docker existentes...");
     try {
@@ -102,12 +104,8 @@ async function setup() {
     // Modificar valores en wp-config.php
     console.log("📝 Actualizando wp-config.php para desarrollo local");
     wpConfigContent = updateConfigValue(wpConfigContent, "DB_HOST", "db");
-    wpConfigContent = updateConfigValue(wpConfigContent, "WP_DEBUG", false); // sin comillas porque es booleano
-    wpConfigContent = updateConfigValue(
-      wpConfigContent,
-      "IS_VITE_DEVELOPMENT",
-      true
-    ); // sin comillas porque es booleano
+    wpConfigContent = updateConfigValue(wpConfigContent, "WP_DEBUG", false);
+    wpConfigContent = updateConfigValue(wpConfigContent, "IS_VITE_DEVELOPMENT", true);
 
     // Agregar configuraciones útiles para desarrollo
     wpConfigContent = wpConfigContent.replace(
@@ -122,12 +120,11 @@ async function setup() {
     define('IS_VITE_DEVELOPMENT', true); 
     /* That's all, stop editing! Happy publishing. */`
     );
+    
     // Guardar wp-config.php modificado
     const modifiedWpConfigPath = path.join(configTempDir, "wp-config.php");
     fs.writeFileSync(modifiedWpConfigPath, wpConfigContent);
-    console.log(
-      `✅ wp-config.php modificado guardado en: ${modifiedWpConfigPath}`
-    );
+    console.log(`✅ wp-config.php modificado guardado en: ${modifiedWpConfigPath}`);
 
     // Buscar archivo SQL en el backup
     const absolutePaths = {
@@ -185,7 +182,5 @@ COMPOSE_PROJECT_NAME=carcaj
     process.exit(1);
   }
 }
-
-setup();
 
 setup();

@@ -7,7 +7,7 @@ add_action('wp_before_admin_bar_render', function () {
     echo '<div data-turbo="false">';
 });
 add_action('wp_after_admin_bar_render', function () {
-    echo '</dev>';
+    echo '</div>';
 });
 
 /* `Stop the admin bar from pushing the page down */

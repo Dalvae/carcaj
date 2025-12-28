@@ -1,0 +1,18 @@
+# Backups
+backup/
+temp/
+
+# Dependencies
+node_modules/
+vendor/
+
+# Build output
+dist/
+
+# Git
+.git/
+
+# Misc
+*.tar.gz
+*.sql
+.env

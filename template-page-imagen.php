@@ -8,15 +8,14 @@
 		<?php if (have_posts()): while (have_posts()) : the_post(); ?>
 
 				<!-- article -->
-				<article class="flex prose flex-col md:flex-row">
+				<article class="flex prose flex-col md:flex-row md:gap-8">
 
-
-					<div class="mt-12 text-2xl font-al leading-relaxed prose max-w-none content-full text-justify">
+					<div class="mt-12 text-2xl font-al leading-relaxed prose max-w-none content-full text-justify md:w-1/2">
 						<?php the_content(); ?>
 					</div>
 
-					<div class="h-full w-full">
-						<img src="<?php bloginfo('template_url'); ?>/img/carcaj-about.png" alt="">
+					<div class="w-full md:w-1/2 flex items-start justify-center mt-8 md:mt-12">
+						<img src="<?php bloginfo('template_url'); ?>/img/carcaj-about.png" alt="" class="max-w-[45%] md:max-w-full h-auto">
 					</div>
 
 				</article>

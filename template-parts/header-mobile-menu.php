@@ -39,14 +39,14 @@
         <div class="flex justify-center space-x-6 mt-8 pt-8 border-t">
             <a href="https://www.facebook.com/revistacarcaj/"
                 target="_blank"
-                class="p-3 rounded-full fill-[#EA6060] text-white hover:bg-[#9A7A14] transition-colors duration-200">
+                class="p-3 rounded-full fill-rosado text-white hover:bg-darkgold transition-colors duration-200">
                 <svg class="h-6 w-6">
                     <use xlink:href="#icon-facebook" />
                 </svg>
             </a>
             <a href="https://www.instagram.com/revista.carcaj/"
                 target="_blank"
-                class="p-3 rounded-full fill-[#EA6060] text-white hover:bg-[#9A7A14] transition-colors duration-200">
+                class="p-3 rounded-full fill-rosado text-white hover:bg-darkgold transition-colors duration-200">
                 <svg class="h-6 w-6">
                     <use xlink:href="#icon-instagram" />
                 </svg>

@@ -1,19 +1,15 @@
 {
   "name": "wp-theme",
-  "version": "1.0.0",
+  "version": "2.0.0",
+  "type": "module",
   "devDependencies": {
-    "@hotwired/turbo": "^8.0.12",
-    "@tailwindcss/typography": "^0.5.15",
-    "alpinejs": "^3.14.3",
-    "autoprefixer": "^10.4.20",
-    "cross-env": "^7.0.3",
-    "es6-slide-up-down": "^1.0.0",
-    "postcss": "^8.4.49",
-    "postcss-nested": "^7.0.2",
-    "sass": "^1.81.0",
-    "tailwindcss": "^3.4.15",
+    "@hotwired/turbo": "^8.0.20",
+    "@tailwindcss/typography": "^0.5.19",
+    "@tailwindcss/vite": "^4.1.18",
+    "alpinejs": "^3.15.3",
+    "tailwindcss": "^4.1.18",
     "tar": "^7.4.3",
-    "vite": "^5.4.11",
+    "vite": "^6.0.0",
     "vite-plugin-live-reload": "^3.0.3"
   },
   "scripts": {

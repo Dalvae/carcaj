@@ -6,6 +6,10 @@ RUN apt-get update && apt-get install -y \
     mariadb-client \
     && rm -rf /var/lib/apt/lists/*
 
+# Deshabilitar SSL para conexiones MySQL en desarrollo local
+ENV MYSQL_SSL_MODE=DISABLED
+RUN printf "[client]\nssl=0\n[mariadb-check]\nssl=0\n" > /root/.my.cnf && chmod 600 /root/.my.cnf
+
 # Instalar WP-CLI
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
     && chmod +x wp-cli.phar \

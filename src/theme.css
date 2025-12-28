@@ -1,0 +1,423 @@
+@import "tailwindcss";
+@import "./fonts.css";
+
+/* ============================================
+   THEME CONFIGURATION - Single Source of Truth
+   ============================================ */
+@theme {
+  /* Colors */
+  --color-rojo: #D22800;
+  --color-gris: #47586A;
+  --color-swhite: #F5F5ED;
+  --color-gold: #D8D4AE;
+  --color-darkgold: #9A7A14;
+  --color-lightgrey: #C2C2C2;
+  --color-rosado: #EA6060;
+  --color-selection: #04A4CC;
+  --color-orange: #9A7A14;
+  --color-custom-grey: #585858;
+
+  /* Fonts */
+  --font-alegreya: "Alegreya", serif;
+  --font-alegreya-sc: "Alegreya SC", serif;
+  --font-sans: "Alegreya Sans", system-ui, sans-serif;
+
+  /* Container */
+  --container-padding: 1rem;
+  --container-padding-sm: 2rem;
+  --container-padding-lg: 4rem;
+  --container-padding-xl: 5rem;
+  --container-padding-2xl: 6rem;
+}
+
+/* ============================================
+   CONTAINER - Restore Tailwind 3 behavior
+   ============================================ */
+@utility container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  @media (min-width: 640px) {
+    max-width: 640px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    max-width: 768px;
+  }
+
+  @media (min-width: 1024px) {
+    max-width: 1024px;
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
+  @media (min-width: 1280px) {
+    max-width: 1280px;
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+@layer base {
+  :root {
+    font-family: var(--font-alegreya);
+  }
+
+  ::selection {
+    background-color: var(--color-selection);
+    color: white;
+  }
+
+  ::-moz-selection {
+    background-color: var(--color-selection);
+    color: white;
+  }
+
+  body {
+    font-family: var(--font-alegreya);
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+  }
+
+  .wp-block-image .size-full {
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+  }
+}
+
+/* ============================================
+   TYPOGRAPHY PLUGIN CUSTOMIZATION
+   ============================================ */
+@layer base {
+  .prose {
+    --tw-prose-body: black;
+    --tw-prose-headings: var(--color-rojo);
+    --tw-prose-links: var(--color-rosado);
+    --tw-prose-bold: black;
+    --tw-prose-counters: black;
+    --tw-prose-bullets: black;
+    --tw-prose-quotes: black;
+    --tw-prose-captions: black;
+    max-width: none;
+
+    & p {
+      margin-top: 1.5em;
+      margin-bottom: 1.5em;
+      line-height: 1.5;
+      font-weight: 400;
+
+      &::selection {
+        background-color: var(--color-selection);
+        color: white;
+      }
+    }
+
+    & h1, & h2, & h3 {
+      color: var(--color-rojo);
+    }
+
+    & h1 {
+      font-weight: 500;
+    }
+
+    & h2 {
+      font-weight: 400;
+    }
+
+    & h3, & h4 {
+      font-weight: 500;
+    }
+
+    & a {
+      color: var(--color-rosado);
+      text-decoration: underline;
+
+      &:hover {
+        color: var(--color-darkgold);
+      }
+    }
+
+    & a:has(sup) {
+      text-decoration: none;
+    }
+
+    & sup {
+      font-size: 1.2rem;
+      vertical-align: baseline;
+      position: relative;
+      bottom: 0.1em;
+      top: -0.3rem;
+      margin-left: 0.1em;
+
+      & a {
+        color: var(--color-rojo);
+        text-decoration: none;
+
+        &:hover {
+          color: var(--color-gold);
+        }
+      }
+    }
+
+    & figcaption {
+      color: black;
+    }
+
+    & blockquote {
+      quotes: none;
+      font-style: normal;
+      border-left-width: 0;
+      border-left-color: transparent;
+      padding-left: 2em;
+      margin-left: 0;
+      margin-right: 0;
+
+      &::before,
+      &::after {
+        content: none;
+      }
+    }
+
+    & img {
+      margin-top: 2em;
+      margin-bottom: 2em;
+      max-width: 100%;
+      height: auto;
+    }
+
+    & ul {
+      list-style-type: disc;
+      margin-top: 1.5em;
+      margin-bottom: 1.5em;
+    }
+
+    & ol {
+      list-style-type: decimal;
+      margin-top: 1.5em;
+      margin-bottom: 1.5em;
+    }
+
+    & ul, & ol {
+      padding-left: 1.5em;
+    }
+
+    & li {
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+    }
+
+    & p.has-small-font-size {
+      font-size: 2rem;
+    }
+
+    & .wp-block-separator {
+      border-top: 2px solid black;
+      border-bottom: none;
+      margin: 2em 0;
+    }
+  }
+}
+
+/* ============================================
+   COMPONENTS
+   ============================================ */
+@layer components {
+  /* Expanded Footnote (Mobile) */
+  .expanded-footnote {
+    @apply bg-swhite rounded-lg mt-4 block overflow-hidden px-6 shadow-inner;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+
+    &.entering {
+      @apply py-4;
+    }
+
+    &.removing {
+      @apply py-0;
+      max-height: 0 !important;
+      transition: max-height 0.3s ease-in, padding 0.3s ease-in;
+    }
+  }
+
+  /* Menu Items - Shared base styles */
+  .menu-item {
+    color: var(--color-gris);
+
+    & a {
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: var(--color-darkgold);
+      }
+    }
+
+    &.current-menu-item a {
+      color: var(--color-darkgold);
+      border-bottom: 1px solid var(--color-darkgold);
+    }
+  }
+
+  /* Header Menu Styles */
+  header {
+    & .menu-item-has-children {
+      position: relative;
+
+      &:hover > .sub-menu {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    & .sub-menu {
+      position: absolute;
+      left: 0;
+      top: 100%;
+      min-width: 200px;
+      @apply bg-white border border-gray-200 rounded-md shadow-lg;
+      padding: 0.5rem 0;
+      z-index: 50;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+
+      & .menu-item a {
+        display: block;
+        padding: 8px 16px;
+        font-size: 1.25rem;
+
+        &:hover {
+          @apply bg-gray-50;
+          color: var(--color-darkgold);
+        }
+      }
+    }
+  }
+
+  /* Mobile Header Styles */
+  @media (max-width: 1024px) {
+    header {
+      & .sub-menu {
+        position: relative;
+        opacity: 1;
+        visibility: visible;
+        display: block;
+        box-shadow: none;
+        border: 0;
+        padding-left: 1rem;
+        min-width: 100%;
+        margin-top: 0;
+        padding-top: 0;
+
+        & .menu-item a {
+          font-size: 1rem;
+        }
+      }
+
+      & .menu-item {
+        display: block;
+        padding: 8px 0;
+      }
+    }
+  }
+
+  /* Footer Navigation */
+  .footer-nav {
+    & a {
+      color: white !important;
+    }
+
+    & .sub-menu {
+      @media (max-width: 1024px) {
+        display: none;
+        padding-left: 1rem;
+
+        &[x-show] {
+          display: block;
+        }
+      }
+
+      & a {
+        color: var(--color-gris) !important;
+
+        &:hover {
+          color: var(--color-rosado) !important;
+        }
+      }
+    }
+
+    @media (max-width: 1024px) {
+      & .menu-item {
+        width: 100%;
+
+        & a {
+          display: block;
+          padding: 8px 0;
+        }
+      }
+    }
+  }
+
+  /* Article Card Categories */
+  .article-card .categories {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    & a {
+      display: block;
+      color: white;
+      padding: 0.25rem 0.5rem;
+      transition: all 0.3s ease;
+    }
+  }
+
+  /* Contact Form 7 Styles */
+  .wpcf7-form {
+    @apply mx-auto px-3 bg-white max-w-3xl font-bold;
+
+    & input[type="text"],
+    & input[type="email"],
+    & textarea {
+      @apply w-full mt-2 px-3 py-2 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-rosado;
+    }
+
+    & label {
+      @apply block text-gray-700 text-sm font-bold;
+    }
+
+    & p {
+      @apply m-0 p-0;
+    }
+  }
+
+  .wpcf7-submit {
+    @apply bg-rosado hover:bg-rojo text-white font-bold py-4 w-full text-center focus:outline-none focus:ring-2 focus:ring-rosado mt-2;
+  }
+
+  /* Contact Image Override */
+  .wp-image-8219 {
+    max-width: min(100%, 48rem) !important;
+    width: auto !important;
+    height: auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}

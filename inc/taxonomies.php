@@ -80,8 +80,22 @@ function carcaj_handle_search_and_archive_filters($query)
 
         // Handle author filter
         $author_id = get_query_var('author');
-        if (isset($author_id) && $author_id < 1) {
+        if (!empty($author_id) && $author_id > 0) {
+            $query->set('author', $author_id);
+        } elseif (isset($author_id) && $author_id < 1) {
             unset($query->query_vars['author']);
+        }
+
+        // If search term is empty but we have filters, get all posts matching filters
+        $search_term = get_query_var('s');
+        if (empty($search_term)) {
+            $has_filters = !empty($cat_id) && $cat_id > 0 
+                || !empty($author_id) && $author_id > 0 
+                || !empty($year_slug) && $year_slug != '-1';
+            
+            if ($has_filters) {
+                $query->set('post_type', 'post');
+            }
         }
     }
 

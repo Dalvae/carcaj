@@ -37,7 +37,7 @@ get_header();
   </section>
 
   <section class="newsletter block my-8 mx-auto bg-gris">
-    <div class="container mx-auto bg-[#color-azul] text-white px-5 py-5 lg:px-50 lg:py-[70px]">
+    <div class="container mx-auto text-white px-5 py-5 lg:px-50 lg:py-[70px]">
       <p class="text-lightgrey  font-bold text-3xl italic my-8 p-0 text-center">
         Suscríbete y recibe actualizaciones en tu correo electrónico
       </p>
@@ -46,9 +46,9 @@ get_header();
         <input
           type="email"
           placeholder="Tu email"
-          class="w-[600px] text-base py-2.5 px-2.5 border-none mr-2.5">
+          class="w-[600px] text-base py-2.5 px-2.5 border-none mr-2.5 bg-white text-black">
         <button
-          class="w-[200px] py-2.5 px-2.5 text-base bg-darkgold border-none text-white uppercase transition-colors duration-300 hover:cursor-pointer hover:bg-[#color-dorado-hover]">
+          class="w-[200px] py-2.5 px-2.5 text-base bg-darkgold border-none text-white uppercase transition-colors duration-300 hover:cursor-pointer hover:bg-gold">
           Enviar
         </button>
       </form>
