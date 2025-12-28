@@ -7,19 +7,16 @@
 <!-- Footer -->
 <footer class="bg-custom-grey text-white pt-12 lg:pt-16 pb-8">
     <div class="container mx-auto px-4">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-            <!-- Columna Logos (1/3) -->
-            <div class="flex gap-4 items-start justify-center lg:justify-start">
-                <img src="<?php bloginfo('template_url'); ?>/img/logo_gobierno.png"
-                    alt="Logo Gobierno"
-                    class="h-24 lg:h-auto lg:max-w-[45%] w-auto object-contain">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-12">
+            <!-- Columna Logo (1/4) -->
+            <div class="flex items-start justify-center lg:justify-start">
                 <img src="<?php bloginfo('template_url'); ?>/img/logolom.png"
                     alt="Logo LOM"
-                    class="h-32 lg:h-auto lg:max-w-[45%] w-auto object-contain">
+                    class="h-32 lg:h-auto lg:max-w-full w-auto object-contain">
             </div>
 
-            <!-- Columna Contenido (2/3) -->
-            <div class="lg:col-span-2 flex flex-col justify-between gap-6">
+            <!-- Columna Contenido (3/4) -->
+            <div class="lg:col-span-3 flex flex-col justify-between gap-6">
                 <!-- Navegación -->
                 <nav class="w-full border-b border-white/30 pb-6 hidden lg:block">
                     <?php
