@@ -1,5 +1,4 @@
 <?php
-error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 
 // Main switch to get frontend assets from a Vite dev server OR from production built folder
 // If you specify a DEVELOPMENT_IP constant, the frontend assets will be loaded from the Vite dev server only for the IP specified
@@ -30,6 +29,8 @@ require 'inc/widgets.php';
 require 'inc/coauthors.php';
 require 'inc/opengraph.php';
 require 'inc/taxonomies.php';
+require 'inc/search-filters.php';
+require 'inc/performance.php';
 
 require_once get_template_directory() . '/template-parts/articles-grid.php';
 function html5blank_nav()

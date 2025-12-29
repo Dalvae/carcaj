@@ -10,7 +10,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-12">
             <!-- Columna Logo (1/4) -->
             <div class="flex items-start justify-center lg:justify-start">
-                <img src="<?php bloginfo('template_url'); ?>/img/logolom.png"
+                <img src="<?php echo esc_url(get_template_directory_uri()); ?>/img/logolom.webp"
                     alt="Logo LOM"
                     class="h-32 lg:h-auto lg:max-w-full w-auto object-contain">
             </div>
@@ -57,7 +57,7 @@
 
                 <!-- Texto Footer -->
                 <div class="w-full font-alegreya text-sm leading-relaxed text-white/80 border-t border-white/30 pt-6 text-center lg:text-right">
-                    <?php the_field('texto_footer'); ?>
+                    <?php echo wp_kses_post(get_field('texto_footer')); ?>
                 </div>
             </div>
         </div>

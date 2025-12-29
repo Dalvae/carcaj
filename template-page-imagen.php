@@ -15,7 +15,7 @@
 					</div>
 
 					<div class="w-full md:w-1/2 flex items-start justify-center mt-8 md:mt-12">
-						<img src="<?php bloginfo('template_url'); ?>/img/carcaj-about.png" alt="" class="max-w-[45%] md:max-w-full h-auto">
+						<img src="<?php echo esc_url(get_template_directory_uri()); ?>/img/carcaj-about.webp" alt="" class="max-w-[45%] md:max-w-full h-auto">
 					</div>
 
 				</article>

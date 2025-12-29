@@ -79,42 +79,18 @@ add_action(HOOK_PREFIX . '_enqueue_scripts', function () {
                 }
             }
 
-            // Preload fonts
-            add_action('wp_head', function () use ($manifest) {
-                $entry_point_manifest = $manifest[VITE_ENTRY_POINT] ?? null;
-                if (!$entry_point_manifest) {
-                    return;
+            // Preload critical fonts
+            add_action('wp_head', function () {
+                $fonts = [
+                    'Alegreya-Regular.woff2',
+                    'Alegreya-Medium.woff2', 
+                    'Alegreya-Bold.woff2',
+                    'Alegreya-Italic.woff2',
+                ];
+                foreach ($fonts as $font) {
+                    echo '<link rel="preload" href="' . esc_url(DIST_URI . '/assets/fonts/' . $font) . '" as="font" type="font/woff2" crossorigin>' . "\n";
                 }
-
-                $fonts_to_preload = [];
-
-                // Collect CSS files from the entry point
-                $css_files = $entry_point_manifest['css'] ?? [];
-
-                // Find assets (like fonts) from those CSS files by traversing the manifest
-                foreach ($manifest as $chunk) {
-                    // If this chunk is one of the CSS files for our entry point
-                    if (isset($chunk['file']) && in_array($chunk['file'], $css_files, true)) {
-                        // And if it has assets
-                        if (!empty($chunk['assets'])) {
-                            foreach ($chunk['assets'] as $asset_key) {
-                                // Find the asset's final file path from its own manifest entry
-                                if (isset($manifest[$asset_key]['file'])) {
-                                    $asset_file = $manifest[$asset_key]['file'];
-                                    if (pathinfo($asset_file, PATHINFO_EXTENSION) === 'woff2') {
-                                        $fonts_to_preload[$asset_file] = true;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                // Output preload links for the unique fonts found
-                foreach (array_keys($fonts_to_preload) as $font_file) {
-                    echo '<link rel="preload" href="' . esc_url(DIST_URI . '/' . $font_file) . '" as="font" type="font/woff2" crossorigin>' . "\n";
-                }
-            });
+            }, 1);
         }
     }
 });

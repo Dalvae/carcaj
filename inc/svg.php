@@ -1,6 +1,6 @@
 <?php
 
-/* `SVG` Support - Can be a security risk
+/* `SVG` Support - With basic sanitization
 ----------------------------------------------------------------------------------------------------*/
 
 add_filter( 'wp_check_filetype_and_ext', function($data, $file, $filename, $mimes) {
@@ -25,6 +25,75 @@ function cc_mime_types( $mimes ){
     return $mimes;
 }
 add_filter( 'upload_mimes', 'cc_mime_types' );
+
+/**
+ * Sanitize SVG file on upload.
+ * Removes potentially dangerous elements and attributes.
+ */
+function carcaj_sanitize_svg_upload($file) {
+    if ($file['type'] !== 'image/svg+xml') {
+        return $file;
+    }
+
+    $svg_content = file_get_contents($file['tmp_name']);
+    
+    if (false === $svg_content) {
+        $file['error'] = 'No se pudo leer el archivo SVG.';
+        return $file;
+    }
+
+    // Check if it's valid XML
+    libxml_use_internal_errors(true);
+    $dom = new DOMDocument();
+    $dom->loadXML($svg_content);
+    $errors = libxml_get_errors();
+    libxml_clear_errors();
+    
+    if (!empty($errors)) {
+        $file['error'] = 'El archivo SVG no es valido.';
+        return $file;
+    }
+
+    // Remove dangerous elements
+    $dangerous_elements = ['script', 'use', 'foreignObject', 'set', 'animate', 'animateMotion', 'animateTransform'];
+    $xpath = new DOMXPath($dom);
+    
+    foreach ($dangerous_elements as $tag) {
+        $nodes = $xpath->query('//' . $tag);
+        foreach ($nodes as $node) {
+            $node->parentNode->removeChild($node);
+        }
+    }
+
+    // Remove event handlers and dangerous attributes from all elements
+    $all_elements = $xpath->query('//*');
+    $dangerous_attrs = ['onload', 'onclick', 'onmouseover', 'onmouseout', 'onmousedown', 
+                        'onmouseup', 'onerror', 'onfocus', 'onblur', 'href', 'xlink:href'];
+    
+    foreach ($all_elements as $element) {
+        foreach ($dangerous_attrs as $attr) {
+            if ($element->hasAttribute($attr)) {
+                // Allow href only on non-script elements and only for safe URLs
+                if (($attr === 'href' || $attr === 'xlink:href')) {
+                    $href_value = $element->getAttribute($attr);
+                    // Block javascript: URLs
+                    if (preg_match('/^\s*javascript:/i', $href_value)) {
+                        $element->removeAttribute($attr);
+                    }
+                } else {
+                    $element->removeAttribute($attr);
+                }
+            }
+        }
+    }
+
+    // Save sanitized SVG
+    $sanitized = $dom->saveXML();
+    file_put_contents($file['tmp_name'], $sanitized);
+
+    return $file;
+}
+add_filter('wp_handle_upload_prefilter', 'carcaj_sanitize_svg_upload');
 
 function fix_svg() {
     echo '<style type="text/css">

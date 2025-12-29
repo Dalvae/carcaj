@@ -11,7 +11,6 @@ import Alpine from "alpinejs";
 window.Alpine = Alpine;
 Alpine.start();
 
-import "./js/slider.js";
 import "./js/progressbar.js";
 import "./js/footnotes.js";
 

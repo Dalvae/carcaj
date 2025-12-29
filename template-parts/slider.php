@@ -1,6 +1,7 @@
 <section class="destacados mb-12 relative z-0 isolate">
     <?php
     $slides = get_field('slider') ?: [];
+    $first_slide = !empty($slides) ? $slides[0] : null;
     $slider_data = array_map(function ($slide) {
         return [
             'imagen' => $slide['imagen'],
@@ -10,6 +11,13 @@
             'fecha' => esc_html($slide['fecha'])
         ];
     }, $slides);
+    
+    // Preload LCP image
+    if ($first_slide && !empty($first_slide['imagen']['url'])) {
+        add_action('wp_head', function() use ($first_slide) {
+            echo '<link rel="preload" as="image" href="' . esc_url($first_slide['imagen']['url']) . '" fetchpriority="high">' . "\n";
+        }, 1);
+    }
     ?>
     <script>
         window.sliderData = <?php echo json_encode($slider_data); ?>;
@@ -82,16 +90,16 @@
                             <!-- Flechas -->
                             <div class="absolute inset-0 pointer-events-none hidden lg:block">
                                 <!-- Flecha superior (más arriba) -->
-                                <img src="<?php bloginfo('template_url'); ?>/img/flechahorizontal.png"
-                                    class="absolute z-10 top-[20%] left-[25%] transform -translate-x-1/2 -translate-y-1/2" alt="Flecha Superior">
+                                <img src="<?php echo esc_url(get_template_directory_uri()); ?>/img/flechahorizontal.webp"
+                                    class="absolute z-10 top-[20%] left-[25%] transform -translate-x-1/2 -translate-y-1/2" alt="">
 
                                 <!-- Flecha del medio (centrada) -->
-                                <img src="<?php bloginfo('template_url'); ?>/img/flechahorizontal.png"
-                                    class="absolute z-10 top-1/2 left-[20%] transform -translate-x-1/2 -translate-y-1/2" alt="Flecha Central">
+                                <img src="<?php echo esc_url(get_template_directory_uri()); ?>/img/flechahorizontal.webp"
+                                    class="absolute z-10 top-1/2 left-[20%] transform -translate-x-1/2 -translate-y-1/2" alt="">
 
                                 <!-- Flecha inferior (más abajo) -->
-                                <img src="<?php bloginfo('template_url'); ?>/img/flechahorizontal.png"
-                                    class="absolute z-10 bottom-[20%] left-[25%] transform -translate-x-1/2 translate-y-1/2" alt="Flecha Inferior">
+                                <img src="<?php echo esc_url(get_template_directory_uri()); ?>/img/flechahorizontal.webp"
+                                    class="absolute z-10 bottom-[20%] left-[25%] transform -translate-x-1/2 translate-y-1/2" alt="">
                             </div>
 
                             <!-- Círculo de la imagen -->
@@ -99,6 +107,8 @@
                                 <img
                                     :src="slide.imagen.url"
                                     :alt="slide.imagen.alt"
+                                    :fetchpriority="index === 0 ? 'high' : 'low'"
+                                    :loading="index === 0 ? 'eager' : 'lazy'"
                                     class="absolute inset-0 z-20 w-full h-full object-cover">
                             </a>
                         </div>
@@ -119,14 +129,16 @@
 
         <!-- Navigation Buttons -->
         <button @click="prev"
+            aria-label="Slide anterior"
             class="absolute z-40 left-4 top-1/2 -translate-y-1/2 text-red-600 hover:bg-white p-2 rounded-full shadow-md">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
         </button>
         <button @click="next"
+            aria-label="Siguiente slide"
             class="absolute z-40 right-4 top-1/2 -translate-y-1/2 text-red-600 hover:bg-white p-2 rounded-full shadow-md">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
         </button>
