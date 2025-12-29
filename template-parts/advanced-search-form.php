@@ -104,9 +104,9 @@ $input_class = 'w-full px-4 py-2 bg-white border border-gray-300 focus:ring-2 fo
 
         <!-- Category Filter -->
         <div class="<?php echo esc_attr($field_class); ?>">
-            <label for="cat-select" class="sr-only">Categoria</label>
+            <label for="cat-select" class="sr-only">Categoría</label>
             <select name="cat" id="cat-select" class="<?php echo esc_attr($input_class); ?>">
-                <option value="">Todas las categorias</option>
+                <option value="">Todas las categorías</option>
                 <?php foreach ($available_categories as $category) : ?>
                     <option value="<?php echo esc_attr($category->term_id); ?>" <?php selected($current_cat, $category->term_id); ?>>
                         <?php echo esc_html($category->name); ?>
@@ -117,9 +117,9 @@ $input_class = 'w-full px-4 py-2 bg-white border border-gray-300 focus:ring-2 fo
 
         <!-- Year Filter -->
         <div class="<?php echo esc_attr($field_class); ?>">
-            <label for="anho-select" class="sr-only">Ano</label>
+            <label for="anho-select" class="sr-only">Año</label>
             <select name="anho" id="anho-select" class="<?php echo esc_attr($input_class); ?>">
-                <option value="">Todos los anos</option>
+                <option value="">Todos los años</option>
                 <?php foreach ($available_years as $year) : ?>
                     <option value="<?php echo esc_attr($year->slug); ?>" <?php selected($current_year, $year->slug); ?>>
                         <?php echo esc_html($year->name); ?>
