@@ -9,7 +9,8 @@
     </div>
 
     <!-- Firma -->
-    <img class="w-12 h-12" src="<?php bloginfo('template_url'); ?>/img/diana.svg" alt="">
+    <img class="w-12 h-12" src="<?php echo esc_url(get_template_directory_uri()); ?>/img/diana.svg" 
+        width="53" height="52" alt="">
 
     <!-- Botón de compartir -->
     <div class="relative" x-data="{ isOpen: false }" @click.away="isOpen = false">

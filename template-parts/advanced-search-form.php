@@ -78,7 +78,8 @@ $input_class = 'w-full px-4 py-2 bg-white border border-gray-300 focus:ring-2 fo
             <?php endif; ?>
             <?php if ($args['show_icon']) : ?>
                 <img src="<?php echo esc_url(get_template_directory_uri()); ?>/img/search.png" 
-                     alt="Buscar" 
+                     alt="" 
+                     width="829" height="128"
                      class="h-16 w-auto">
             <?php endif; ?>
         </div>

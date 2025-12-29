@@ -12,6 +12,8 @@
             <div class="flex items-start justify-center lg:justify-start">
                 <img src="<?php echo esc_url(get_template_directory_uri()); ?>/img/logolom.webp"
                     alt="Logo LOM"
+                    width="118"
+                    height="288"
                     class="h-32 lg:h-auto lg:max-w-full w-auto object-contain">
             </div>
 

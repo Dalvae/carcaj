@@ -96,11 +96,15 @@ function carcaj_dequeue_unnecessary_assets() {
         return;
     }
     
-    // Avatar manager - only on posts/author pages
-    if (!is_singular('post') && !is_author()) {
-        wp_dequeue_style('jeherve-avatar-manager-css');
-        wp_dequeue_script('jeherve-avatar-manager');
-    }
+    // Avatar manager - remove completely, not needed on frontend
+    wp_dequeue_style('jeherve-avatar-manager-css');
+    wp_deregister_style('jeherve-avatar-manager-css');
+    wp_dequeue_script('jeherve-avatar-manager');
+    wp_deregister_script('jeherve-avatar-manager');
+    
+    // Co-Authors Plus styles - not needed
+    wp_dequeue_style('co-authors-plus-css');
+    wp_deregister_style('co-authors-plus-css');
     
     // Classic theme styles - not needed
     wp_dequeue_style('classic-theme-styles');
