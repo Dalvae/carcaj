@@ -7,7 +7,7 @@ Usage: [pdf url="https://example.com/document.pdf" height="600"]
 add_shortcode('pdf', function ($atts) {
     $default = array(
         'url' => '',
-        'height' => '600',
+        'height' => '100vh',
     );
     $atts = shortcode_atts($default, $atts);
     
@@ -22,7 +22,7 @@ add_shortcode('pdf', function ($atts) {
         <iframe 
             src="' . esc_url($pdf_url) . '" 
             width="100%" 
-            height="' . esc_attr($atts['height']) . 'px"
+            height="' . esc_attr($atts['height']) . '"
             class="border border-gray-300 rounded-lg shadow-sm"
             allowfullscreen>
         </iframe>
