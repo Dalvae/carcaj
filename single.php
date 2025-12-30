@@ -42,6 +42,11 @@
                             $thumb_sizes = wp_get_attachment_image_sizes($thumb_id, 'large');
                             $thumb_alt = get_post_meta($thumb_id, '_wp_attachment_image_alt', true);
                             
+                            // Fallback: use post title if no alt text defined (SEO improvement)
+                            if (empty($thumb_alt)) {
+                                $thumb_alt = get_the_title();
+                            }
+                            
                             if ($thumb_src): ?>
                             <img 
                                 src="<?php echo esc_url($thumb_src[0]); ?>"

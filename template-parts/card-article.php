@@ -24,7 +24,8 @@ $settings = wp_parse_args($args, [
             <?php else : ?>
                 <img src="<?php echo esc_url(get_template_directory_uri()); ?>/img/thumb.webp" 
                     width="800" height="600" loading="lazy"
-                    class="w-full h-full object-cover transition-brightness duration-300 group-hover:brightness-50" alt="">
+                    class="w-full h-full object-cover transition-brightness duration-300 group-hover:brightness-50" 
+                    alt="<?php echo esc_attr(get_the_title()); ?>">
             <?php endif; ?>
         </div>
         <div class="categories absolute bottom-0 right-0 font-medium text-4xl flex flex-col items-end opacity-0 transform translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 z-20">

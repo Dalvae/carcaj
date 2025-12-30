@@ -252,6 +252,7 @@ add_action('after_setup_theme', 'carcaj_custom_image_sizes');
 /**
  * Add loading="lazy" and decoding="async" to images
  * Priority images (LCP): slider, full, large on single posts
+ * Also adds fallback alt text for SEO
  */
 function carcaj_lazy_load_images($attr, $attachment, $size) {
     // Determine if this is a priority (above-the-fold) image
@@ -276,6 +277,18 @@ function carcaj_lazy_load_images($attr, $attachment, $size) {
     } else {
         $attr['loading'] = 'lazy';
         $attr['decoding'] = 'async';
+    }
+    
+    // SEO: Add fallback alt text if empty
+    if (empty($attr['alt'])) {
+        // Try to get the post title if this is a featured image
+        $post_id = get_the_ID();
+        if ($post_id) {
+            $attr['alt'] = get_the_title($post_id);
+        } elseif ($attachment && !empty($attachment->post_title)) {
+            // Fallback to attachment title
+            $attr['alt'] = $attachment->post_title;
+        }
     }
     
     return $attr;
