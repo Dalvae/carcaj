@@ -1,63 +1,63 @@
 {
-  "src/fonts/Alegreya-Black.woff2": {
-    "file": "assets/fonts/Alegreya-Black.woff2",
-    "src": "src/fonts/Alegreya-Black.woff2"
+  "src/fonts/subset-Alegreya-Black.woff2": {
+    "file": "assets/fonts/subset-Alegreya-Black.woff2",
+    "src": "src/fonts/subset-Alegreya-Black.woff2"
   },
-  "src/fonts/Alegreya-BlackItalic.woff2": {
-    "file": "assets/fonts/Alegreya-BlackItalic.woff2",
-    "src": "src/fonts/Alegreya-BlackItalic.woff2"
+  "src/fonts/subset-Alegreya-BlackItalic.woff2": {
+    "file": "assets/fonts/subset-Alegreya-BlackItalic.woff2",
+    "src": "src/fonts/subset-Alegreya-BlackItalic.woff2"
   },
-  "src/fonts/Alegreya-Bold.woff2": {
-    "file": "assets/fonts/Alegreya-Bold.woff2",
-    "src": "src/fonts/Alegreya-Bold.woff2"
+  "src/fonts/subset-Alegreya-Bold.woff2": {
+    "file": "assets/fonts/subset-Alegreya-Bold.woff2",
+    "src": "src/fonts/subset-Alegreya-Bold.woff2"
   },
-  "src/fonts/Alegreya-BoldItalic.woff2": {
-    "file": "assets/fonts/Alegreya-BoldItalic.woff2",
-    "src": "src/fonts/Alegreya-BoldItalic.woff2"
+  "src/fonts/subset-Alegreya-BoldItalic.woff2": {
+    "file": "assets/fonts/subset-Alegreya-BoldItalic.woff2",
+    "src": "src/fonts/subset-Alegreya-BoldItalic.woff2"
   },
-  "src/fonts/Alegreya-ExtraBold.woff2": {
-    "file": "assets/fonts/Alegreya-ExtraBold.woff2",
-    "src": "src/fonts/Alegreya-ExtraBold.woff2"
+  "src/fonts/subset-Alegreya-ExtraBold.woff2": {
+    "file": "assets/fonts/subset-Alegreya-ExtraBold.woff2",
+    "src": "src/fonts/subset-Alegreya-ExtraBold.woff2"
   },
-  "src/fonts/Alegreya-ExtraBoldItalic.woff2": {
-    "file": "assets/fonts/Alegreya-ExtraBoldItalic.woff2",
-    "src": "src/fonts/Alegreya-ExtraBoldItalic.woff2"
+  "src/fonts/subset-Alegreya-ExtraBoldItalic.woff2": {
+    "file": "assets/fonts/subset-Alegreya-ExtraBoldItalic.woff2",
+    "src": "src/fonts/subset-Alegreya-ExtraBoldItalic.woff2"
   },
-  "src/fonts/Alegreya-Italic.woff2": {
-    "file": "assets/fonts/Alegreya-Italic.woff2",
-    "src": "src/fonts/Alegreya-Italic.woff2"
+  "src/fonts/subset-Alegreya-Italic.woff2": {
+    "file": "assets/fonts/subset-Alegreya-Italic.woff2",
+    "src": "src/fonts/subset-Alegreya-Italic.woff2"
   },
-  "src/fonts/Alegreya-Medium.woff2": {
-    "file": "assets/fonts/Alegreya-Medium.woff2",
-    "src": "src/fonts/Alegreya-Medium.woff2"
+  "src/fonts/subset-Alegreya-Medium.woff2": {
+    "file": "assets/fonts/subset-Alegreya-Medium.woff2",
+    "src": "src/fonts/subset-Alegreya-Medium.woff2"
   },
-  "src/fonts/Alegreya-MediumItalic.woff2": {
-    "file": "assets/fonts/Alegreya-MediumItalic.woff2",
-    "src": "src/fonts/Alegreya-MediumItalic.woff2"
+  "src/fonts/subset-Alegreya-MediumItalic.woff2": {
+    "file": "assets/fonts/subset-Alegreya-MediumItalic.woff2",
+    "src": "src/fonts/subset-Alegreya-MediumItalic.woff2"
   },
-  "src/fonts/Alegreya-Regular.woff2": {
-    "file": "assets/fonts/Alegreya-Regular.woff2",
-    "src": "src/fonts/Alegreya-Regular.woff2"
+  "src/fonts/subset-Alegreya-Regular.woff2": {
+    "file": "assets/fonts/subset-Alegreya-Regular.woff2",
+    "src": "src/fonts/subset-Alegreya-Regular.woff2"
   },
   "src/theme.js": {
-    "file": "assets/theme-Dhh5Vq62.js",
+    "file": "assets/theme-Dxhflgdn.js",
     "name": "theme",
     "src": "src/theme.js",
     "isEntry": true,
     "css": [
-      "assets/theme-JvAX5SKF.css"
+      "assets/theme-C8xCW_k4.css"
     ],
     "assets": [
-      "assets/fonts/Alegreya-Regular.woff2",
-      "assets/fonts/Alegreya-Medium.woff2",
-      "assets/fonts/Alegreya-Bold.woff2",
-      "assets/fonts/Alegreya-ExtraBold.woff2",
-      "assets/fonts/Alegreya-Black.woff2",
-      "assets/fonts/Alegreya-Italic.woff2",
-      "assets/fonts/Alegreya-MediumItalic.woff2",
-      "assets/fonts/Alegreya-BoldItalic.woff2",
-      "assets/fonts/Alegreya-ExtraBoldItalic.woff2",
-      "assets/fonts/Alegreya-BlackItalic.woff2"
+      "assets/fonts/subset-Alegreya-Regular.woff2",
+      "assets/fonts/subset-Alegreya-Medium.woff2",
+      "assets/fonts/subset-Alegreya-Bold.woff2",
+      "assets/fonts/subset-Alegreya-ExtraBold.woff2",
+      "assets/fonts/subset-Alegreya-Black.woff2",
+      "assets/fonts/subset-Alegreya-Italic.woff2",
+      "assets/fonts/subset-Alegreya-MediumItalic.woff2",
+      "assets/fonts/subset-Alegreya-BoldItalic.woff2",
+      "assets/fonts/subset-Alegreya-ExtraBoldItalic.woff2",
+      "assets/fonts/subset-Alegreya-BlackItalic.woff2"
     ]
   }
 }

@@ -5,9 +5,9 @@ function add_opengraph_tags()
     $site_name = esc_attr(get_bloginfo('name'));
     $site_description = esc_attr(get_bloginfo('description'));
     
-    // Fallback site description
-    if (empty($site_description)) {
-        $site_description = 'Revista de literatura, arte y pensamiento crítico';
+    // Fallback site description (used when WP description is empty or too short)
+    if (empty($site_description) || mb_strlen($site_description) < 50) {
+        $site_description = 'Revista chilena de literatura, arte y pensamiento crítico. Ensayos, poesía, narrativa y crítica cultural.';
     }
     
     $default_image = get_template_directory_uri() . '/img/thumb.png';
@@ -32,12 +32,26 @@ function add_opengraph_tags()
         global $post;
 
         $title = esc_attr(get_the_title());
-        $description = esc_attr(wp_strip_all_tags(get_the_excerpt()));
         
-        // Fallback if no excerpt
+        // Try to get excerpt, or generate from content
+        $description = get_the_excerpt();
+        
+        if (empty($description) && !empty($post->post_content)) {
+            // Generate excerpt from content (first 155 characters)
+            $content = wp_strip_all_tags($post->post_content);
+            $content = preg_replace('/\s+/', ' ', $content); // Normalize whitespace
+            $description = mb_substr($content, 0, 155);
+            if (mb_strlen($content) > 155) {
+                $description .= '...';
+            }
+        }
+        
+        // Final fallback if still empty
         if (empty($description)) {
             $description = $site_description;
         }
+        
+        $description = esc_attr(wp_strip_all_tags($description));
         
         $url = esc_url(get_permalink());
         $image = $default_image;

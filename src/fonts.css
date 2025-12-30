@@ -1,85 +1,134 @@
 /* ============================================
-   ALEGREYA FONT FAMILY
-   ============================================ */
+   ALEGREYA FONT FAMILY - Latin Extended Subset
+   ============================================ 
+   
+   Subset includes: Latin, Latin Extended-A/B, General Punctuation
+   Unicode ranges: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F
+   
+   This covers Spanish, Portuguese, and most Western European languages.
+   For Japanese/CJK characters, the browser will use system fallback fonts.
+   
+   Font metric overrides help reduce CLS by matching fallback font metrics.
+*/
 
 /* Alegreya - Normal (Regular, Medium, Bold, ExtraBold, Black) */
 @font-face {
   font-family: "Alegreya";
-  src: url("./fonts/Alegreya-Regular.woff2") format("woff2");
+  src: url("./fonts/subset-Alegreya-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+  unicode-range: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+2070-209F, U+20A0-20CF, U+2100-214F;
+  ascent-override: 96%;
+  descent-override: 25%;
+  line-gap-override: 0%;
 }
 
 @font-face {
   font-family: "Alegreya";
-  src: url("./fonts/Alegreya-Medium.woff2") format("woff2");
+  src: url("./fonts/subset-Alegreya-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
+  unicode-range: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+2070-209F, U+20A0-20CF, U+2100-214F;
+  ascent-override: 96%;
+  descent-override: 25%;
+  line-gap-override: 0%;
 }
 
 @font-face {
   font-family: "Alegreya";
-  src: url("./fonts/Alegreya-Bold.woff2") format("woff2");
+  src: url("./fonts/subset-Alegreya-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
+  unicode-range: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+2070-209F, U+20A0-20CF, U+2100-214F;
+  ascent-override: 96%;
+  descent-override: 25%;
+  line-gap-override: 0%;
 }
 
 @font-face {
   font-family: "Alegreya";
-  src: url("./fonts/Alegreya-ExtraBold.woff2") format("woff2");
+  src: url("./fonts/subset-Alegreya-ExtraBold.woff2") format("woff2");
   font-weight: 800;
   font-style: normal;
   font-display: swap;
+  unicode-range: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+2070-209F, U+20A0-20CF, U+2100-214F;
+  ascent-override: 96%;
+  descent-override: 25%;
+  line-gap-override: 0%;
 }
 
 @font-face {
   font-family: "Alegreya";
-  src: url("./fonts/Alegreya-Black.woff2") format("woff2");
+  src: url("./fonts/subset-Alegreya-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
+  unicode-range: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+2070-209F, U+20A0-20CF, U+2100-214F;
+  ascent-override: 96%;
+  descent-override: 25%;
+  line-gap-override: 0%;
 }
 
 /* Alegreya - Italic (Regular, Medium, Bold, ExtraBold, Black) */
 @font-face {
   font-family: "Alegreya";
-  src: url("./fonts/Alegreya-Italic.woff2") format("woff2");
+  src: url("./fonts/subset-Alegreya-Italic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
+  unicode-range: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+2070-209F, U+20A0-20CF, U+2100-214F;
+  ascent-override: 96%;
+  descent-override: 25%;
+  line-gap-override: 0%;
 }
 
 @font-face {
   font-family: "Alegreya";
-  src: url("./fonts/Alegreya-MediumItalic.woff2") format("woff2");
+  src: url("./fonts/subset-Alegreya-MediumItalic.woff2") format("woff2");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
+  unicode-range: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+2070-209F, U+20A0-20CF, U+2100-214F;
+  ascent-override: 96%;
+  descent-override: 25%;
+  line-gap-override: 0%;
 }
 
 @font-face {
   font-family: "Alegreya";
-  src: url("./fonts/Alegreya-BoldItalic.woff2") format("woff2");
+  src: url("./fonts/subset-Alegreya-BoldItalic.woff2") format("woff2");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
+  unicode-range: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+2070-209F, U+20A0-20CF, U+2100-214F;
+  ascent-override: 96%;
+  descent-override: 25%;
+  line-gap-override: 0%;
 }
 
 @font-face {
   font-family: "Alegreya";
-  src: url("./fonts/Alegreya-ExtraBoldItalic.woff2") format("woff2");
+  src: url("./fonts/subset-Alegreya-ExtraBoldItalic.woff2") format("woff2");
   font-weight: 800;
   font-style: italic;
   font-display: swap;
+  unicode-range: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+2070-209F, U+20A0-20CF, U+2100-214F;
+  ascent-override: 96%;
+  descent-override: 25%;
+  line-gap-override: 0%;
 }
 
 @font-face {
   font-family: "Alegreya";
-  src: url("./fonts/Alegreya-BlackItalic.woff2") format("woff2");
+  src: url("./fonts/subset-Alegreya-BlackItalic.woff2") format("woff2");
   font-weight: 900;
   font-style: italic;
   font-display: swap;
+  unicode-range: U+0000-00FF, U+0100-017F, U+0180-024F, U+2000-206F, U+2070-209F, U+20A0-20CF, U+2100-214F;
+  ascent-override: 96%;
+  descent-override: 25%;
+  line-gap-override: 0%;
 }

@@ -4,6 +4,6 @@
             alt="<?php echo esc_attr(get_bloginfo('name')); ?>"
             width="792"
             height="246"
-            class="h-10 lg:h-20 w-auto">
+            class="h-10 w-[129px] lg:h-20 lg:w-[258px]">
     </a>
 </div>
