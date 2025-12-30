@@ -258,12 +258,15 @@ function carcaj_resource_hints($urls, $relation_type) {
     if ('dns-prefetch' === $relation_type) {
         $urls[] = '//www.googletagmanager.com';
         $urls[] = '//www.google-analytics.com';
+        $urls[] = '//cdnjs.cloudflare.com'; // PDF.js CDN
         if (!empty(CARCAJ_CDN_URL)) {
             $urls[] = '//' . parse_url(CARCAJ_CDN_URL, PHP_URL_HOST);
         }
     }
     
     if ('preconnect' === $relation_type) {
+        // PDF.js CDN - preconnect for faster PDF viewer loading
+        $urls[] = ['href' => 'https://cdnjs.cloudflare.com', 'crossorigin' => true];
         if (!empty(CARCAJ_CDN_URL)) {
             $urls[] = ['href' => CARCAJ_CDN_URL, 'crossorigin' => true];
         }
