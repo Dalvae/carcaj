@@ -15,9 +15,12 @@ add_shortcode('pdf', function ($atts) {
         return '<p class="text-red-500">Error: No se especificó URL del PDF</p>';
     }
     
+    // Forzar HTTPS para evitar mixed content
+    $pdf_url = str_replace('http://', 'https://', $atts['url']);
+    
     return '<div class="pdf-container my-8">
         <iframe 
-            src="' . esc_url($atts['url']) . '" 
+            src="' . esc_url($pdf_url) . '" 
             width="100%" 
             height="' . esc_attr($atts['height']) . 'px"
             class="border border-gray-300 rounded-lg shadow-sm"
