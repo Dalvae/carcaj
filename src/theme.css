@@ -146,17 +146,12 @@
 
   color: var(--tw-prose-body);
   max-width: none;
-  font-family: var(--font-alegreya);
-  font-size: 1rem;
-  line-height: 1.75;
 }
 
 /* --- Paragraphs --- */
 .prose :where(p):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   margin-top: 1.25em;
   margin-bottom: 1.25em;
-  line-height: 1.5;
-  font-weight: 400;
 }
 
 .prose :where(p):not(:where([class~="not-prose"], [class~="not-prose"] *))::selection {
