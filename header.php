@@ -66,10 +66,10 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TQLBVTPB"
             height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <header class="w-full bg-white" x-data="header" @scroll.window="hasScrolled = (window.pageYOffset > 20)">
+    <header class="w-full bg-white" x-data="header" @scroll.window="$store.header.hasScrolled = (window.pageYOffset > 20)">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center py-4 lg:py-6"
-                :class="{ 'lg:py-3': hasScrolled }"
+                :class="{ 'lg:py-3': $store.header.hasScrolled }"
                 x-transition>
 
                 <!-- Logo -->
