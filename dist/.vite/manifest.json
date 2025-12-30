@@ -80,12 +80,12 @@
     "src": "src/fonts/AlegreyaSC-Regular.woff2"
   },
   "src/theme.js": {
-    "file": "assets/theme-Lp_zCAWC.js",
+    "file": "assets/theme-B9Q5JQhj.js",
     "name": "theme",
     "src": "src/theme.js",
     "isEntry": true,
     "css": [
-      "assets/theme-DtOBSj4e.css"
+      "assets/theme-C51TiMy_.css"
     ],
     "assets": [
       "assets/fonts/Alegreya-Regular.woff2",

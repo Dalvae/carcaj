@@ -146,6 +146,7 @@
 
   color: var(--tw-prose-body);
   max-width: none;
+  font-family: var(--font-alegreya);
   font-size: 1rem;
   line-height: 1.75;
 }
