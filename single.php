@@ -34,11 +34,19 @@
                 <?php if (has_post_thumbnail()): ?>
                     <div class=" mb-8">
                         <div class="w-full">
-                            <?php the_post_thumbnail('large', [
+                            <?php 
+                            // Get the thumbnail HTML and force eager loading (fix WP lazy loading override)
+                            $thumbnail = get_the_post_thumbnail(get_the_ID(), 'large', [
                                 'class' => 'w-full h-auto lg:aspect-[2/3] lg:max-h-[650px] object-cover',
-                                'loading' => 'eager',
-                                'fetchpriority' => 'high'
-                            ]); ?>
+                            ]);
+                            // Force proper LCP attributes - remove lazy, add eager and high priority
+                            $thumbnail = preg_replace('/loading=["\']lazy["\']/', 'loading="eager"', $thumbnail);
+                            $thumbnail = preg_replace('/decoding=["\']async["\']/', '', $thumbnail);
+                            if (strpos($thumbnail, 'fetchpriority') === false) {
+                                $thumbnail = str_replace('<img ', '<img fetchpriority="high" ', $thumbnail);
+                            }
+                            echo $thumbnail;
+                            ?>
                         </div>
                         <?php if (get_field('creditos_imagen')): ?>
                             <p class="text-gray-500 text-right text-base pt-2"><?php the_field('creditos_imagen'); ?></p>
