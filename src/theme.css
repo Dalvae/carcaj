@@ -66,6 +66,11 @@
    BASE STYLES
    ============================================ */
 @layer base {
+  /* Alpine.js cloak - hide elements until Alpine initializes */
+  [x-cloak] {
+    display: none !important;
+  }
+
   :root {
     font-family: var(--font-alegreya);
   }

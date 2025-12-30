@@ -40,12 +40,12 @@
     "src": "src/fonts/Alegreya-Regular.woff2"
   },
   "src/theme.js": {
-    "file": "assets/theme-CmVCnNCI.js",
+    "file": "assets/theme-B7_VZ16X.js",
     "name": "theme",
     "src": "src/theme.js",
     "isEntry": true,
     "css": [
-      "assets/theme-db9Z8OnF.css"
+      "assets/theme-BXlvY_bz.css"
     ],
     "assets": [
       "assets/fonts/Alegreya-Regular.woff2",
