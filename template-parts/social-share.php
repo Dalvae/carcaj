@@ -1,11 +1,11 @@
 <div class="flex justify-center items-center gap-8 my-24">
     <!-- Botón de imprimir -->
     <div class="inline-flex text-rojo">
-        <a href="#" rel="nofollow" onclick="window.print(); return false;" class="inline-flex p-2" aria-label="Imprimir artículo">
+        <button type="button" onclick="window.print();" class="inline-flex p-2 cursor-pointer" aria-label="Imprimir artículo">
             <svg class="w-12 h-12 fill-rojo hover:fill-darkgold transition-colors duration-300" aria-hidden="true">
                 <use xlink:href="#icon-print" />
             </svg>
-        </a>
+        </button>
     </div>
 
     <!-- Firma -->

@@ -50,7 +50,15 @@ class Walker_Nav_Menu_Tailwind extends \Walker_Nav_Menu
         $atts['title']  = !empty($item->attr_title) ? $item->attr_title : '';
         $atts['target'] = !empty($item->target) ? $item->target : '';
         $atts['rel']    = !empty($item->xfn) ? $item->xfn : '';
-        $atts['href']   = !empty($item->url) ? $item->url : '#';
+        
+        // SEO: If href is "#", use javascript:void(0) to avoid "uncrawlable link" warning
+        $href = !empty($item->url) ? $item->url : '';
+        if ($href === '#' || empty($href)) {
+            $atts['href'] = 'javascript:void(0)';
+            $atts['role'] = 'button';
+        } else {
+            $atts['href'] = $href;
+        }
 
         // Agregar clases de estilo consistentes con tu diseño
         $atts['class'] = 'text-sm font-bold italic block py-2 hover:text-rosado transition-colors duration-200';
