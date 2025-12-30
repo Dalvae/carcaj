@@ -1,21 +1,21 @@
 <div class="flex justify-center items-center gap-8 my-24">
     <!-- Botón de imprimir -->
     <div class="inline-flex text-rojo">
-        <?php
-        if (function_exists('pf_show_link')) {
-            echo pf_show_link();
-        }
-        ?>
+        <a href="#" rel="nofollow" onclick="window.print(); return false;" class="inline-flex p-2" aria-label="Imprimir artículo">
+            <svg class="w-12 h-12 fill-rojo hover:fill-darkgold transition-colors duration-300" aria-hidden="true">
+                <use xlink:href="#icon-print" />
+            </svg>
+        </a>
     </div>
 
     <!-- Firma -->
     <img class="w-12 h-12" src="<?php echo esc_url(get_template_directory_uri()); ?>/img/diana.svg" 
-        width="53" height="52" alt="">
+        width="53" height="52" alt="Carcaj" loading="lazy">
 
     <!-- Botón de compartir -->
     <div class="relative" x-data="{ isOpen: false }" @click.away="isOpen = false">
-        <button @click="isOpen = !isOpen" class="inline-flex p-2">
-            <svg class="w-12 h-12 fill-rojo hover:fill-darkgold transition-colors duration-300">
+        <button @click="isOpen = !isOpen" class="inline-flex p-2" aria-label="Compartir artículo" aria-expanded="false" :aria-expanded="isOpen.toString()">
+            <svg class="w-12 h-12 fill-rojo hover:fill-darkgold transition-colors duration-300" aria-hidden="true">
                 <use xlink:href="#icon-share" />
             </svg>
         </button>
@@ -24,15 +24,15 @@
         <div x-show="isOpen" x-transition class="absolute left-full top-0 ml-2 bg-white p-4 rounded-lg shadow-lg flex items-center gap-4 z-10" style="transform: translateX(10px);">
              <div class="relative after:content-[''] after:absolute after:top-1/2 after:right-full after:border-8 after:border-transparent after:border-r-white after:-translate-y-1/2">
                 <!-- Facebook -->
-                <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_permalink()); ?>" target="_blank" class="inline-flex p-2">
-                    <svg class="w-10 h-10 fill-rose-400 hover:fill-darkgold transition-colors duration-300">
+                <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_permalink()); ?>" target="_blank" rel="noopener" class="inline-flex p-2" aria-label="Compartir en Facebook">
+                    <svg class="w-10 h-10 fill-rose-400 hover:fill-darkgold transition-colors duration-300" aria-hidden="true">
                         <use xlink:href="#icon-facebook"></use>
                     </svg>
                 </a>
-                <!-- Instagram -->
-                <a href="https://www.instagram.com/share?url=<?php echo urlencode(get_permalink()); ?>" target="_blank" class="inline-flex p-2">
-                    <svg class="w-10 h-10 fill-rosado hover:fill-darkgold transition-colors duration-300">
-                        <use xlink:href="#icon-instagram"></use>
+                <!-- Twitter/X -->
+                <a href="https://twitter.com/intent/tweet?url=<?php echo urlencode(get_permalink()); ?>&text=<?php echo urlencode(get_the_title()); ?>" target="_blank" rel="noopener" class="inline-flex p-2" aria-label="Compartir en Twitter">
+                    <svg class="w-10 h-10 fill-rosado hover:fill-darkgold transition-colors duration-300" aria-hidden="true">
+                        <use xlink:href="#icon-twitter"></use>
                     </svg>
                 </a>
             </div>
