@@ -33,30 +33,6 @@
     </script>
     <!-- End Google Tag Manager -->
 
-    <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.store('header', {
-                isOpen: false,
-                currentCategory: null,
-                hasScrolled: false
-            });
-
-            Alpine.data('header', () => ({
-                isSearchOpen: false, 
-                init() {
-                    this.$watch('$store.header.isOpen', value => {
-                        document.body.style.overflow = value ? 'hidden' : '';
-                        if (value) {
-                            window.dispatchEvent(new Event('stopSlider'));
-                        } else {
-                            window.dispatchEvent(new Event('startSlider'));
-                        }
-                    });
-                }
-            }))
-        });
-    </script>
-
     <?php include_once('img/sprite.svg'); ?>
     <?php wp_head(); ?>
 </head>

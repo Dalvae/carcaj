@@ -84,7 +84,8 @@ if (post_password_required()) {
         ),
         'submit_button'        => '<button type="submit" class="w-full bg-gold-600 text-white py-4 px-6  bg-darkgold hover:bg-gold hover:text-darkgold transition-colors">PUBLICAR EL COMENTARIO</button>',
         'class_form'           => 'space-y-4',
-        'cancel_reply_link'    => '<span class="text-sm text-gold hover:text-darkgold ml-2">Cancelar respuesta</span>'
+        'cancel_reply_link'    => '<span class="text-sm text-gold hover:text-darkgold ml-2">Cancelar respuesta</span>',
+        'form_attributes'      => array('data-turbo' => 'false'),
     );
 
     comment_form($comments_args);

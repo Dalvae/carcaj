@@ -78,7 +78,7 @@ function carcaj_defer_scripts($tag, $handle, $src) {
         return $tag;
     }
     
-    $defer_scripts = ['avatar-manager', 'wp-i18n', 'wp-hooks'];
+    $defer_scripts = ['avatar-manager'];
     
     if (in_array($handle, $defer_scripts)) {
         return str_replace(' src', ' defer src', $tag);
@@ -113,6 +113,8 @@ function carcaj_dequeue_unnecessary_assets() {
     wp_dequeue_style('wp-block-library');
     wp_dequeue_style('wp-block-library-theme');
     wp_dequeue_style('global-styles');
+    
+
 }
 add_action('wp_enqueue_scripts', 'carcaj_dequeue_unnecessary_assets', 100);
 
