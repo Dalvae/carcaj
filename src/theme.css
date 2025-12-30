@@ -799,8 +799,9 @@
 
 /* --- Quote Block --- */
 .wp-block-quote {
-  margin: 1.5em 0;
+  border-left: 4px solid var(--color-rojo);
   padding-left: 1.5em;
+  margin: 1.5em 0;
 }
 
 .wp-block-quote cite,
