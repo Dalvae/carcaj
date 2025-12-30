@@ -68,44 +68,18 @@ add_action(HOOK_PREFIX . '_enqueue_scripts', function () {
             $entry_point_manifest = isset($manifest[VITE_ENTRY_POINT]) ? $manifest[VITE_ENTRY_POINT] : null;
 
             if ($entry_point_manifest) {
-                // DON'T enqueue CSS normally - we'll load it async instead
-                // This prevents render-blocking CSS
-                
+                // enqueue CSS files (standard method - works reliably)
+                if (!empty($entry_point_manifest['css'])) {
+                    foreach ($entry_point_manifest['css'] as $css_file) {
+                        wp_enqueue_style('theme', DIST_URI . '/' . $css_file);
+                    }
+                }
+
                 // enqueue theme JS file
                 if (!empty($entry_point_manifest['file'])) {
                     $js_file = $entry_point_manifest['file'];
                     wp_enqueue_script('theme', DIST_URI . '/' . $js_file, JS_DEPENDENCY, '', JS_LOAD_IN_FOOTER);
                 }
-                
-                // Output critical CSS inline + async load full CSS
-                add_action('wp_head', function () use ($entry_point_manifest) {
-                    // 1. Output critical CSS inline (above-the-fold styles)
-                    carcaj_output_critical_css();
-                    
-                    // 2. Preload critical fonts (subset versions)
-                    $fonts = [
-                        'subset-Alegreya-Regular.woff2',
-                        'subset-Alegreya-Medium.woff2', 
-                        'subset-Alegreya-Bold.woff2',
-                        'subset-Alegreya-Italic.woff2',
-                    ];
-                    foreach ($fonts as $font) {
-                        echo '<link rel="preload" href="' . esc_url(DIST_URI . '/assets/fonts/' . $font) . '" as="font" type="font/woff2" crossorigin>' . "\n";
-                    }
-                    
-                    // 3. Load full CSS asynchronously (non-render-blocking)
-                    if (!empty($entry_point_manifest['css'])) {
-                        foreach ($entry_point_manifest['css'] as $css_file) {
-                            $css_url = esc_url(DIST_URI . '/' . $css_file);
-                            // Preload the CSS file
-                            echo '<link rel="preload" href="' . $css_url . '" as="style">' . "\n";
-                            // Load async with print media trick
-                            echo '<link rel="stylesheet" href="' . $css_url . '" media="print" onload="this.media=\'all\'">' . "\n";
-                            // Fallback for no-JS
-                            echo '<noscript><link rel="stylesheet" href="' . $css_url . '"></noscript>' . "\n";
-                        }
-                    }
-                }, 1);
             }
 
             // Add type="module" to theme script for Turbo compatibility
@@ -115,6 +89,19 @@ add_action(HOOK_PREFIX . '_enqueue_scripts', function () {
                 }
                 return $tag;
             }, 10, 3);
+
+            // Preload critical fonts (subset versions)
+            add_action('wp_head', function () {
+                $fonts = [
+                    'subset-Alegreya-Regular.woff2',
+                    'subset-Alegreya-Medium.woff2', 
+                    'subset-Alegreya-Bold.woff2',
+                    'subset-Alegreya-Italic.woff2',
+                ];
+                foreach ($fonts as $font) {
+                    echo '<link rel="preload" href="' . esc_url(DIST_URI . '/assets/fonts/' . $font) . '" as="font" type="font/woff2" crossorigin>' . "\n";
+                }
+            }, 1);
         }
     }
 });
