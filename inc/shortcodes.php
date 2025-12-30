@@ -114,6 +114,22 @@ add_shortcode('pdf', function ($atts) {
                 font-size: 18px;
                 padding: 6px 16px;
             }
+            .pdf-controls .download-btn {
+                background: transparent;
+                color: #999;
+                border: 1px solid #444;
+                padding: 6px 12px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+                transition: all 0.2s;
+                text-decoration: none;
+            }
+            .pdf-controls .download-btn:hover {
+                background: #333;
+                color: white;
+                border-color: #666;
+            }
             .pdf-loading {
                 position: absolute;
                 inset: 0;
@@ -159,6 +175,7 @@ add_shortcode('pdf', function ($atts) {
                 <button class="zoom-in-btn">+</button>
                 <button class="nav-btn next-btn">›</button>
                 <button class="spread-btn">2x</button>
+                <a href="' . esc_url($pdf_url) . '" download class="download-btn" title="Descargar PDF">↓</a>
             </div>
         </div>
         <div class="pdf-loading">Cargando PDF...</div>
