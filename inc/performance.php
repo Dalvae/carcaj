@@ -114,6 +114,21 @@ function carcaj_dequeue_unnecessary_assets() {
     wp_dequeue_style('wp-block-library-theme');
     wp_dequeue_style('global-styles');
     
+    // WordPress block scripts - not needed on frontend (Gutenberg editor only)
+    wp_dequeue_script('wp-hooks');
+    wp_deregister_script('wp-hooks');
+    wp_dequeue_script('wp-i18n');
+    wp_deregister_script('wp-i18n');
+    wp_dequeue_script('wp-block-library');
+    wp_deregister_script('wp-block-library');
+    
+    // Contact Form 7 - only load on contact page
+    if (!is_page('contacto')) {
+        wp_dequeue_style('contact-form-7');
+        wp_dequeue_script('contact-form-7');
+        wp_dequeue_style('wpcf7-recaptcha');
+        wp_dequeue_script('wpcf7-recaptcha');
+    }
 
 }
 add_action('wp_enqueue_scripts', 'carcaj_dequeue_unnecessary_assets', 100);
