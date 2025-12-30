@@ -40,58 +40,36 @@ add_shortcode('pdf', function ($atts) {
             }
             .pdf-viewer-inner {
                 height: 100%;
-                overflow: hidden;
                 display: flex;
                 flex-direction: column;
             }
             .pdf-book {
                 flex: 1;
+                overflow: auto;
+                cursor: grab;
+            }
+            .pdf-book:active {
+                cursor: grabbing;
+            }
+            .pdf-book.zoomed-out {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                perspective: 2000px;
-                overflow: hidden;
             }
             .pdf-pages-wrapper {
                 display: flex;
                 justify-content: center;
-                align-items: center;
-                gap: 0;
-                transition: transform 0.4s ease-out, opacity 0.3s ease-out;
+                gap: 2px;
+                padding: 10px;
+                min-height: 100%;
+                transition: opacity 0.2s ease;
             }
-            .pdf-pages-wrapper.flipping-next {
-                animation: flipNext 0.5s ease-in-out;
-            }
-            .pdf-pages-wrapper.flipping-prev {
-                animation: flipPrev 0.5s ease-in-out;
-            }
-            @keyframes flipNext {
-                0% { transform: translateX(0); opacity: 1; }
-                40% { transform: translateX(-30px) scale(0.95); opacity: 0.5; }
-                60% { transform: translateX(30px) scale(0.95); opacity: 0.5; }
-                100% { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes flipPrev {
-                0% { transform: translateX(0); opacity: 1; }
-                40% { transform: translateX(30px) scale(0.95); opacity: 0.5; }
-                60% { transform: translateX(-30px) scale(0.95); opacity: 0.5; }
-                100% { transform: translateX(0); opacity: 1; }
+            .pdf-pages-wrapper.fading {
+                opacity: 0.3;
             }
             .pdf-pages-wrapper canvas {
                 display: block;
-                max-height: calc(100vh - 50px);
-                width: auto;
-                height: auto;
                 box-shadow: 0 5px 30px rgba(0,0,0,0.5);
-            }
-            .pdf-pages-wrapper.spread-view {
-                gap: 2px;
-            }
-            .pdf-pages-wrapper.spread-view canvas:first-child {
-                box-shadow: -5px 5px 30px rgba(0,0,0,0.5);
-            }
-            .pdf-pages-wrapper.spread-view canvas:last-child {
-                box-shadow: 5px 5px 30px rgba(0,0,0,0.5);
             }
             .pdf-controls {
                 background: #111;
@@ -101,6 +79,7 @@ add_shortcode('pdf', function ($atts) {
                 gap: 8px;
                 align-items: center;
                 border-top: 1px solid #333;
+                flex-shrink: 0;
             }
             .pdf-controls button {
                 background: transparent;
@@ -121,6 +100,10 @@ add_shortcode('pdf', function ($atts) {
                 opacity: 0.3;
                 cursor: not-allowed;
             }
+            .pdf-controls button.active {
+                background: #444;
+                color: white;
+            }
             .pdf-controls .page-info {
                 color: #666;
                 font-size: 14px;
@@ -131,33 +114,6 @@ add_shortcode('pdf', function ($atts) {
                 font-size: 18px;
                 padding: 6px 16px;
             }
-            .pdf-nav-area {
-                position: absolute;
-                top: 0;
-                bottom: 50px;
-                width: 20%;
-                cursor: pointer;
-                z-index: 5;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                opacity: 0;
-                transition: opacity 0.2s;
-            }
-            .pdf-nav-area:hover {
-                opacity: 1;
-                background: linear-gradient(to right, rgba(0,0,0,0.1), transparent);
-            }
-            .pdf-nav-area.next:hover {
-                background: linear-gradient(to left, rgba(0,0,0,0.1), transparent);
-            }
-            .pdf-nav-area .nav-icon {
-                font-size: 48px;
-                color: rgba(255,255,255,0.5);
-            }
-            .pdf-nav-area.prev { left: 0; }
-            .pdf-nav-area.next { right: 0; }
-            
             .pdf-loading {
                 position: absolute;
                 inset: 0;
@@ -186,12 +142,6 @@ add_shortcode('pdf', function ($atts) {
                     font-size: 12px;
                     min-width: 80px;
                 }
-                .pdf-nav-area {
-                    width: 25%;
-                }
-                .pdf-nav-area .nav-icon {
-                    font-size: 32px;
-                }
             }
         </style>';
     }
@@ -199,23 +149,17 @@ add_shortcode('pdf', function ($atts) {
     return $script . '
     <div id="' . $viewer_id . '" class="pdf-viewer-container" style="height: ' . esc_attr($atts['height']) . ';">
         <div class="pdf-viewer-inner">
-            <div class="pdf-book">
-                <div class="pdf-pages-wrapper spread-view"></div>
+            <div class="pdf-book zoomed-out">
+                <div class="pdf-pages-wrapper"></div>
             </div>
             <div class="pdf-controls">
-                <button class="nav-btn prev-btn" onclick="pdfViewers[\'' . $viewer_id . '\'].prevPage()">‹</button>
-                <button onclick="pdfViewers[\'' . $viewer_id . '\'].zoomOut()">−</button>
+                <button class="nav-btn prev-btn">‹</button>
+                <button class="zoom-out-btn">−</button>
                 <span class="page-info"><span class="current-page">1</span> / <span class="total-pages">?</span></span>
-                <button onclick="pdfViewers[\'' . $viewer_id . '\'].zoomIn()">+</button>
-                <button class="nav-btn next-btn" onclick="pdfViewers[\'' . $viewer_id . '\'].nextPage()">›</button>
-                <button onclick="pdfViewers[\'' . $viewer_id . '\'].toggleSpread()" class="spread-btn">2x</button>
+                <button class="zoom-in-btn">+</button>
+                <button class="nav-btn next-btn">›</button>
+                <button class="spread-btn">2x</button>
             </div>
-        </div>
-        <div class="pdf-nav-area prev" onclick="pdfViewers[\'' . $viewer_id . '\'].prevPage()">
-            <span class="nav-icon">‹</span>
-        </div>
-        <div class="pdf-nav-area next" onclick="pdfViewers[\'' . $viewer_id . '\'].nextPage()">
-            <span class="nav-icon">›</span>
         </div>
         <div class="pdf-loading">Cargando PDF...</div>
     </div>
@@ -226,12 +170,15 @@ add_shortcode('pdf', function ($atts) {
         window.pdfViewers = window.pdfViewers || {};
         
         const container = document.getElementById("' . $viewer_id . '");
+        const book = container.querySelector(".pdf-book");
         const wrapper = container.querySelector(".pdf-pages-wrapper");
         const currentPageSpan = container.querySelector(".current-page");
         const totalPagesSpan = container.querySelector(".total-pages");
         const spreadBtn = container.querySelector(".spread-btn");
         const prevBtn = container.querySelector(".prev-btn");
         const nextBtn = container.querySelector(".next-btn");
+        const zoomInBtn = container.querySelector(".zoom-in-btn");
+        const zoomOutBtn = container.querySelector(".zoom-out-btn");
         const loading = container.querySelector(".pdf-loading");
         
         let pdf = null;
@@ -240,7 +187,36 @@ add_shortcode('pdf', function ($atts) {
         let spreadMode = !isMobile;
         let baseScale = 1;
         let userScale = 1;
-        let isAnimating = false;
+        
+        // Drag functionality
+        let isDragging = false;
+        let startX, startY, scrollLeft, scrollTop;
+        
+        book.addEventListener("mousedown", (e) => {
+            isDragging = true;
+            startX = e.pageX - book.offsetLeft;
+            startY = e.pageY - book.offsetTop;
+            scrollLeft = book.scrollLeft;
+            scrollTop = book.scrollTop;
+        });
+        
+        book.addEventListener("mouseleave", () => isDragging = false);
+        book.addEventListener("mouseup", () => isDragging = false);
+        book.addEventListener("mousemove", (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.pageX - book.offsetLeft;
+            const y = e.pageY - book.offsetTop;
+            book.scrollLeft = scrollLeft - (x - startX);
+            book.scrollTop = scrollTop - (y - startY);
+        });
+        
+        // Button handlers
+        prevBtn.addEventListener("click", () => prevPage());
+        nextBtn.addEventListener("click", () => nextPage());
+        zoomInBtn.addEventListener("click", () => zoomIn());
+        zoomOutBtn.addEventListener("click", () => zoomOut());
+        spreadBtn.addEventListener("click", () => toggleSpread());
         
         async function loadPDF() {
             pdf = await pdfjsLib.getDocument("' . esc_url($pdf_url) . '").promise;
@@ -248,7 +224,6 @@ add_shortcode('pdf', function ($atts) {
             await calculateOptimalScale();
             await renderPages();
             loading.classList.add("hidden");
-            updateButtons();
         }
         
         async function calculateOptimalScale() {
@@ -270,7 +245,7 @@ add_shortcode('pdf', function ($atts) {
             }
         }
         
-        function updateButtons() {
+        function updateUI() {
             const atStart = currentPage <= 1;
             const atEnd = spreadMode 
                 ? currentPage + 1 >= pdf.numPages 
@@ -279,43 +254,38 @@ add_shortcode('pdf', function ($atts) {
             prevBtn.disabled = atStart;
             nextBtn.disabled = atEnd;
             spreadBtn.textContent = spreadMode ? "2x" : "1x";
+            spreadBtn.classList.toggle("active", spreadMode);
+            
+            // Toggle zoomed class for centering
+            const isZoomedOut = userScale <= 1;
+            book.classList.toggle("zoomed-out", isZoomedOut);
         }
         
-        async function renderPages(direction = null) {
-            if (direction && !isAnimating) {
-                isAnimating = true;
-                wrapper.classList.add(direction === "next" ? "flipping-next" : "flipping-prev");
-                
-                await new Promise(r => setTimeout(r, 250));
-                wrapper.innerHTML = "";
-                await doRender();
-                
-                await new Promise(r => setTimeout(r, 250));
-                wrapper.classList.remove("flipping-next", "flipping-prev");
-                isAnimating = false;
-            } else if (!direction) {
-                wrapper.innerHTML = "";
-                await doRender();
+        async function renderPages(animate = false) {
+            if (animate) {
+                wrapper.classList.add("fading");
+                await new Promise(r => setTimeout(r, 150));
             }
             
-            updateButtons();
-        }
-        
-        async function doRender() {
+            wrapper.innerHTML = "";
             const scale = baseScale * userScale;
             
             if (spreadMode) {
-                wrapper.classList.add("spread-view");
                 const startPage = currentPage % 2 === 0 ? currentPage - 1 : currentPage;
                 for (let i = startPage; i <= Math.min(startPage + 1, pdf.numPages); i++) {
                     await renderPage(i, scale);
                 }
                 currentPageSpan.textContent = startPage + "-" + Math.min(startPage + 1, pdf.numPages);
             } else {
-                wrapper.classList.remove("spread-view");
                 await renderPage(currentPage, scale);
                 currentPageSpan.textContent = currentPage;
             }
+            
+            if (animate) {
+                wrapper.classList.remove("fading");
+            }
+            
+            updateUI();
         }
         
         async function renderPage(pageNum, scale) {
@@ -334,39 +304,43 @@ add_shortcode('pdf', function ($atts) {
             wrapper.appendChild(canvas);
         }
         
-        window.pdfViewers["' . $viewer_id . '"] = {
-            prevPage() {
-                if (isAnimating || currentPage <= 1) return;
-                currentPage = spreadMode ? Math.max(1, currentPage - 2) : currentPage - 1;
-                renderPages("prev");
-            },
-            nextPage() {
-                if (isAnimating) return;
-                const increment = spreadMode ? 2 : 1;
-                if (currentPage + increment <= pdf.numPages) {
-                    currentPage += increment;
-                    renderPages("next");
-                }
-            },
-            zoomIn() {
-                userScale = Math.min(userScale + 0.15, 3);
-                renderPages();
-            },
-            zoomOut() {
-                userScale = Math.max(userScale - 0.15, 0.5);
-                renderPages();
-            },
-            async toggleSpread() {
-                if (isMobile) return;
-                spreadMode = !spreadMode;
-                await calculateOptimalScale();
-                renderPages();
+        function prevPage() {
+            if (currentPage <= 1) return;
+            currentPage = spreadMode ? Math.max(1, currentPage - 2) : currentPage - 1;
+            renderPages(true);
+        }
+        
+        function nextPage() {
+            const increment = spreadMode ? 2 : 1;
+            if (currentPage + increment <= pdf.numPages) {
+                currentPage += increment;
+                renderPages(true);
             }
-        };
+        }
+        
+        function zoomIn() {
+            userScale = Math.min(userScale + 0.3, 4);
+            renderPages();
+        }
+        
+        function zoomOut() {
+            userScale = Math.max(userScale - 0.3, 0.5);
+            renderPages();
+        }
+        
+        async function toggleSpread() {
+            if (isMobile) return;
+            spreadMode = !spreadMode;
+            await calculateOptimalScale();
+            renderPages();
+        }
+        
+        // Expose for keyboard
+        window.pdfViewers["' . $viewer_id . '"] = { prevPage, nextPage, zoomIn, zoomOut };
         
         document.addEventListener("keydown", (e) => {
-            if (e.key === "ArrowLeft") pdfViewers["' . $viewer_id . '"].prevPage();
-            if (e.key === "ArrowRight") pdfViewers["' . $viewer_id . '"].nextPage();
+            if (e.key === "ArrowLeft") prevPage();
+            if (e.key === "ArrowRight") nextPage();
         });
         
         loadPDF();
