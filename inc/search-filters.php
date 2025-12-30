@@ -206,7 +206,15 @@ function carcaj_clear_search_cache($post_id) {
     if (wp_is_post_revision($post_id)) {
         return;
     }
-    wp_cache_delete_group('carcaj_search');
+    
+    // wp_cache_delete_group() only works with external object caches (Redis, Memcached)
+    // For standard WordPress installs, we use wp_cache_flush() or delete individual keys
+    if (function_exists('wp_cache_flush_group')) {
+        wp_cache_flush_group('carcaj_search');
+    } elseif (function_exists('wp_cache_delete_group')) {
+        wp_cache_delete_group('carcaj_search');
+    }
+    // If neither function exists, cache will expire naturally (HOUR_IN_SECONDS)
 }
 add_action('save_post', 'carcaj_clear_search_cache');
 add_action('delete_post', 'carcaj_clear_search_cache');
