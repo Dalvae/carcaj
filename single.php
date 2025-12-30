@@ -35,18 +35,26 @@
                     <div class=" mb-8">
                         <div class="w-full">
                             <?php 
-                            // Get the thumbnail HTML and force eager loading (fix WP lazy loading override)
-                            $thumbnail = get_the_post_thumbnail(get_the_ID(), 'large', [
-                                'class' => 'w-full h-auto lg:aspect-[2/3] lg:max-h-[650px] object-cover',
-                            ]);
-                            // Force proper LCP attributes - remove lazy, add eager and high priority
-                            $thumbnail = preg_replace('/loading=["\']lazy["\']/', 'loading="eager"', $thumbnail);
-                            $thumbnail = preg_replace('/decoding=["\']async["\']/', '', $thumbnail);
-                            if (strpos($thumbnail, 'fetchpriority') === false) {
-                                $thumbnail = str_replace('<img ', '<img fetchpriority="high" ', $thumbnail);
-                            }
-                            echo $thumbnail;
-                            ?>
+                            // Build the featured image manually to bypass WordPress lazy loading
+                            $thumb_id = get_post_thumbnail_id();
+                            $thumb_src = wp_get_attachment_image_src($thumb_id, 'large');
+                            $thumb_srcset = wp_get_attachment_image_srcset($thumb_id, 'large');
+                            $thumb_sizes = wp_get_attachment_image_sizes($thumb_id, 'large');
+                            $thumb_alt = get_post_meta($thumb_id, '_wp_attachment_image_alt', true);
+                            
+                            if ($thumb_src): ?>
+                            <img 
+                                src="<?php echo esc_url($thumb_src[0]); ?>"
+                                width="<?php echo esc_attr($thumb_src[1]); ?>"
+                                height="<?php echo esc_attr($thumb_src[2]); ?>"
+                                srcset="<?php echo esc_attr($thumb_srcset); ?>"
+                                sizes="<?php echo esc_attr($thumb_sizes); ?>"
+                                alt="<?php echo esc_attr($thumb_alt); ?>"
+                                class="w-full h-auto lg:aspect-[2/3] lg:max-h-[650px] object-cover"
+                                loading="eager"
+                                fetchpriority="high"
+                            />
+                            <?php endif; ?>
                         </div>
                         <?php if (get_field('creditos_imagen')): ?>
                             <p class="text-gray-500 text-right text-base pt-2"><?php the_field('creditos_imagen'); ?></p>
