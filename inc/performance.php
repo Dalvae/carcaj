@@ -262,18 +262,16 @@ function carcaj_lazy_load_images($attr, $attachment, $size) {
         $is_priority = true;
     }
     
-    // Featured image on single posts should be priority (LCP image)
-    if (is_singular() && $size === 'large') {
-        $post_thumbnail_id = get_post_thumbnail_id();
-        if ($attachment && $attachment->ID === $post_thumbnail_id) {
-            $is_priority = true;
-        }
+    // Large images on single posts (likely the featured image / LCP)
+    // Use more permissive check - any large image on singular pages
+    if (is_singular() && ($size === 'large' || (is_array($size) && $size[0] >= 768))) {
+        $is_priority = true;
     }
     
     if ($is_priority) {
         $attr['fetchpriority'] = 'high';
         $attr['loading'] = 'eager';
-        // Remove decoding=async for LCP image
+        // Remove decoding=async for LCP image - let browser handle it
         unset($attr['decoding']);
     } else {
         $attr['loading'] = 'lazy';
@@ -285,31 +283,36 @@ function carcaj_lazy_load_images($attr, $attachment, $size) {
 add_filter('wp_get_attachment_image_attributes', 'carcaj_lazy_load_images', 99, 3);
 
 /**
- * Disable WordPress auto-adding loading="lazy" to LCP images
- * WordPress 5.9+ adds loading="lazy" automatically, we need to override for LCP
+ * Override WordPress loading optimization for post thumbnails
+ * WordPress 6.3+ uses this filter to set loading/fetchpriority
  */
-function carcaj_disable_lazy_on_lcp($loading, $tag, $context) {
-    // On single posts, the featured image should not have lazy loading
-    if (is_singular() && $context === 'the_content') {
-        return $loading; // Let our filter handle it
+function carcaj_override_loading_optimization($loading_attrs, $tag_or_context, $context = null) {
+    // Handle both WordPress 6.3+ (3 params) and earlier versions (2 params)
+    if ($context === null) {
+        $context = $tag_or_context;
     }
     
-    // For featured images specifically
-    if ($context === 'wp_get_attachment_image') {
-        return false; // Let our filter handle it completely
+    // For post thumbnails on singular pages, force eager loading
+    if (is_singular()) {
+        // Return empty to prevent WP from adding loading=lazy
+        // Our wp_get_attachment_image_attributes filter will add the correct attrs
+        return array(
+            'loading' => 'eager',
+            'fetchpriority' => 'high'
+        );
     }
     
-    return $loading;
+    return $loading_attrs;
 }
-add_filter('wp_img_tag_add_loading_attr', 'carcaj_disable_lazy_on_lcp', 10, 3);
+add_filter('wp_get_loading_optimization_attributes', 'carcaj_override_loading_optimization', 99, 3);
 
 /**
  * Control lazy loading at the source - disable for featured images on single
  * This filter runs before wp_get_attachment_image_attributes
  */
 function carcaj_control_lazy_loading($default, $tag_name, $context) {
-    // Disable auto lazy loading for post thumbnails - our filter will handle it
-    if ($context === 'wp_get_attachment_image' || $context === 'the_post_thumbnail') {
+    // On singular pages, let our other filters handle the loading attributes
+    if (is_singular() && $tag_name === 'img') {
         return false;
     }
     return $default;
