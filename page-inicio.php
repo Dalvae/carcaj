@@ -38,7 +38,7 @@ get_header();
 
   <section class="newsletter block my-8 mx-auto bg-gris">
     <div class="container mx-auto text-white px-5 py-5 lg:px-50 lg:py-[70px]">
-      <p class="text-lightgrey  font-bold text-3xl italic my-8 p-0 text-center">
+      <p class="text-white font-bold text-3xl italic my-8 p-0 text-center">
         Suscríbete y recibe actualizaciones en tu correo electrónico
       </p>
 

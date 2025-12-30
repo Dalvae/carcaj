@@ -3,8 +3,34 @@
     $slides = get_field('slider') ?: [];
     $first_slide = !empty($slides) ? $slides[0] : null;
     $slider_data = array_map(function ($slide) {
+        $image = $slide['imagen'];
+        $sizes = $image['sizes'] ?? [];
+        
+        // Build srcset from available sizes
+        $srcset_parts = [];
+        if (!empty($sizes['medium'])) {
+            $srcset_parts[] = $sizes['medium'] . ' ' . $sizes['medium-width'] . 'w';
+        }
+        if (!empty($sizes['medium_large'])) {
+            $srcset_parts[] = $sizes['medium_large'] . ' ' . $sizes['medium_large-width'] . 'w';
+        }
+        if (!empty($sizes['large'])) {
+            $srcset_parts[] = $sizes['large'] . ' ' . $sizes['large-width'] . 'w';
+        }
+        if (!empty($sizes['slider'])) {
+            $srcset_parts[] = $sizes['slider'] . ' ' . $sizes['slider-width'] . 'w';
+        }
+        // Full size as fallback
+        $srcset_parts[] = $image['url'] . ' ' . $image['width'] . 'w';
+        
         return [
-            'imagen' => $slide['imagen'],
+            'imagen' => [
+                'url' => $image['url'],
+                'alt' => $image['alt'] ?? '',
+                // Use medium_large (768px) as default for mobile, full for desktop
+                'src_mobile' => $sizes['medium_large'] ?? $sizes['large'] ?? $image['url'],
+                'srcset' => implode(', ', $srcset_parts),
+            ],
             'enlace' => esc_url($slide['enlace']),
             'titulo' => esc_html($slide['titulo']),
             'bajada' => wp_kses_post($slide['bajada']),
@@ -12,8 +38,15 @@
         ];
     }, $slides);
     
-    // Preload LCP image
-    if ($first_slide && !empty($first_slide['imagen']['url'])) {
+    // Preload LCP image - use medium_large size for better performance
+    if ($first_slide && !empty($first_slide['imagen']['sizes']['medium_large'])) {
+        $preload_url = $first_slide['imagen']['sizes']['medium_large'];
+        $full_url = $first_slide['imagen']['url'];
+        add_action('wp_head', function() use ($preload_url, $full_url) {
+            // Preload with srcset for responsive
+            echo '<link rel="preload" as="image" href="' . esc_url($preload_url) . '" imagesrcset="' . esc_url($preload_url) . ' 768w, ' . esc_url($full_url) . ' 1024w" imagesizes="(max-width: 768px) 100vw, 450px" fetchpriority="high">' . "\n";
+        }, 1);
+    } elseif ($first_slide && !empty($first_slide['imagen']['url'])) {
         add_action('wp_head', function() use ($first_slide) {
             echo '<link rel="preload" as="image" href="' . esc_url($first_slide['imagen']['url']) . '" fetchpriority="high">' . "\n";
         }, 1);
@@ -108,10 +141,14 @@
                             <!-- Círculo de la imagen -->
                             <a :href="slide.enlace" :aria-label="'Ver especial: ' + slide.titulo" class="rounded-full overflow-hidden block relative w-full max-w-[450px] aspect-square">
                                 <img
-                                    :src="slide.imagen.url"
+                                    :src="slide.imagen.src_mobile"
+                                    :srcset="slide.imagen.srcset"
+                                    sizes="(max-width: 768px) 100vw, 450px"
                                     :alt="slide.imagen.alt"
                                     :fetchpriority="index === 0 ? 'high' : 'low'"
                                     :loading="index === 0 ? 'eager' : 'lazy'"
+                                    width="450"
+                                    height="450"
                                     class="absolute inset-0 z-20 w-full h-full object-cover">
                             </a>
                         </div>

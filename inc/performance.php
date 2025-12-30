@@ -97,8 +97,12 @@ function carcaj_dequeue_unnecessary_assets() {
     }
     
     // Avatar manager - remove completely, not needed on frontend
+    wp_dequeue_style('avatar-manager-css');
+    wp_deregister_style('avatar-manager-css');
     wp_dequeue_style('jeherve-avatar-manager-css');
     wp_deregister_style('jeherve-avatar-manager-css');
+    wp_dequeue_script('avatar-manager');
+    wp_deregister_script('avatar-manager');
     wp_dequeue_script('jeherve-avatar-manager');
     wp_deregister_script('jeherve-avatar-manager');
     
