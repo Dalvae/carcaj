@@ -112,11 +112,21 @@
     --tw-prose-bullets: black;
     --tw-prose-quotes: black;
     --tw-prose-captions: black;
+    --tw-prose-code: black;
+    --tw-prose-pre-code: #e5e7eb;
+    --tw-prose-pre-bg: #1f2937;
+    --tw-prose-th-borders: #d1d5db;
+    --tw-prose-td-borders: #e5e7eb;
+    
     max-width: none;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--tw-prose-body);
 
+    /* --- Paragraphs --- */
     & p {
-      margin-top: 1.5em;
-      margin-bottom: 1.5em;
+      margin-top: 1.25em;
+      margin-bottom: 1.25em;
       line-height: 1.5;
       font-weight: 400;
 
@@ -126,25 +136,67 @@
       }
     }
 
-    & h1, & h2, & h3 {
-      color: var(--color-rojo);
+    /* --- Lead paragraph --- */
+    & .lead {
+      font-size: 1.25em;
+      line-height: 1.6;
+      margin-top: 1.2em;
+      margin-bottom: 1.2em;
+      color: #4b5563;
+    }
+
+    /* --- Headings --- */
+    & h1, & h2, & h3, & h4, & h5, & h6 {
+      color: var(--tw-prose-headings);
     }
 
     & h1 {
+      font-size: 2.25em;
       font-weight: 500;
+      margin-top: 0;
+      margin-bottom: 0.8888889em;
+      line-height: 1.1111111;
     }
 
     & h2 {
+      font-size: 1.5em;
       font-weight: 400;
+      margin-top: 2em;
+      margin-bottom: 1em;
+      line-height: 1.3333333;
     }
 
-    & h3, & h4 {
+    & h3 {
+      font-size: 1.25em;
       font-weight: 500;
+      margin-top: 1.6em;
+      margin-bottom: 0.6em;
+      line-height: 1.6;
     }
 
+    & h4 {
+      font-weight: 500;
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+      line-height: 1.5;
+    }
+
+    & h5, & h6 {
+      font-weight: 500;
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+    }
+
+    /* Remove margin from element after heading */
+    & h2 + *, & h3 + *, & h4 + * {
+      margin-top: 0;
+    }
+
+    /* --- Links --- */
     & a {
       color: var(--color-rosado);
       text-decoration: underline;
+      font-weight: 500;
 
       &:hover {
         color: var(--color-darkgold);
@@ -155,6 +207,13 @@
       text-decoration: none;
     }
 
+    /* --- Strong/Bold --- */
+    & strong {
+      color: var(--tw-prose-bold);
+      font-weight: 600;
+    }
+
+    /* --- Superscript (footnotes) --- */
     & sup {
       font-size: 1.2rem;
       vertical-align: baseline;
@@ -173,16 +232,58 @@
       }
     }
 
-    & figcaption {
-      color: black;
+    /* --- Figure & Figcaption --- */
+    & figure {
+      margin-top: 2em;
+      margin-bottom: 2em;
     }
 
+    & figure > * {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    & figcaption {
+      color: var(--tw-prose-captions);
+      font-size: 0.875em;
+      line-height: 1.4285714;
+      margin-top: 0.8571429em;
+    }
+
+    /* --- Images --- */
+    & img {
+      margin-top: 2em;
+      margin-bottom: 2em;
+      max-width: 100%;
+      height: auto;
+    }
+
+    & picture {
+      display: block;
+      margin-top: 2em;
+      margin-bottom: 2em;
+    }
+
+    & picture > img {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    /* --- Video --- */
+    & video {
+      margin-top: 2em;
+      margin-bottom: 2em;
+    }
+
+    /* --- Blockquote --- */
     & blockquote {
       quotes: none;
       font-style: normal;
+      font-weight: 500;
       border-left-width: 0;
       border-left-color: transparent;
       padding-left: 2em;
+      margin: 1.6em 0;
       margin-left: 0;
       margin-right: 0;
 
@@ -192,27 +293,21 @@
       }
     }
 
-    & img {
-      margin-top: 2em;
-      margin-bottom: 2em;
-      max-width: 100%;
-      height: auto;
-    }
-
+    /* --- Lists --- */
     & ul {
       list-style-type: disc;
-      margin-top: 1.5em;
-      margin-bottom: 1.5em;
+      margin-top: 1.25em;
+      margin-bottom: 1.25em;
     }
 
     & ol {
       list-style-type: decimal;
-      margin-top: 1.5em;
-      margin-bottom: 1.5em;
+      margin-top: 1.25em;
+      margin-bottom: 1.25em;
     }
 
     & ul, & ol {
-      padding-left: 1.5em;
+      padding-left: 1.625em;
     }
 
     & li {
@@ -220,6 +315,189 @@
       margin-bottom: 0.5em;
     }
 
+    & ol > li,
+    & ul > li {
+      padding-left: 0.375em;
+    }
+
+    /* Nested lists */
+    & ul ul, & ul ol, & ol ul, & ol ol {
+      margin-top: 0.75em;
+      margin-bottom: 0.75em;
+    }
+
+    /* List markers */
+    & ol > li::marker {
+      font-weight: 400;
+      color: var(--tw-prose-counters);
+    }
+
+    & ul > li::marker {
+      color: var(--tw-prose-bullets);
+    }
+
+    /* --- Horizontal Rule --- */
+    & hr {
+      border-color: #e5e7eb;
+      border-top-width: 1px;
+      margin-top: 3em;
+      margin-bottom: 3em;
+    }
+
+    & hr + * {
+      margin-top: 0;
+    }
+
+    /* --- Code --- */
+    & code {
+      color: var(--tw-prose-code);
+      font-weight: 600;
+      font-size: 0.875em;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    & code::before {
+      content: "`";
+    }
+
+    & code::after {
+      content: "`";
+    }
+
+    /* --- Pre (code blocks) --- */
+    & pre {
+      color: var(--tw-prose-pre-code);
+      background-color: var(--tw-prose-pre-bg);
+      overflow-x: auto;
+      font-weight: 400;
+      font-size: 0.875em;
+      line-height: 1.7142857;
+      margin-top: 1.7142857em;
+      margin-bottom: 1.7142857em;
+      border-radius: 0.375rem;
+      padding: 0.8571429em 1.1428571em;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    & pre code {
+      background-color: transparent;
+      border-width: 0;
+      border-radius: 0;
+      padding: 0;
+      font-weight: inherit;
+      color: inherit;
+      font-size: inherit;
+      font-family: inherit;
+      line-height: inherit;
+    }
+
+    & pre code::before,
+    & pre code::after {
+      content: none;
+    }
+
+    /* --- Tables --- */
+    & table {
+      width: 100%;
+      table-layout: auto;
+      text-align: left;
+      margin-top: 2em;
+      margin-bottom: 2em;
+      font-size: 0.875em;
+      line-height: 1.7142857;
+    }
+
+    & thead {
+      border-bottom-width: 1px;
+      border-bottom-color: var(--tw-prose-th-borders);
+    }
+
+    & thead th {
+      color: var(--tw-prose-headings);
+      font-weight: 600;
+      vertical-align: bottom;
+      padding-right: 0.5714286em;
+      padding-bottom: 0.5714286em;
+      padding-left: 0.5714286em;
+    }
+
+    & thead th:first-child {
+      padding-left: 0;
+    }
+
+    & thead th:last-child {
+      padding-right: 0;
+    }
+
+    & tbody tr {
+      border-bottom-width: 1px;
+      border-bottom-color: var(--tw-prose-td-borders);
+    }
+
+    & tbody tr:last-child {
+      border-bottom-width: 0;
+    }
+
+    & tbody td, & tfoot td {
+      vertical-align: baseline;
+      padding: 0.5714286em;
+    }
+
+    & tbody td:first-child, & tfoot td:first-child {
+      padding-left: 0;
+    }
+
+    & tbody td:last-child, & tfoot td:last-child {
+      padding-right: 0;
+    }
+
+    & tfoot {
+      border-top-width: 1px;
+      border-top-color: var(--tw-prose-th-borders);
+    }
+
+    & tfoot td {
+      vertical-align: top;
+    }
+
+    /* --- Definition Lists --- */
+    & dl {
+      margin-top: 1.25em;
+      margin-bottom: 1.25em;
+    }
+
+    & dt {
+      color: var(--tw-prose-headings);
+      font-weight: 600;
+      margin-top: 1.25em;
+    }
+
+    & dd {
+      margin-top: 0.5em;
+      padding-left: 1.625em;
+    }
+
+    /* --- Keyboard --- */
+    & kbd {
+      font-weight: 500;
+      font-family: inherit;
+      color: var(--tw-prose-code);
+      box-shadow: 0 0 0 1px rgb(17 24 39 / 10%), 0 3px 0 rgb(17 24 39 / 10%);
+      font-size: 0.875em;
+      border-radius: 0.3125rem;
+      padding: 0.1875em 0.375em;
+    }
+
+    /* --- First and last child margins --- */
+    & > :first-child {
+      margin-top: 0;
+    }
+
+    & > :last-child {
+      margin-bottom: 0;
+    }
+
+    /* --- WordPress specific --- */
     & p.has-small-font-size {
       font-size: 2rem;
     }
