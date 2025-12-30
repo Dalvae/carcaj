@@ -34,8 +34,8 @@ if (IS_LOGIN_PAGE) {
     define("HOOK_PREFIX", 'wp');
 }
 
-// Include critical CSS helper
-require_once get_template_directory() . '/inc/critical-css.php';
+// Critical CSS helper (disabled for now - causes issues)
+// require_once get_template_directory() . '/inc/critical-css.php';
 
 // enqueue hook
 add_action(HOOK_PREFIX . '_enqueue_scripts', function () {
