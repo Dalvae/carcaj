@@ -13,7 +13,9 @@ $settings = wp_parse_args($args, [
 ]);
 ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class('article-card bg-white overflow-hidden group relative'); ?>>
-    <a href="<?php the_permalink(); ?>" class="absolute inset-0 z-10"></a>
+    <a href="<?php the_permalink(); ?>" class="absolute inset-0 z-10" aria-label="<?php echo esc_attr(get_the_title()); ?>">
+        <span class="sr-only"><?php the_title(); ?></span>
+    </a>
 
     <div class="thumb relative">
         <div class="article-image h-60 overflow-hidden">

@@ -41,15 +41,17 @@
                     <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
                         <p class="font-alegreya text-base lg:text-lg font-semibold italic text-white/90">síguenos como @revistacarcaj</p>
                         <div class="flex items-center gap-4">
-                            <a href="https://www.facebook.com/revistacarcaj/" target="_blank"
+                            <a href="https://www.facebook.com/revistacarcaj/" target="_blank" rel="noopener noreferrer"
+                                aria-label="Facebook de Revista Carcaj"
                                 class="text-white/90 hover:text-rosado transition-all duration-300 hover:scale-110">
-                                <svg class="w-7 h-7 fill-current">
+                                <svg class="w-7 h-7 fill-current" aria-hidden="true">
                                     <use xlink:href="#icon-facebook" />
                                 </svg>
                             </a>
-                            <a href="https://www.instagram.com/revista.carcaj/" target="_blank"
+                            <a href="https://www.instagram.com/revista.carcaj/" target="_blank" rel="noopener noreferrer"
+                                aria-label="Instagram de Revista Carcaj"
                                 class="text-white/90 hover:text-rosado transition-all duration-300 hover:scale-110">
-                                <svg class="w-7 h-7 fill-current">
+                                <svg class="w-7 h-7 fill-current" aria-hidden="true">
                                     <use xlink:href="#icon-instagram" />
                                 </svg>
                             </a>

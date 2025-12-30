@@ -106,7 +106,7 @@
                             </div>
 
                             <!-- Círculo de la imagen -->
-                            <a :href="slide.enlace" class="rounded-full overflow-hidden block relative w-full max-w-[450px] aspect-square">
+                            <a :href="slide.enlace" :aria-label="'Ver especial: ' + slide.titulo" class="rounded-full overflow-hidden block relative w-full max-w-[450px] aspect-square">
                                 <img
                                     :src="slide.imagen.url"
                                     :alt="slide.imagen.alt"
