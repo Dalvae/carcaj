@@ -247,9 +247,13 @@ add_shortcode('pdf', function ($atts) {
         
         function updateUI() {
             const atStart = currentPage <= 1;
-            const atEnd = spreadMode 
-                ? currentPage + 1 >= pdf.numPages 
-                : currentPage >= pdf.numPages;
+            let atEnd;
+            if (spreadMode) {
+                // En spread: página 1 sola, después pares
+                atEnd = currentPage >= pdf.numPages || (currentPage > 1 && currentPage + 1 >= pdf.numPages);
+            } else {
+                atEnd = currentPage >= pdf.numPages;
+            }
             
             prevBtn.disabled = atStart;
             nextBtn.disabled = atEnd;
@@ -271,11 +275,18 @@ add_shortcode('pdf', function ($atts) {
             const scale = baseScale * userScale;
             
             if (spreadMode) {
-                const startPage = currentPage % 2 === 0 ? currentPage - 1 : currentPage;
-                for (let i = startPage; i <= Math.min(startPage + 1, pdf.numPages); i++) {
-                    await renderPage(i, scale);
+                // Página 1 (portada) va sola, después 2-3, 4-5, etc.
+                if (currentPage === 1) {
+                    await renderPage(1, scale);
+                    currentPageSpan.textContent = "1";
+                } else {
+                    // Páginas pares van con la siguiente impar (2-3, 4-5, 6-7...)
+                    const startPage = currentPage % 2 === 0 ? currentPage : currentPage - 1;
+                    for (let i = startPage; i <= Math.min(startPage + 1, pdf.numPages); i++) {
+                        await renderPage(i, scale);
+                    }
+                    currentPageSpan.textContent = startPage + "-" + Math.min(startPage + 1, pdf.numPages);
                 }
-                currentPageSpan.textContent = startPage + "-" + Math.min(startPage + 1, pdf.numPages);
             } else {
                 await renderPage(currentPage, scale);
                 currentPageSpan.textContent = currentPage;
@@ -306,16 +317,35 @@ add_shortcode('pdf', function ($atts) {
         
         function prevPage() {
             if (currentPage <= 1) return;
-            currentPage = spreadMode ? Math.max(1, currentPage - 2) : currentPage - 1;
+            if (spreadMode) {
+                // Si estamos en página 2-3, volver a 1
+                // Si estamos en 4-5, volver a 2-3, etc.
+                if (currentPage <= 2) {
+                    currentPage = 1;
+                } else {
+                    currentPage = currentPage - 2;
+                }
+            } else {
+                currentPage = currentPage - 1;
+            }
             renderPages(true);
         }
         
         function nextPage() {
-            const increment = spreadMode ? 2 : 1;
-            if (currentPage + increment <= pdf.numPages) {
-                currentPage += increment;
-                renderPages(true);
+            if (spreadMode) {
+                // De página 1, ir a 2-3
+                // De 2-3, ir a 4-5, etc.
+                if (currentPage === 1) {
+                    currentPage = 2;
+                } else {
+                    currentPage = currentPage + 2;
+                }
+                if (currentPage > pdf.numPages) return;
+            } else {
+                if (currentPage >= pdf.numPages) return;
+                currentPage = currentPage + 1;
             }
+            renderPages(true);
         }
         
         function zoomIn() {
