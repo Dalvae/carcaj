@@ -21,8 +21,7 @@ add_shortcode('pdf', function ($atts) {
     return '<div class="pdf-container my-8">
         <iframe 
             src="' . esc_url($pdf_url) . '" 
-            width="100%" 
-            height="' . esc_attr($atts['height']) . '"
+            style="width: 100%; height: ' . esc_attr($atts['height']) . ';"
             class="border border-gray-300 rounded-lg shadow-sm"
             allowfullscreen>
         </iframe>
