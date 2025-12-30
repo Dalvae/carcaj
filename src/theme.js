@@ -5,6 +5,12 @@ import * as Turbo from "@hotwired/turbo";
 
 Turbo.config.drive.progressBarDelay = 500;
 
+// Handle Turbo errors gracefully
+document.addEventListener("turbo:frame-missing", (event) => {
+    event.preventDefault();
+    event.detail.visit(event.detail.response);
+});
+
 // Alpine JS
 import Alpine from "alpinejs";
 
@@ -35,9 +41,13 @@ Alpine.start();
 import "./js/progressbar.js";
 import "./js/footnotes.js";
 
-// Page Change
+// Page Change - reinitialize Alpine components after navigation
 document.addEventListener("turbo:load", function () {
-  // console.log('turbo:load');
+    // Reset header state on navigation
+    if (Alpine.store('header')) {
+        Alpine.store('header').isOpen = false;
+        Alpine.store('header').hasScrolled = window.pageYOffset > 20;
+    }
 });
 
 // Anchor scroll with offset for sticky header
