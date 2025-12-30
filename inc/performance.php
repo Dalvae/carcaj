@@ -319,6 +319,34 @@ function carcaj_control_lazy_loading($default, $tag_name, $context) {
 }
 add_filter('wp_lazy_loading_enabled', 'carcaj_control_lazy_loading', 10, 3);
 
+/**
+ * Fix LCP image loading attribute - final pass
+ * WordPress 6.x uses wp_content_img_tag to add loading="lazy" to ALL images
+ * This filter modifies the final HTML output for the featured image
+ */
+function carcaj_fix_lcp_image_tag($filtered_image, $context, $attachment_id) {
+    // Only process on singular pages
+    if (!is_singular()) {
+        return $filtered_image;
+    }
+    
+    // Check if this is the featured image
+    $post_thumbnail_id = get_post_thumbnail_id();
+    if ($attachment_id === $post_thumbnail_id) {
+        // Replace loading="lazy" with loading="eager"
+        $filtered_image = preg_replace('/loading=["\']lazy["\']/', 'loading="eager"', $filtered_image);
+        // Remove decoding="async" for LCP
+        $filtered_image = preg_replace('/\s*decoding=["\']async["\']\s*/', ' ', $filtered_image);
+        // Ensure fetchpriority="high" is present
+        if (strpos($filtered_image, 'fetchpriority') === false) {
+            $filtered_image = preg_replace('/<img\s/', '<img fetchpriority="high" ', $filtered_image);
+        }
+    }
+    
+    return $filtered_image;
+}
+add_filter('wp_content_img_tag', 'carcaj_fix_lcp_image_tag', 999, 3);
+
 // ============================================================================
 // Resource Hints
 // ============================================================================
