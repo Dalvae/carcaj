@@ -82,7 +82,7 @@ if (post_password_required()) {
             'email'  => '<div class="comment-form-email mb-4"><label for="email" class="sr-only">Email</label><input id="email" name="email" type="email" class="w-full p-4 bg-white border border-gray-200  focus:outline-none focus:ring-0" placeholder="Email" required /></div>',
             'cookies' => '<p class="comment-form-cookies-consent mb-4"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes" class="mr-2"> <label for="wp-comment-cookies-consent" class="text-sm text-gray-600">Guarda mi nombre, correo electrónico y web en este navegador para la próxima vez que comente.</label></p>',
         ),
-        'submit_button'        => '<button type="submit" class="w-full text-white py-4 px-6 bg-rojo hover:bg-darkgold transition-colors">PUBLICAR EL COMENTARIO</button>',
+        'submit_button'        => '<button type="submit" class="w-full text-white font-bold py-4 px-6 bg-darkgold hover:bg-gold hover:text-darkgold transition-colors">PUBLICAR EL COMENTARIO</button>',
         'class_form'           => 'space-y-4',
         'cancel_reply_link'    => '<span class="text-sm text-gold hover:text-darkgold ml-2">Cancelar respuesta</span>',
         'form_attributes'      => array('data-turbo' => 'false'),
