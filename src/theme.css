@@ -795,8 +795,20 @@
 /* --- Quote Block --- */
 .wp-block-quote {
   border-left: 4px solid var(--color-rojo);
-  padding-left: 1em;
+  padding-left: 1.5em;
   margin: 1.5em 0;
+  position: relative;
+}
+
+.wp-block-quote::before {
+  content: '"';
+  font-size: 4em;
+  color: var(--color-rojo);
+  position: absolute;
+  left: 0.1em;
+  top: -0.2em;
+  line-height: 1;
+  font-family: Georgia, serif;
 }
 
 .wp-block-quote.is-style-plain {
