@@ -251,12 +251,30 @@ add_action('after_setup_theme', 'carcaj_custom_image_sizes');
 
 /**
  * Add loading="lazy" and decoding="async" to images
+ * Priority images (LCP): slider, full, large on single posts
  */
 function carcaj_lazy_load_images($attr, $attachment, $size) {
-    // Don't lazy load above-the-fold images
+    // Determine if this is a priority (above-the-fold) image
+    $is_priority = false;
+    
+    // Slider and full are always priority
     if ($size === 'slider' || $size === 'full') {
+        $is_priority = true;
+    }
+    
+    // Featured image on single posts should be priority (LCP image)
+    if (is_singular() && $size === 'large') {
+        $post_thumbnail_id = get_post_thumbnail_id();
+        if ($attachment && $attachment->ID === $post_thumbnail_id) {
+            $is_priority = true;
+        }
+    }
+    
+    if ($is_priority) {
         $attr['fetchpriority'] = 'high';
         $attr['loading'] = 'eager';
+        // Remove decoding=async for LCP image
+        unset($attr['decoding']);
     } else {
         $attr['loading'] = 'lazy';
         $attr['decoding'] = 'async';
@@ -264,7 +282,39 @@ function carcaj_lazy_load_images($attr, $attachment, $size) {
     
     return $attr;
 }
-add_filter('wp_get_attachment_image_attributes', 'carcaj_lazy_load_images', 10, 3);
+add_filter('wp_get_attachment_image_attributes', 'carcaj_lazy_load_images', 99, 3);
+
+/**
+ * Disable WordPress auto-adding loading="lazy" to LCP images
+ * WordPress 5.9+ adds loading="lazy" automatically, we need to override for LCP
+ */
+function carcaj_disable_lazy_on_lcp($loading, $tag, $context) {
+    // On single posts, the featured image should not have lazy loading
+    if (is_singular() && $context === 'the_content') {
+        return $loading; // Let our filter handle it
+    }
+    
+    // For featured images specifically
+    if ($context === 'wp_get_attachment_image') {
+        return false; // Let our filter handle it completely
+    }
+    
+    return $loading;
+}
+add_filter('wp_img_tag_add_loading_attr', 'carcaj_disable_lazy_on_lcp', 10, 3);
+
+/**
+ * Control lazy loading at the source - disable for featured images on single
+ * This filter runs before wp_get_attachment_image_attributes
+ */
+function carcaj_control_lazy_loading($default, $tag_name, $context) {
+    // Disable auto lazy loading for post thumbnails - our filter will handle it
+    if ($context === 'wp_get_attachment_image' || $context === 'the_post_thumbnail') {
+        return false;
+    }
+    return $default;
+}
+add_filter('wp_lazy_loading_enabled', 'carcaj_control_lazy_loading', 10, 3);
 
 // ============================================================================
 // Resource Hints
