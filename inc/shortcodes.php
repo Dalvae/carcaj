@@ -72,6 +72,25 @@ add_shortcode('pdf', function ($atts) {
             .pdf-pages-wrapper.spread-view {
                 flex-wrap: nowrap;
             }
+            /* Mobile styles */
+            @media (max-width: 768px) {
+                .pdf-controls {
+                    flex-wrap: wrap;
+                    gap: 5px;
+                    padding: 8px;
+                }
+                .pdf-controls button {
+                    padding: 6px 10px;
+                    font-size: 14px;
+                }
+                .pdf-controls .spread-btn {
+                    display: none;
+                }
+                .pdf-pages-wrapper {
+                    padding: 10px;
+                    gap: 10px;
+                }
+            }
         </style>';
     }
     
@@ -83,7 +102,7 @@ add_shortcode('pdf', function ($atts) {
             <button onclick="pdfViewers[\'' . $viewer_id . '\'].nextPage()">Siguiente →</button>
             <button onclick="pdfViewers[\'' . $viewer_id . '\'].zoomOut()">−</button>
             <button onclick="pdfViewers[\'' . $viewer_id . '\'].zoomIn()">+</button>
-            <button onclick="pdfViewers[\'' . $viewer_id . '\'].toggleSpread()">Vista doble</button>
+            <button onclick="pdfViewers[\'' . $viewer_id . '\'].toggleSpread()" class="spread-btn">Vista doble</button>
         </div>
         <div class="pdf-pages-wrapper"></div>
     </div>
@@ -100,7 +119,8 @@ add_shortcode('pdf', function ($atts) {
         
         let pdf = null;
         let currentPage = 1;
-        let scale = 1.2;
+        let isMobile = window.innerWidth <= 768;
+        let scale = isMobile ? 0.8 : 1.2;
         let spreadMode = false;
         
         async function loadPDF() {
@@ -167,6 +187,7 @@ add_shortcode('pdf', function ($atts) {
                 }
             },
             toggleSpread() {
+                if (isMobile) return; // No permitir spread en mobile
                 spreadMode = !spreadMode;
                 renderPages();
             }
