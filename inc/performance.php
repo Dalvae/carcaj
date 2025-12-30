@@ -97,14 +97,22 @@ function carcaj_dequeue_unnecessary_assets() {
     }
     
     // Avatar manager - remove completely, not needed on frontend
-    wp_dequeue_style('avatar-manager-css');
-    wp_deregister_style('avatar-manager-css');
-    wp_dequeue_style('jeherve-avatar-manager-css');
-    wp_deregister_style('jeherve-avatar-manager-css');
-    wp_dequeue_script('avatar-manager');
-    wp_deregister_script('avatar-manager');
-    wp_dequeue_script('jeherve-avatar-manager');
-    wp_deregister_script('jeherve-avatar-manager');
+    // Try all possible handle variations
+    $avatar_handles = [
+        'avatar-manager',
+        'avatar-manager-css', 
+        'jeherve-avatar-manager',
+        'jeherve-avatar-manager-css',
+        'avatar_manager',
+        'avatar_manager_css'
+    ];
+    
+    foreach ($avatar_handles as $handle) {
+        wp_dequeue_style($handle);
+        wp_deregister_style($handle);
+        wp_dequeue_script($handle);
+        wp_deregister_script($handle);
+    }
     
     // Co-Authors Plus styles - not needed
     wp_dequeue_style('co-authors-plus-css');
@@ -136,6 +144,22 @@ function carcaj_dequeue_unnecessary_assets() {
 
 }
 add_action('wp_enqueue_scripts', 'carcaj_dequeue_unnecessary_assets', 100);
+
+/**
+ * Remove avatar-manager CSS by URL pattern (fallback if handle doesn't work)
+ */
+function carcaj_remove_avatar_manager_by_url() {
+    global $wp_styles;
+    if (!empty($wp_styles->registered)) {
+        foreach ($wp_styles->registered as $handle => $style) {
+            if (isset($style->src) && strpos($style->src, 'avatar-manager') !== false) {
+                wp_dequeue_style($handle);
+                wp_deregister_style($handle);
+            }
+        }
+    }
+}
+add_action('wp_enqueue_scripts', 'carcaj_remove_avatar_manager_by_url', 999);
 
 // ============================================================================
 // WebP Support

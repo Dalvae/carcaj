@@ -36,9 +36,9 @@ $settings = wp_parse_args($args, [
 
     <div class="p-4">
         <div class="date text-gris"><?php the_time('d'); ?> de <?php the_time('F Y'); ?></div>
-        <h3 class="text-3xl font-semibold transition-colors duration-300 text-rojo group-hover:text-darkgold">
+        <h2 class="text-3xl font-semibold transition-colors duration-300 text-rojo group-hover:text-darkgold">
             <?php the_title(); ?>
-        </h3>
+        </h2>
         <?php if ($settings['show_author']) : ?>
             <div class="autor italic text-end font-semibold">
                 <span class="text-gris">por</span>
