@@ -48,7 +48,7 @@ get_header();
           placeholder="Tu email"
           class="w-[600px] text-base py-2.5 px-2.5 border-none mr-2.5 bg-white text-black">
         <button
-          class="w-[200px] py-2.5 px-2.5 text-base bg-rojo border-none text-white uppercase transition-colors duration-300 hover:cursor-pointer hover:bg-darkgold">
+          class="w-[200px] py-2.5 px-2.5 text-base bg-darkgold border-none text-white font-bold uppercase transition-colors duration-300 hover:cursor-pointer hover:bg-gold">
           Enviar
         </button>
       </form>
