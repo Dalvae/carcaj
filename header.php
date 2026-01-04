@@ -6,6 +6,34 @@
     <title><?php echo wp_get_document_title(); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- META DESCRIPTION -->
+    <?php
+    $meta_description = '';
+    if (is_front_page() || is_home()) {
+        $meta_description = 'Carcaj, flechas de sentido. Revista cultural chilena de arte, literatura y política. Textos críticos, ensayos y crónicas.';
+    } elseif (is_singular()) {
+        $meta_description = get_the_excerpt();
+        if (empty($meta_description)) {
+            $meta_description = wp_trim_words(get_the_content(), 25, '...');
+        }
+    } elseif (is_category() || is_tag() || is_tax()) {
+        $meta_description = term_description();
+    } elseif (is_author()) {
+        $meta_description = get_the_author_meta('description');
+    }
+    
+    if (empty($meta_description)) {
+        $meta_description = get_bloginfo('description');
+    }
+    
+    $meta_description = wp_strip_all_tags($meta_description);
+    $meta_description = esc_attr(wp_trim_words($meta_description, 25, '...'));
+    
+    if (!empty($meta_description)) :
+    ?>
+    <meta name="description" content="<?php echo $meta_description; ?>">
+    <?php endif; ?>
+
     <!-- FAVICONS -->
     <link rel="apple-touch-icon" sizes="180x180" href="<?php echo esc_url(get_template_directory_uri()); ?>/img/icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="<?php echo esc_url(get_template_directory_uri()); ?>/img/icons/favicon-32x32.png">
