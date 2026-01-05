@@ -38,8 +38,26 @@ Alpine.data('header', () => ({
 window.Alpine = Alpine;
 Alpine.start();
 
-import "./js/progressbar.js";
-import "./js/footnotes.js";
+// Lazy load progressbar and footnotes only on single posts
+function loadArticleModules() {
+    // Check if we're on a single post page (has .content-full or footnotes)
+    const hasProgressBar = document.querySelector('.content-full');
+    const hasFootnotes = document.querySelector('a[href*="_ftn"], a[href*="sdfootnote"]');
+    
+    if (hasProgressBar) {
+        import('./js/progressbar.js');
+    }
+    
+    if (hasFootnotes) {
+        import('./js/footnotes.js');
+    }
+}
+
+// Load on initial page
+loadArticleModules();
+
+// Load after Turbo navigation
+document.addEventListener("turbo:load", loadArticleModules);
 
 // Page Change - reinitialize Alpine components after navigation
 document.addEventListener("turbo:load", function () {

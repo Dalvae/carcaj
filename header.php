@@ -15,6 +15,21 @@
     <title><?php echo wp_get_document_title(); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- PRELOAD CRITICAL ASSETS - discover early, before wp_head -->
+    <?php
+    $manifest_path = get_template_directory() . '/dist/.vite/manifest.json';
+    if (file_exists($manifest_path)) {
+        $manifest = json_decode(file_get_contents($manifest_path), true);
+        $entry = $manifest['src/theme.js'] ?? null;
+        if ($entry && !empty($entry['css'][0])) {
+            $css_file = $entry['css'][0];
+            echo '<link rel="preload" href="' . esc_url(get_template_directory_uri() . '/dist/' . $css_file) . '" as="style">' . "\n";
+        }
+    }
+    ?>
+    <link rel="preload" href="<?php echo esc_url(get_template_directory_uri()); ?>/dist/assets/fonts/subset-Alegreya-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="<?php echo esc_url(get_template_directory_uri()); ?>/dist/assets/fonts/subset-Alegreya-Bold.woff2" as="font" type="font/woff2" crossorigin>
+
     <!-- META DESCRIPTION -->
     <?php
     $meta_description = '';

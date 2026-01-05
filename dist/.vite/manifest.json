@@ -39,13 +39,29 @@
     "file": "assets/fonts/subset-Alegreya-Regular.woff2",
     "src": "src/fonts/subset-Alegreya-Regular.woff2"
   },
+  "src/js/footnotes.js": {
+    "file": "assets/footnotes-BTiG5dEC.js",
+    "name": "footnotes",
+    "src": "src/js/footnotes.js",
+    "isDynamicEntry": true
+  },
+  "src/js/progressbar.js": {
+    "file": "assets/progressbar-CETSGObE.js",
+    "name": "progressbar",
+    "src": "src/js/progressbar.js",
+    "isDynamicEntry": true
+  },
   "src/theme.js": {
-    "file": "assets/theme-Dxhflgdn.js",
+    "file": "assets/theme-DH5x5Co-.js",
     "name": "theme",
     "src": "src/theme.js",
     "isEntry": true,
+    "dynamicImports": [
+      "src/js/progressbar.js",
+      "src/js/footnotes.js"
+    ],
     "css": [
-      "assets/theme-C8xCW_k4.css"
+      "assets/theme-BJEAPZrE.css"
     ],
     "assets": [
       "assets/fonts/subset-Alegreya-Regular.woff2",
