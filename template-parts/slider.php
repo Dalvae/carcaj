@@ -66,13 +66,6 @@
     
     // Total slides count for Alpine
     $total_slides = count($slides);
-    
-    // Preload LCP image
-    if ($first_slide && !empty($first_slide_src)) {
-        add_action('wp_head', function() use ($first_slide_src, $first_slide_srcset) {
-            echo '<link rel="preload" as="image" href="' . esc_url($first_slide_src) . '" imagesrcset="' . esc_attr($first_slide_srcset) . '" imagesizes="(max-width: 768px) 100vw, 450px" fetchpriority="high">' . "\n";
-        }, 1);
-    }
     ?>
     <script>
         window.sliderData = <?php echo json_encode($slider_data); ?>;

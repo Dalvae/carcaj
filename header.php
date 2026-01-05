@@ -26,6 +26,17 @@
             echo '<link rel="preload" href="' . esc_url(get_template_directory_uri() . '/dist/' . $css_file) . '" as="style">' . "\n";
         }
     }
+    
+    // Preload LCP image for homepage slider
+    if (is_front_page() || is_page_template('page-inicio.php')) {
+        $slides = get_field('slider');
+        if (!empty($slides[0]['imagen'])) {
+            $image = $slides[0]['imagen'];
+            $sizes = $image['sizes'] ?? [];
+            $lcp_src = $sizes['medium_large'] ?? $sizes['large'] ?? $image['url'];
+            echo '<link rel="preload" as="image" href="' . esc_url($lcp_src) . '" fetchpriority="high">' . "\n";
+        }
+    }
     ?>
     <link rel="preload" href="<?php echo esc_url(get_template_directory_uri()); ?>/dist/assets/fonts/subset-Alegreya-Regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="<?php echo esc_url(get_template_directory_uri()); ?>/dist/assets/fonts/subset-Alegreya-Bold.woff2" as="font" type="font/woff2" crossorigin>
