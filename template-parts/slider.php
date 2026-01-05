@@ -126,15 +126,13 @@
         <div class="relative lg:h-[60vh] h-[90vh] max-w-[1286px] mx-auto px-4 lg:px-0 lg:min-h-[450px]">
             
             <?php if ($first_slide): ?>
-            <!-- First slide rendered server-side for LCP discoverability -->
+            <!-- First slide rendered server-side WITHOUT x-show for instant LCP -->
             <div x-show="currentSlide === 0"
-                x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="opacity-0 transform translate-x-full"
-                x-transition:enter-end="opacity-100 transform translate-x-0"
                 x-transition:leave="transition ease-in duration-300"
                 x-transition:leave-start="opacity-100 transform translate-x-0"
                 x-transition:leave-end="opacity-0 transform -translate-x-full"
-                class="absolute inset-0 will-change-transform">
+                class="absolute inset-0 will-change-transform"
+                style="display: block;">
                 <div class="flex flex-col lg:flex-row items-center w-full py-4">
                     <!-- Image container with arrows -->
                     <div class="w-full lg:w-1/2 lg:ml-44 flex justify-center items-center relative">
