@@ -2,15 +2,6 @@
 <html <?php language_attributes(); ?> class="no-js">
 
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LDH31X2HDV"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-LDH31X2HDV');
-    </script>
-
     <meta charset="<?php bloginfo('charset'); ?>">
     <title><?php echo wp_get_document_title(); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

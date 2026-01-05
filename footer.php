@@ -69,6 +69,24 @@
 </footer>
 
 <?php wp_footer(); ?>
+
+<!-- Google Analytics - deferred to not block LCP -->
+<script>
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        var script = document.createElement('script');
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-LDH31X2HDV';
+        script.async = true;
+        document.head.appendChild(script);
+        
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-LDH31X2HDV');
+    }, 100);
+});
+</script>
 </body>
 
 </html>
