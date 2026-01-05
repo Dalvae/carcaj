@@ -27,14 +27,31 @@
         }
     }
     
-    // Preload LCP image for homepage slider
+    // Preload LCP image for homepage slider with srcset for correct size selection
     if (is_front_page() || is_page_template('page-inicio.php')) {
         $slides = get_field('slider');
         if (!empty($slides[0]['imagen'])) {
             $image = $slides[0]['imagen'];
             $sizes = $image['sizes'] ?? [];
+            
+            // Build srcset for preload (must match slider.php)
+            $srcset_parts = [];
+            if (!empty($sizes['medium'])) {
+                $srcset_parts[] = $sizes['medium'] . ' ' . $sizes['medium-width'] . 'w';
+            }
+            if (!empty($sizes['medium_large'])) {
+                $srcset_parts[] = $sizes['medium_large'] . ' ' . $sizes['medium_large-width'] . 'w';
+            }
+            if (!empty($sizes['large'])) {
+                $srcset_parts[] = $sizes['large'] . ' ' . $sizes['large-width'] . 'w';
+            }
+            $srcset_parts[] = $image['url'] . ' ' . $image['width'] . 'w';
+            $srcset = implode(', ', $srcset_parts);
+            
+            // Fallback src
             $lcp_src = $sizes['medium_large'] ?? $sizes['large'] ?? $image['url'];
-            echo '<link rel="preload" as="image" href="' . esc_url($lcp_src) . '" fetchpriority="high">' . "\n";
+            
+            echo '<link rel="preload" as="image" href="' . esc_url($lcp_src) . '" imagesrcset="' . esc_attr($srcset) . '" imagesizes="(max-width: 768px) 100vw, 450px" fetchpriority="high">' . "\n";
         }
     }
     ?>
