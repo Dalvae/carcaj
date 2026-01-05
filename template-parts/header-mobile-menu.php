@@ -1,20 +1,10 @@
-<template x-if="$store.header.isOpen">
-    <div class="fixed inset-0 bg-black bg-opacity-50 z-[968]"
-        @click="$store.header.isOpen = false"></div>
-</template>
-<!-- Menú Móvil Mejorado -->
+<!-- Overlay -->
+<div id="mobile-menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-[968] hidden"></div>
 
-<div x-cloak
-    x-show="$store.header.isOpen"
-    x-transition:enter="transition ease-out duration-300"
-    x-transition:enter-start="opacity-0 scale-95"
-    x-transition:enter-end="opacity-100 scale-100"
-    x-transition:leave="transition ease-in duration-200"
-    x-transition:leave-start="opacity-100 scale-100"
-    x-transition:leave-end="opacity-0 scale-95"
-    class="lg:hidden fixed inset-0 bg-white z-[979] overflow-y-auto"
-    @click.away="$store.header.isOpen = false"
-    style="position: fixed;">
+<!-- Menú Móvil -->
+<div id="mobile-menu"
+    class="lg:hidden fixed inset-0 bg-white z-[979] overflow-y-auto transform transition-all duration-300 ease-out opacity-0 scale-95 pointer-events-none"
+    aria-hidden="true">
 
     <div class="container mx-auto px-4 py-8 font-bold italic text-sm">
         <!-- Buscador integrado -->

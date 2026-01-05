@@ -13,15 +13,15 @@
         width="53" height="52" alt="Carcaj" loading="lazy">
 
     <!-- Botón de compartir -->
-    <div class="relative" x-data="{ isOpen: false }" @click.away="isOpen = false">
-        <button @click="isOpen = !isOpen" class="inline-flex p-2" aria-label="Compartir artículo" aria-expanded="false" :aria-expanded="isOpen.toString()">
+    <div class="relative share-container">
+        <button class="share-toggle inline-flex p-2" aria-label="Compartir artículo" aria-expanded="false">
             <svg class="w-12 h-12 fill-rojo hover:fill-darkgold transition-colors duration-300" aria-hidden="true">
                 <use xlink:href="#icon-share" />
             </svg>
         </button>
 
         <!-- Menú desplegable de redes sociales -->
-        <div x-show="isOpen" x-transition class="absolute left-full top-0 ml-2 bg-white p-4 rounded-lg shadow-lg flex items-center gap-4 z-10" style="transform: translateX(10px);">
+        <div class="share-menu absolute left-full top-0 ml-2 bg-white p-4 rounded-lg shadow-lg flex items-center gap-4 z-10 opacity-0 pointer-events-none transition-opacity duration-200" style="transform: translateX(10px);">
              <div class="relative after:content-[''] after:absolute after:top-1/2 after:right-full after:border-8 after:border-transparent after:border-r-white after:-translate-y-1/2">
                 <!-- Facebook -->
                 <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_permalink()); ?>" target="_blank" rel="noopener" class="inline-flex p-2" aria-label="Compartir en Facebook">

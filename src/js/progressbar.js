@@ -1,57 +1,50 @@
-document.addEventListener("alpine:init", () => {
-  Alpine.data("progressBar", () => ({
-    progress: 0,
-    contentFull: null,
+// Progress bar - vanilla JS
 
-    init() {
-      this.contentFull = document.querySelector(".content-full");
-      if (!this.contentFull) return;
+export function initProgressBar() {
+    const contentFull = document.querySelector('.content-full');
+    if (!contentFull) return;
 
-      // Remover barras de progreso existentes
-      const existingBars = document.querySelectorAll(".progress-bar");
-      existingBars.forEach((bar) => bar.remove());
+    // Create progress bar element
+    const progressBar = document.createElement('div');
+    progressBar.id = 'reading-progress';
+    progressBar.className = 'fixed top-0 left-0 h-1.5 bg-rojo transform-gpu z-50';
+    progressBar.style.width = '0%';
+    document.body.prepend(progressBar);
 
-      this.updateProgress();
+    let ticking = false;
 
-      let ticking = false;
+    function updateProgress() {
+        const contentRect = contentFull.getBoundingClientRect();
+        const contentTop = contentRect.top + window.pageYOffset;
+        const contentHeight = contentRect.height;
+        const viewportHeight = window.innerHeight;
+        const currentScroll = window.pageYOffset;
 
-      window.addEventListener(
-        "scroll",
-        () => {
-          if (!ticking) {
+        let progress = 0;
+
+        if (currentScroll > contentTop) {
+            const scrolledContent = currentScroll - contentTop;
+            const viewableContentHeight = contentHeight - viewportHeight;
+            progress = (scrolledContent / viewableContentHeight) * 100;
+            progress = Math.min(Math.max(progress, 0), 100);
+        }
+
+        progressBar.style.width = `${progress}%`;
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
             requestAnimationFrame(() => {
-              this.updateProgress();
-              ticking = false;
+                updateProgress();
+                ticking = false;
             });
             ticking = true;
-          }
-        },
-        { passive: true }
-      );
+        }
+    }, { passive: true });
 
-      window.addEventListener("resize", () => this.updateProgress());
-      window.addEventListener("orientationchange", () => this.updateProgress());
-    },
+    window.addEventListener('resize', updateProgress);
+    window.addEventListener('orientationchange', updateProgress);
 
-    updateProgress() {
-      if (!this.contentFull) return;
-
-      const contentRect = this.contentFull.getBoundingClientRect();
-      const contentTop = contentRect.top + window.pageYOffset;
-      const contentHeight = contentRect.height;
-      const viewportHeight = window.innerHeight;
-      const currentScroll = window.pageYOffset;
-
-      let progress = 0;
-
-      if (currentScroll > contentTop) {
-        const scrolledContent = currentScroll - contentTop;
-        const viewableContentHeight = contentHeight - viewportHeight;
-        progress = (scrolledContent / viewableContentHeight) * 100;
-        progress = Math.min(Math.max(progress, 0), 100);
-      }
-
-      this.progress = progress;
-    },
-  }));
-});
+    // Initial update
+    updateProgress();
+}

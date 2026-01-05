@@ -19,7 +19,7 @@ define('DIST_PATH', get_template_directory() . '/' . DIST_DEF);
 
 // js enqueue settings
 const JS_DEPENDENCY = array(); // array('jquery') as example
-const JS_LOAD_IN_FOOTER = false; // load in head - Turbo needs early initialization
+const JS_LOAD_IN_FOOTER = true; // load in footer for better performance
 
 // deafult server address, port and entry point can be customized in vite.config.json
 const VITE_SERVER = 'http://localhost:3000';

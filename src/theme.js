@@ -1,87 +1,57 @@
 import "./theme.css";
 
-// Turbo SPA
-import * as Turbo from "@hotwired/turbo";
+import { initHeader } from "./js/header.js";
+import { initSlider } from "./js/slider.js";
+import { initProgressBar } from "./js/progressbar.js";
+import { initFootnotes } from "./js/footnotes.js";
 
-Turbo.config.drive.progressBarDelay = 500;
-
-// Handle Turbo errors gracefully
-document.addEventListener("turbo:frame-missing", (event) => {
-    event.preventDefault();
-    event.detail.visit(event.detail.response);
-});
-
-// Alpine JS
-import Alpine from "alpinejs";
-
-// Initialize Alpine store and data before starting
-Alpine.store('header', {
-    isOpen: false,
-    currentCategory: null,
-    hasScrolled: false
-});
-
-Alpine.data('header', () => ({
-    isSearchOpen: false,
-    init() {
-        this.$watch('$store.header.isOpen', value => {
-            document.body.style.overflow = value ? 'hidden' : '';
-            if (value) {
-                window.dispatchEvent(new Event('stopSlider'));
-            } else {
-                window.dispatchEvent(new Event('startSlider'));
-            }
-        });
-    }
-}));
-
-window.Alpine = Alpine;
-Alpine.start();
-
-// Lazy load progressbar and footnotes only on single posts
-function loadArticleModules() {
-    // Check if we're on a single post page (has .content-full or footnotes)
-    const hasProgressBar = document.querySelector('.content-full');
-    const hasFootnotes = document.querySelector('a[href*="_ftn"], a[href*="sdfootnote"]');
-    
-    if (hasProgressBar) {
-        import('./js/progressbar.js');
-    }
-    
-    if (hasFootnotes) {
-        import('./js/footnotes.js');
-    }
+// Initialize all components when DOM is ready
+function init() {
+    initHeader();
+    initSlider();
+    initProgressBar();
+    initFootnotes();
+    initShareButtons();
 }
 
-// Load on initial page
-loadArticleModules();
+// Share buttons functionality
+function initShareButtons() {
+    const shareContainers = document.querySelectorAll('.share-container');
+    
+    shareContainers.forEach(container => {
+        const toggle = container.querySelector('.share-toggle');
+        const menu = container.querySelector('.share-menu');
+        
+        if (!toggle || !menu) return;
+        
+        toggle.addEventListener('click', () => {
+            const isOpen = !menu.classList.contains('opacity-0');
+            
+            if (isOpen) {
+                menu.classList.add('opacity-0', 'pointer-events-none');
+                menu.classList.remove('opacity-100', 'pointer-events-auto');
+                toggle.setAttribute('aria-expanded', 'false');
+            } else {
+                menu.classList.remove('opacity-0', 'pointer-events-none');
+                menu.classList.add('opacity-100', 'pointer-events-auto');
+                toggle.setAttribute('aria-expanded', 'true');
+            }
+        });
+        
+        // Close on click outside
+        document.addEventListener('click', (e) => {
+            if (!container.contains(e.target)) {
+                menu.classList.add('opacity-0', 'pointer-events-none');
+                menu.classList.remove('opacity-100', 'pointer-events-auto');
+                toggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+    });
+}
 
-// Load after Turbo navigation
-document.addEventListener("turbo:load", loadArticleModules);
-
-// Page Change - reinitialize Alpine components after navigation
-document.addEventListener("turbo:load", function () {
-    // Reset header state on navigation
-    if (Alpine.store('header')) {
-        Alpine.store('header').isOpen = false;
-        Alpine.store('header').hasScrolled = window.pageYOffset > 20;
-    }
-});
-
-// Anchor scroll with offset for sticky header
-document.addEventListener("turbo:render", function (event) {
-    // Check if newBody exists before accessing its properties
-    if (!event.detail?.newBody?.baseURI) {
-        return;
-    }
-    const url = new URL(event.detail.newBody.baseURI);
-    if (url.hash) {
-        const targetElement = document.getElementById(url.hash.substring(1));
-        if (targetElement) {
-            const position = targetElement.getBoundingClientRect().top + window.scrollY;
-            window.scrollTo({
-                top: position - 200, // Adjusted for sticky header
-            });
-        }
-    }
-});
+// Run on DOM ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
+}

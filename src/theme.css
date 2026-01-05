@@ -2,6 +2,13 @@
 @import "./fonts.css";
 
 /* ============================================
+   GLOBAL - Prevent horizontal overflow
+   ============================================ */
+html, body {
+  overflow-x: hidden;
+}
+
+/* ============================================
    THEME CONFIGURATION - Single Source of Truth
    ============================================ */
 @theme {
