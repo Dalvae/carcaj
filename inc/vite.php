@@ -19,7 +19,7 @@ define('DIST_PATH', get_template_directory() . '/' . DIST_DEF);
 
 // js enqueue settings
 const JS_DEPENDENCY = array(); // array('jquery') as example
-const JS_LOAD_IN_FOOTER = false; // load in head for Turbo compatibility
+const JS_LOAD_IN_FOOTER = true; // load in footer to avoid blocking render
 
 // deafult server address, port and entry point can be customized in vite.config.json
 const VITE_SERVER = 'http://localhost:3000';
@@ -84,10 +84,11 @@ add_action(HOOK_PREFIX . '_enqueue_scripts', function () {
                 }
             }
 
-            // Add type="module" to theme script for Turbo compatibility
+            // Add type="module" and defer to theme script
+            // type="module" is deferred by default, but explicit defer helps older parsers
             add_filter('script_loader_tag', function ($tag, $handle, $src) {
                 if ($handle === 'theme') {
-                    return '<script type="module" src="' . esc_url($src) . '" id="theme-js"></script>' . "\n";
+                    return '<script type="module" defer src="' . esc_url($src) . '" id="theme-js"></script>' . "\n";
                 }
                 return $tag;
             }, 10, 3);
