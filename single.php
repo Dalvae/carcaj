@@ -12,7 +12,8 @@
                             $thumb_id = get_post_thumbnail_id();
                             $thumb_src = wp_get_attachment_image_src($thumb_id, 'large');
                             $thumb_srcset = wp_get_attachment_image_srcset($thumb_id, 'large');
-                            $thumb_sizes = wp_get_attachment_image_sizes($thumb_id, 'large');
+                            // Custom sizes: full width on mobile, max 768px on desktop
+                            $thumb_sizes = '(max-width: 768px) 100vw, 768px';
                             $thumb_alt = get_post_meta($thumb_id, '_wp_attachment_image_alt', true);
                             
                             // Fallback: use post title if no alt text defined (SEO improvement)

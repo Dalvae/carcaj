@@ -24,7 +24,7 @@
         if (!empty($slides[0]['imagen'])) {
             $image = $slides[0]['imagen'];
             $sizes = $image['sizes'] ?? [];
-            
+
             // Build srcset for preload (must match slider.php)
             $srcset_parts = [];
             if (!empty($sizes['medium'])) {
@@ -38,11 +38,23 @@
             }
             $srcset_parts[] = $image['url'] . ' ' . $image['width'] . 'w';
             $srcset = implode(', ', $srcset_parts);
-            
+
             // Fallback src
             $lcp_src = $sizes['medium_large'] ?? $sizes['large'] ?? $image['url'];
-            
+
             echo '<link rel="preload" as="image" href="' . esc_url($lcp_src) . '" imagesrcset="' . esc_attr($srcset) . '" imagesizes="(max-width: 768px) 100vw, 450px" fetchpriority="high">' . "\n";
+        }
+    }
+
+    // Preload LCP image for single posts (featured image)
+    if (is_singular('post') && has_post_thumbnail()) {
+        $thumb_id = get_post_thumbnail_id();
+        $thumb_srcset = wp_get_attachment_image_srcset($thumb_id, 'large');
+        $thumb_src = wp_get_attachment_image_url($thumb_id, 'large');
+
+        if ($thumb_src && $thumb_srcset) {
+            // sizes matches single.php: full width on mobile, constrained on desktop
+            echo '<link rel="preload" as="image" href="' . esc_url($thumb_src) . '" imagesrcset="' . esc_attr($thumb_srcset) . '" imagesizes="(max-width: 768px) 100vw, 768px" fetchpriority="high">' . "\n";
         }
     }
     ?>

@@ -29,7 +29,6 @@ require 'inc/widgets.php';
 require 'inc/coauthors.php';
 require 'inc/opengraph.php';
 require 'inc/taxonomies.php';
-require 'inc/search-filters.php';
 require 'inc/performance.php';
 
 require_once get_template_directory() . '/template-parts/articles-grid.php';

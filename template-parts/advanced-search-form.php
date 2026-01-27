@@ -1,10 +1,9 @@
 <?php
 /**
- * Advanced Search Form Template with Crossfiltering
- * 
- * Reusable search form with filters that update based on current selection.
- * Uses functions from inc/search-filters.php for secure, cached queries.
- * 
+ * Advanced Search Form Template
+ *
+ * Reusable search form with filters.
+ *
  * @param array $args {
  *     Optional. Arguments to customize the form.
  *     @type bool   $show_title    Whether to show the title. Default true.
@@ -32,39 +31,26 @@ $current_author = absint(get_query_var('author'));
 // Check if we have any active filters
 $has_filters = !empty($current_search) || $current_cat > 0 || !empty($current_year) || $current_author > 0;
 
-// Get filtered post IDs if we have active filters
-$filtered_post_ids = $has_filters 
-    ? carcaj_get_filtered_post_ids($current_search, $current_cat, $current_year, $current_author) 
-    : [];
-
-// For each dropdown, get available options excluding that filter from the query
-// This allows selecting a new value for that filter
-
-// Categories: get available based on other filters (excluding category)
-$cat_post_ids = $has_filters 
-    ? carcaj_get_filtered_post_ids($current_search, 0, $current_year, $current_author)
-    : [];
-$available_categories = carcaj_get_available_categories($cat_post_ids);
-
-// Years: get available based on other filters (excluding year)
-$year_post_ids = $has_filters 
-    ? carcaj_get_filtered_post_ids($current_search, $current_cat, '', $current_author)
-    : [];
-$available_years = carcaj_get_available_years($year_post_ids);
-
-// Authors: get available based on other filters (excluding author)
-$author_post_ids = $has_filters 
-    ? carcaj_get_filtered_post_ids($current_search, $current_cat, $current_year, 0)
-    : [];
-$available_authors = carcaj_get_available_authors($author_post_ids);
+// Get all options (no crossfiltering)
+$all_categories = get_categories(['hide_empty' => true, 'orderby' => 'name']);
+$all_years = get_terms([
+    'taxonomy'   => 'anho',
+    'hide_empty' => true,
+    'orderby'    => 'name',
+    'order'      => 'DESC',
+]);
+$all_authors = get_users([
+    'capability' => ['edit_posts'],
+    'orderby'    => 'display_name',
+]);
 
 // Layout classes
-$form_class = $args['layout'] === 'horizontal' 
-    ? 'flex flex-wrap gap-4 items-end' 
+$form_class = $args['layout'] === 'horizontal'
+    ? 'flex flex-wrap gap-4 items-end'
     : 'flex flex-col gap-4';
 
-$field_class = $args['layout'] === 'horizontal' 
-    ? 'flex-1 min-w-[200px]' 
+$field_class = $args['layout'] === 'horizontal'
+    ? 'flex-1 min-w-[200px]'
     : '';
 
 $input_class = 'w-full px-4 py-2 bg-white border border-gray-300 focus:ring-2 focus:ring-rojo focus:border-transparent focus:outline-none';
@@ -77,20 +63,20 @@ $input_class = 'w-full px-4 py-2 bg-white border border-gray-300 focus:ring-2 fo
                 <h1 class="text-4xl lg:text-5xl font-semibold my-4 text-rojo"><?php echo esc_html($args['title']); ?></h1>
             <?php endif; ?>
             <?php if ($args['show_icon']) : ?>
-                <img src="<?php echo esc_url(get_template_directory_uri()); ?>/img/search.png" 
-                     alt="" 
+                <img src="<?php echo esc_url(get_template_directory_uri()); ?>/img/search.png"
+                     alt=""
                      width="829" height="128"
                      class="h-16 w-auto">
             <?php endif; ?>
         </div>
     <?php endif; ?>
 
-    <form class="<?php echo esc_attr($form_class); ?> p-4" 
-          method="get" 
-          action="<?php echo esc_url(home_url('/')); ?>" 
-          role="search" 
+    <form class="<?php echo esc_attr($form_class); ?> p-4"
+          method="get"
+          action="<?php echo esc_url(home_url('/')); ?>"
+          role="search"
           id="advanced-search-form">
-        
+
         <!-- Search Term -->
         <div class="<?php echo esc_attr($field_class); ?>">
             <label for="search-term" class="sr-only">Buscar por palabra</label>
@@ -107,7 +93,7 @@ $input_class = 'w-full px-4 py-2 bg-white border border-gray-300 focus:ring-2 fo
             <label for="cat-select" class="sr-only">Categoría</label>
             <select name="cat" id="cat-select" class="<?php echo esc_attr($input_class); ?>">
                 <option value="">Todas las categorías</option>
-                <?php foreach ($available_categories as $category) : ?>
+                <?php foreach ($all_categories as $category) : ?>
                     <option value="<?php echo esc_attr($category->term_id); ?>" <?php selected($current_cat, $category->term_id); ?>>
                         <?php echo esc_html($category->name); ?>
                     </option>
@@ -120,7 +106,7 @@ $input_class = 'w-full px-4 py-2 bg-white border border-gray-300 focus:ring-2 fo
             <label for="anho-select" class="sr-only">Año</label>
             <select name="anho" id="anho-select" class="<?php echo esc_attr($input_class); ?>">
                 <option value="">Todos los años</option>
-                <?php foreach ($available_years as $year) : ?>
+                <?php foreach ($all_years as $year) : ?>
                     <option value="<?php echo esc_attr($year->slug); ?>" <?php selected($current_year, $year->slug); ?>>
                         <?php echo esc_html($year->name); ?>
                     </option>
@@ -133,7 +119,7 @@ $input_class = 'w-full px-4 py-2 bg-white border border-gray-300 focus:ring-2 fo
             <label for="author-select" class="sr-only">Autor</label>
             <select name="author" id="author-select" class="<?php echo esc_attr($input_class); ?>">
                 <option value="">Todos los autores</option>
-                <?php foreach ($available_authors as $author) : ?>
+                <?php foreach ($all_authors as $author) : ?>
                     <option value="<?php echo esc_attr($author->ID); ?>" <?php selected($current_author, $author->ID); ?>>
                         <?php echo esc_html($author->display_name); ?>
                     </option>
@@ -143,7 +129,7 @@ $input_class = 'w-full px-4 py-2 bg-white border border-gray-300 focus:ring-2 fo
 
         <!-- Submit Button -->
         <div class="<?php echo $args['layout'] === 'horizontal' ? '' : 'mt-2'; ?>">
-            <button type="submit" 
+            <button type="submit"
                     class="w-full bg-rojo hover:bg-darkgold text-white font-bold italic py-2 px-6 transition duration-300">
                 Buscar
             </button>
@@ -152,7 +138,7 @@ $input_class = 'w-full px-4 py-2 bg-white border border-gray-300 focus:ring-2 fo
         <?php if ($has_filters) : ?>
         <!-- Clear Filters -->
         <div class="text-center">
-            <a href="<?php echo esc_url(home_url('/busqueda/')); ?>" 
+            <a href="<?php echo esc_url(home_url('/busqueda/')); ?>"
                class="text-sm text-gray-500 hover:text-rojo underline">
                 Limpiar filtros
             </a>
@@ -168,10 +154,10 @@ $input_class = 'w-full px-4 py-2 bg-white border border-gray-300 focus:ring-2 fo
 
     form.addEventListener('submit', function(e) {
         e.preventDefault();
-        
+
         const params = new URLSearchParams();
         const searchInput = form.querySelector('input[name="s"]');
-        
+
         // Always include search param for WordPress
         params.set('s', searchInput ? searchInput.value : '');
 
