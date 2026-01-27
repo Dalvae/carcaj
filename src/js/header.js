@@ -14,11 +14,12 @@ export function initHeader() {
     // Mobile menu toggle
     function toggleMobileMenu() {
         isMenuOpen = !isMenuOpen;
-        
+
         if (isMenuOpen) {
             mobileMenu.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
             mobileMenu.classList.add('opacity-100', 'scale-100');
             mobileMenu.setAttribute('aria-hidden', 'false');
+            mobileMenu.removeAttribute('inert');
             mobileMenuOverlay.classList.remove('hidden');
             mobileMenuBtn.setAttribute('aria-expanded', 'true');
             document.body.style.overflow = 'hidden';
@@ -38,10 +39,11 @@ export function initHeader() {
     function closeMobileMenu() {
         isMenuOpen = false;
         if (!mobileMenu) return;
-        
+
         mobileMenu.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
         mobileMenu.classList.remove('opacity-100', 'scale-100');
         mobileMenu.setAttribute('aria-hidden', 'true');
+        mobileMenu.setAttribute('inert', '');
         mobileMenuOverlay?.classList.add('hidden');
         mobileMenuBtn?.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
@@ -60,11 +62,12 @@ export function initHeader() {
     // Search toggle
     function toggleSearch() {
         isSearchOpen = !isSearchOpen;
-        
+
         if (isSearchOpen) {
             searchBar.classList.remove('opacity-0', '-translate-y-2', 'pointer-events-none');
             searchBar.classList.add('opacity-100', 'translate-y-0');
             searchBar.setAttribute('aria-hidden', 'false');
+            searchBar.removeAttribute('inert');
             searchToggleBtn.setAttribute('aria-expanded', 'true');
             // Focus the search input
             const input = searchBar.querySelector('input[type="search"], input[type="text"]');
@@ -77,10 +80,11 @@ export function initHeader() {
     function closeSearch() {
         isSearchOpen = false;
         if (!searchBar) return;
-        
+
         searchBar.classList.add('opacity-0', '-translate-y-2', 'pointer-events-none');
         searchBar.classList.remove('opacity-100', 'translate-y-0');
         searchBar.setAttribute('aria-hidden', 'true');
+        searchBar.setAttribute('inert', '');
         searchToggleBtn?.setAttribute('aria-expanded', 'false');
     }
 

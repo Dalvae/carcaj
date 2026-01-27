@@ -4,7 +4,8 @@
 <!-- Menú Móvil -->
 <div id="mobile-menu"
     class="lg:hidden fixed inset-0 bg-white z-[979] overflow-y-auto transform transition-all duration-300 ease-out opacity-0 scale-95 pointer-events-none"
-    aria-hidden="true">
+    aria-hidden="true"
+    inert>
 
     <div class="container mx-auto px-4 py-8 font-bold italic text-sm">
         <!-- Buscador integrado -->
