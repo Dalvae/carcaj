@@ -78,6 +78,7 @@ add_action(HOOK_PREFIX . '_enqueue_scripts', function () {
                 }
 
                 // Inline critical CSS + async load full CSS
+                // Priority 4: after wp_enqueue_scripts (1), before wp_print_styles (8)
                 add_action('wp_head', function () use ($entry_point_manifest) {
                     // 1. Inline critical CSS (above-the-fold styles for instant render)
                     carcaj_output_critical_css();
@@ -91,7 +92,7 @@ add_action(HOOK_PREFIX . '_enqueue_scripts', function () {
                             echo '<noscript><link rel="stylesheet" href="' . $css_url . '"></noscript>' . "\n";
                         }
                     }
-                }, 1);
+                }, 4);
             }
 
             // Add type="module" and defer to theme script
