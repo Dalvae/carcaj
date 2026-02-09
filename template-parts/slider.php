@@ -39,7 +39,7 @@
                 $is_first = $index === 0;
             ?>
             <!-- Slide <?php echo $index; ?> -->
-            <div class="slide absolute inset-0 transition-all duration-300 ease-out <?php echo $is_first ? 'opacity-100' : 'opacity-0 translate-x-full pointer-events-none'; ?>"
+            <div class="slide absolute inset-0 transition-[opacity,transform] duration-300 ease-out <?php echo $is_first ? 'opacity-100' : 'opacity-0 translate-x-full pointer-events-none'; ?>"
                  data-index="<?php echo $index; ?>"
                  <?php echo $is_first ? '' : 'aria-hidden="true"'; ?>>
                 <div class="flex flex-col lg:flex-row items-center w-full py-4">

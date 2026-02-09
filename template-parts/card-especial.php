@@ -13,7 +13,7 @@
             <img
                 src="<?php echo esc_url($image['sizes']['large']); ?>"
                 alt="<?php echo esc_attr($image['alt']); ?>"
-                class="w-full h-full object-cover transition-all duration-300 group-hover:brightness-75" />
+                class="w-full h-full object-cover transition-[filter] duration-300 group-hover:brightness-75" />
         </div>
     <?php endif; ?>
 

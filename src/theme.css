@@ -1436,7 +1436,7 @@ html, body {
       display: block;
       color: white;
       padding: 0.25rem 0.5rem;
-      transition: all 0.3s ease;
+      transition: background-color 0.3s ease;
     }
   }
 

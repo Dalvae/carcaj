@@ -43,14 +43,14 @@
                         <div class="flex items-center gap-4">
                             <a href="https://www.facebook.com/revistacarcaj/" target="_blank" rel="noopener noreferrer"
                                 aria-label="Facebook de Revista Carcaj"
-                                class="text-white/90 hover:text-rosado transition-all duration-300 hover:scale-110">
+                                class="text-white/90 hover:text-rosado transition-[color,transform] duration-300 hover:scale-110">
                                 <svg class="w-7 h-7 fill-current" aria-hidden="true">
                                     <use xlink:href="#icon-facebook" />
                                 </svg>
                             </a>
                             <a href="https://www.instagram.com/revista.carcaj/" target="_blank" rel="noopener noreferrer"
                                 aria-label="Instagram de Revista Carcaj"
-                                class="text-white/90 hover:text-rosado transition-all duration-300 hover:scale-110">
+                                class="text-white/90 hover:text-rosado transition-[color,transform] duration-300 hover:scale-110">
                                 <svg class="w-7 h-7 fill-current" aria-hidden="true">
                                     <use xlink:href="#icon-instagram" />
                                 </svg>

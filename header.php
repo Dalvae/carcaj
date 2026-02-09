@@ -104,7 +104,7 @@
 <body <?php body_class('bg-white font-alegreya min-h-screen flex flex-col'); ?>>
     <header id="site-header" class="w-full bg-white">
         <div class="container mx-auto px-4">
-            <div id="header-inner" class="flex justify-between items-center py-4 lg:py-6 transition-all duration-300">
+            <div id="header-inner" class="flex justify-between items-center py-4 lg:py-6 transition-[padding] duration-300">
 
                 <!-- Logo -->
                 <?php get_template_part('template-parts/header-logo'); ?>

@@ -28,7 +28,7 @@ $settings = wp_parse_args($args, [
                     alt="<?php echo esc_attr(get_the_title()); ?>">
             <?php endif; ?>
         </div>
-        <div class="categories absolute bottom-0 right-0 font-medium text-4xl flex flex-col items-end opacity-0 transform translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 z-20">
+        <div class="categories absolute bottom-0 right-0 font-medium text-4xl flex flex-col items-end opacity-0 transform translate-y-2 transition-[opacity,transform] duration-300 group-hover:opacity-100 group-hover:translate-y-0 z-20">
             <div class="relative z-20">
                 <?php the_category(' '); ?>
             </div>
