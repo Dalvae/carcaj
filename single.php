@@ -22,13 +22,14 @@
                             }
                             
                             if ($thumb_src): ?>
-                            <img 
+                            <img
                                 src="<?php echo esc_url($thumb_src[0]); ?>"
                                 width="<?php echo esc_attr($thumb_src[1]); ?>"
                                 height="<?php echo esc_attr($thumb_src[2]); ?>"
                                 srcset="<?php echo esc_attr($thumb_srcset); ?>"
                                 sizes="<?php echo esc_attr($thumb_sizes); ?>"
                                 alt="<?php echo esc_attr($thumb_alt); ?>"
+                                style="aspect-ratio: <?php echo esc_attr($thumb_src[1]); ?> / <?php echo esc_attr($thumb_src[2]); ?>"
                                 class="w-full h-auto lg:aspect-[2/3] lg:max-h-[650px] object-cover"
                                 loading="eager"
                                 fetchpriority="high"

@@ -60,6 +60,7 @@
     ?>
     <link rel="preload" href="<?php echo esc_url(get_template_directory_uri()); ?>/dist/assets/fonts/subset-Alegreya-Regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="<?php echo esc_url(get_template_directory_uri()); ?>/dist/assets/fonts/subset-Alegreya-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="<?php echo esc_url(get_template_directory_uri()); ?>/dist/assets/fonts/subset-Alegreya-Italic.woff2" as="font" type="font/woff2" crossorigin>
 
     <!-- META DESCRIPTION -->
     <?php
