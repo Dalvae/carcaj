@@ -3,7 +3,7 @@
 
 <!-- Menú Móvil -->
 <div id="mobile-menu"
-    class="lg:hidden fixed inset-0 bg-white z-[979] overflow-y-auto transform transition-[opacity,transform] duration-300 ease-out opacity-0 scale-95 pointer-events-none"
+    class="lg:hidden fixed inset-0 bg-white z-[979] overflow-y-auto transform transition-[opacity,scale] duration-300 ease-out opacity-0 scale-95 pointer-events-none"
     aria-hidden="true"
     inert>
 
