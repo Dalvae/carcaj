@@ -34,8 +34,8 @@ if (IS_LOGIN_PAGE) {
     define("HOOK_PREFIX", 'wp');
 }
 
-// Critical CSS helper (disabled for now - causes issues)
-// require_once get_template_directory() . '/inc/critical-css.php';
+// Critical CSS helper - inlines above-the-fold styles for instant render
+require_once get_template_directory() . '/inc/critical-css.php';
 
 // enqueue hook
 add_action(HOOK_PREFIX . '_enqueue_scripts', function () {
@@ -68,20 +68,30 @@ add_action(HOOK_PREFIX . '_enqueue_scripts', function () {
             $entry_point_manifest = isset($manifest[VITE_ENTRY_POINT]) ? $manifest[VITE_ENTRY_POINT] : null;
 
             if ($entry_point_manifest) {
-                // enqueue CSS files (standard method - works reliably)
-                // null version since Vite already adds content hash to filename
-                if (!empty($entry_point_manifest['css'])) {
-                    foreach ($entry_point_manifest['css'] as $css_file) {
-                        wp_enqueue_style('theme', DIST_URI . '/' . $css_file, [], null);
-                    }
-                }
+                // Don't enqueue CSS normally - load it async to avoid render-blocking
+                // Critical CSS is inlined for instant first paint
 
                 // enqueue theme JS file
-                // null version since Vite already adds content hash to filename
                 if (!empty($entry_point_manifest['file'])) {
                     $js_file = $entry_point_manifest['file'];
                     wp_enqueue_script('theme', DIST_URI . '/' . $js_file, JS_DEPENDENCY, null, JS_LOAD_IN_FOOTER);
                 }
+
+                // Inline critical CSS + async load full CSS
+                add_action('wp_head', function () use ($entry_point_manifest) {
+                    // 1. Inline critical CSS (above-the-fold styles for instant render)
+                    carcaj_output_critical_css();
+
+                    // 2. Load full CSS async (non-render-blocking)
+                    // header.php already has <link rel="preload"> for early discovery
+                    if (!empty($entry_point_manifest['css'])) {
+                        foreach ($entry_point_manifest['css'] as $css_file) {
+                            $css_url = esc_url(DIST_URI . '/' . $css_file);
+                            echo '<link rel="stylesheet" href="' . $css_url . '" media="print" onload="this.media=\'all\'">' . "\n";
+                            echo '<noscript><link rel="stylesheet" href="' . $css_url . '"></noscript>' . "\n";
+                        }
+                    }
+                }, 1);
             }
 
             // Add type="module" and defer to theme script
