@@ -12,7 +12,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/generate-critical-css.js",
     "setup": "node setup.js"
   }
 }

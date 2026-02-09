@@ -40,12 +40,12 @@
     "src": "src/fonts/subset-Alegreya-Regular.woff2"
   },
   "src/theme.js": {
-    "file": "assets/theme-wrBbUJMC.js",
+    "file": "assets/theme-BuSAhffH.js",
     "name": "theme",
     "src": "src/theme.js",
     "isEntry": true,
     "css": [
-      "assets/theme-BYCNIF__.css"
+      "assets/theme-B3-nv9BW.css"
     ],
     "assets": [
       "assets/fonts/subset-Alegreya-Regular.woff2",

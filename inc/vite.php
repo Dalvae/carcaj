@@ -34,7 +34,7 @@ if (IS_LOGIN_PAGE) {
     define("HOOK_PREFIX", 'wp');
 }
 
-// Critical CSS helper - inlines above-the-fold styles for instant render
+// Critical CSS helper (auto-generated at build time, preserves @layer structure)
 require_once get_template_directory() . '/inc/critical-css.php';
 
 // enqueue hook
