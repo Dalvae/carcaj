@@ -9,8 +9,6 @@ export function initProgressBar() {
     progressBar.id = 'reading-progress';
     progressBar.className = 'fixed top-0 left-0 h-1.5 bg-rojo transform-gpu z-50';
     progressBar.style.width = '0%';
-    document.body.prepend(progressBar);
-
     // Cache layout values — only recalculate on resize
     let contentTop = 0;
     let contentHeight = 0;
@@ -58,7 +56,10 @@ export function initProgressBar() {
         updateProgress();
     });
 
-    // Initial measurement + update
-    measureLayout();
-    updateProgress();
+    // Defer DOM insertion + measurement to next frame to avoid forced reflow
+    requestAnimationFrame(() => {
+        document.body.prepend(progressBar);
+        measureLayout();
+        updateProgress();
+    });
 }
