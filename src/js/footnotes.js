@@ -40,22 +40,28 @@ export function initFootnotes() {
     function showTooltip(element, content) {
         clearTimeout(hideTimer);
         const tip = createTooltip();
-        
+
         tip.innerHTML = content;
+
+        // Move offscreen to measure without forced reflow on visible layout
+        tip.style.left = '-9999px';
+        tip.style.top = '0px';
         tip.classList.remove('opacity-0', 'pointer-events-none');
         tip.classList.add('opacity-100', 'pointer-events-auto');
 
-        // Position tooltip
+        // Batch-read all layout values in one pass
         const rect = element.getBoundingClientRect();
+        const tipWidth = tip.offsetWidth;
+        const tipHeight = tip.offsetHeight;
         const viewportWidth = window.innerWidth;
         const viewportHeight = window.innerHeight;
 
-        tip.style.left = '0px'; // reset for width calculation
-        let left = Math.max(10, Math.min(rect.left, viewportWidth - tip.offsetWidth - 20));
+        // Batch-write positions
+        let left = Math.max(10, Math.min(rect.left, viewportWidth - tipWidth - 20));
         let top = rect.bottom + 5;
 
-        if (rect.bottom + tip.offsetHeight > viewportHeight && rect.top > tip.offsetHeight) {
-            top = rect.top - tip.offsetHeight - 5;
+        if (rect.bottom + tipHeight > viewportHeight && rect.top > tipHeight) {
+            top = rect.top - tipHeight - 5;
         }
 
         tip.style.left = `${left}px`;

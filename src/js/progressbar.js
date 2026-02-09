@@ -11,15 +11,22 @@ export function initProgressBar() {
     progressBar.style.width = '0%';
     document.body.prepend(progressBar);
 
+    // Cache layout values — only recalculate on resize
+    let contentTop = 0;
+    let contentHeight = 0;
+    let viewportHeight = 0;
+
+    function measureLayout() {
+        const rect = contentFull.getBoundingClientRect();
+        contentTop = rect.top + window.pageYOffset;
+        contentHeight = rect.height;
+        viewportHeight = window.innerHeight;
+    }
+
     let ticking = false;
 
     function updateProgress() {
-        const contentRect = contentFull.getBoundingClientRect();
-        const contentTop = contentRect.top + window.pageYOffset;
-        const contentHeight = contentRect.height;
-        const viewportHeight = window.innerHeight;
         const currentScroll = window.pageYOffset;
-
         let progress = 0;
 
         if (currentScroll > contentTop) {
@@ -42,9 +49,16 @@ export function initProgressBar() {
         }
     }, { passive: true });
 
-    window.addEventListener('resize', updateProgress);
-    window.addEventListener('orientationchange', updateProgress);
+    window.addEventListener('resize', () => {
+        measureLayout();
+        updateProgress();
+    });
+    window.addEventListener('orientationchange', () => {
+        measureLayout();
+        updateProgress();
+    });
 
-    // Initial update
+    // Initial measurement + update
+    measureLayout();
     updateProgress();
 }
