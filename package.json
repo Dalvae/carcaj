@@ -6,9 +6,10 @@
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.1.18",
     "tailwindcss": "^4.1.18",
-    "tar": "^7.5.12",
-    "vite": "^6.0.0",
-    "vite-plugin-live-reload": "^3.0.3"
+    "tar": "^7.5.16",
+    "vite": "^6.4.3",
+    "vite-plugin-live-reload": "^3.0.3",
+    "yaml": "^2.8.3"
   },
   "scripts": {
     "dev": "vite",
