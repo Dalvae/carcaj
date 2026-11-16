@@ -263,27 +263,29 @@ function carcaj_lazy_load_images($attr, $attachment, $size) {
         $is_priority = true;
     }
     
-    // Large images on single posts (likely the featured image / LCP)
-    // Use more permissive check - any large image on singular pages
-    if (is_singular() && ($size === 'large' || (is_array($size) && $size[0] >= 768))) {
+    // En entradas y paginas: solo la imagen destacada del propio contenido es LCP.
+    // (Antes: cualquier imagen "large" en singular; y el filtro de abajo marcaba
+    // todas como high, asi que la portada estatica cargaba 12 tarjetas con
+    // prioridad alta compitiendo con el slider.)
+    if (is_singular() && $attachment
+        && (int) $attachment->ID === (int) get_post_thumbnail_id(get_queried_object_id())) {
         $is_priority = true;
     }
-    
+
     if ($is_priority) {
         $attr['fetchpriority'] = 'high';
         $attr['loading'] = 'eager';
         // Remove decoding=async for LCP image - let browser handle it
         unset($attr['decoding']);
-    } elseif (($attr['fetchpriority'] ?? '') === 'high') {
-        // WordPress ya marco esta imagen como LCP (p. ej. la primera tarjeta de
-        // una categoria): no diferirla. Antes se forzaba lazy y el LCP movil
-        // de las categorias llegaba a 3,6 s.
+    } elseif (!is_singular() && ($attr['fetchpriority'] ?? '') === 'high') {
+        // Categorias/archivos: WordPress marco la primera tarjeta como LCP; no diferirla.
         $attr['loading'] = 'eager';
         unset($attr['decoding']);
-    } elseif (!isset($attr['loading'])) {
-        // WordPress decidio no diferir (primeras imagenes visibles): respetarlo.
+    } elseif (!is_singular() && !isset($attr['loading'])) {
+        // Categorias/archivos: WordPress decidio no diferir las primeras tarjetas.
         $attr['decoding'] = 'async';
     } else {
+        unset($attr['fetchpriority']);
         $attr['loading'] = 'lazy';
         $attr['decoding'] = 'async';
     }

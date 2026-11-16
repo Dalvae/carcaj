@@ -1,20 +1,24 @@
 <?php
 /**
  * Plugin Name: Carcaj Media (R2)
- * Description: Sirve las imagenes de wp-content/uploads/AAAA/MM desde media.carcaj.cl (Cloudflare R2).
+ * Description: Reescritura opcional de imagenes a media.carcaj.cl (R2). Apagada: las sirve el Worker carcaj-uploads.
  *
  * El respaldo diario (~/scripts/backup-r2.sh) copia uploads/AAAA/MM al bucket
- * carcaj-media. Los meses recientes (mes actual y el anterior) se siguen
- * sirviendo desde el hosting, para no apuntar a archivos que aun no se copian.
- * Para desactivar: define('CARCAJ_MEDIA_URL', '') en wp-config.php o borrar este archivo.
+ * carcaj-media. Si CARCAJ_MEDIA_URL tiene valor, reescribe esas URLs a ese host,
+ * salvo el mes actual y el anterior (pueden no estar copiados aun).
  */
 
 if (!defined('ABSPATH')) {
 	exit;
 }
 
+// Desde 2026-11-16 las imagenes de R2 se sirven en el mismo dominio
+// (carcaj.cl/wp-content/uploads/*) con el Worker workers/carcaj-uploads, asi
+// que no se reescribe nada: un host aparte (media.carcaj.cl) sumaba ~1,3 s al
+// LCP movil por la conexion extra (prueba A/B, 5 rondas).
+// Para volver a servir desde media: define('CARCAJ_MEDIA_URL', 'https://media.carcaj.cl').
 if (!defined('CARCAJ_MEDIA_URL')) {
-	define('CARCAJ_MEDIA_URL', 'https://media.carcaj.cl');
+	define('CARCAJ_MEDIA_URL', '');
 }
 
 /** Meses que siguen en el hosting (actual y anterior). */

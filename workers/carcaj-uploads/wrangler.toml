@@ -1,0 +1,15 @@
+name = "carcaj-uploads"
+main = "worker.js"
+compatibility_date = "2026-11-01"
+account_id = "dba482293d68729388841da772e33a78"
+workers_dev = false
+
+# Solo las imagenes de uploads/AAAA/MM; el resto del sitio no pasa por el Worker.
+routes = [
+  { pattern = "carcaj.cl/wp-content/uploads/*", zone_name = "carcaj.cl" },
+  { pattern = "www.carcaj.cl/wp-content/uploads/*", zone_name = "carcaj.cl" },
+]
+
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "carcaj-media"
