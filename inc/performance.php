@@ -274,6 +274,15 @@ function carcaj_lazy_load_images($attr, $attachment, $size) {
         $attr['loading'] = 'eager';
         // Remove decoding=async for LCP image - let browser handle it
         unset($attr['decoding']);
+    } elseif (($attr['fetchpriority'] ?? '') === 'high') {
+        // WordPress ya marco esta imagen como LCP (p. ej. la primera tarjeta de
+        // una categoria): no diferirla. Antes se forzaba lazy y el LCP movil
+        // de las categorias llegaba a 3,6 s.
+        $attr['loading'] = 'eager';
+        unset($attr['decoding']);
+    } elseif (!isset($attr['loading'])) {
+        // WordPress decidio no diferir (primeras imagenes visibles): respetarlo.
+        $attr['decoding'] = 'async';
     } else {
         $attr['loading'] = 'lazy';
         $attr['decoding'] = 'async';

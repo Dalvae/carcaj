@@ -44,6 +44,23 @@ function carcaj_media_rewrite(string $html): string {
 	}, $html) ?? $html;
 }
 
+/**
+ * Preconnect a media: las imagenes vienen de otro host, y sin esto el navegador
+ * abre la conexion (DNS+TCP+TLS) recien al encontrar la primera <img>, lo que
+ * retrasaba el LCP ~0,6-1 s en movil. Va como <link> y como cabecera Link
+ * (Cloudflare la usa para Early Hints 103).
+ */
+add_action('send_headers', function () {
+	if (CARCAJ_MEDIA_URL !== '' && !is_admin()) {
+		header('Link: <' . rtrim(CARCAJ_MEDIA_URL, '/') . '>; rel=preconnect', false);
+	}
+});
+add_action('wp_head', function () {
+	if (CARCAJ_MEDIA_URL !== '') {
+		echo '<link rel="preconnect" href="' . esc_url(rtrim(CARCAJ_MEDIA_URL, '/')) . '">' . "\n";
+	}
+}, 0);
+
 /** Portada, entradas, feeds, sitemaps: todo el HTML del frente pasa por aqui. */
 add_action('template_redirect', function () {
 	if (is_admin() || wp_doing_ajax() || (defined('REST_REQUEST') && REST_REQUEST)) {
