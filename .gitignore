@@ -27,3 +27,11 @@ error_log
 _notes
 
 .aider*
+
+# Secretos de produccion (llaves SSH, credenciales WP)
+.keys/
+.wp-credentials
+
+# Notas locales de infraestructura y scripts del servidor (repo publico)
+CLAUDE.md
+tmp/
