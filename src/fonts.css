@@ -132,3 +132,57 @@
   descent-override: 25%;
   line-gap-override: 0%;
 }
+
+/* ============================================
+   ALEGREYA FALLBACK - evita CLS al cargar la fuente
+   ============================================
+   Mientras Alegreya carga, el navegador muestra Times New Roman (o Liberation
+   Serif / Tinos, con las mismas medidas). Estas caras la escalan para que ocupe
+   el mismo ancho y alto que Alegreya, asi el texto no se rearma (CLS) al llegar
+   la fuente real. Calculado con fontTools sobre los .woff2 y Times New Roman
+   (size-adjust = ancho promedio Alegreya / Times; ascent/descent = los
+   overrides de Alegreya (96% / 25%) divididos por size-adjust).
+*/
+@font-face {
+  font-family: "Alegreya Fallback";
+  src: local("Times New Roman"), local("TimesNewRomanPSMT"), local("Liberation Serif"), local("Tinos");
+  font-weight: 100 500;
+  font-style: normal;
+  size-adjust: 100.47%;
+  ascent-override: 95.55%;
+  descent-override: 24.88%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Alegreya Fallback";
+  src: local("Times New Roman Bold"), local("TimesNewRomanPS-BoldMT"), local("Liberation Serif Bold"), local("Tinos Bold");
+  font-weight: 501 900;
+  font-style: normal;
+  size-adjust: 95.89%;
+  ascent-override: 100.12%;
+  descent-override: 26.07%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Alegreya Fallback";
+  src: local("Times New Roman Italic"), local("TimesNewRomanPS-ItalicMT"), local("Liberation Serif Italic"), local("Tinos Italic");
+  font-weight: 100 500;
+  font-style: italic;
+  size-adjust: 87.55%;
+  ascent-override: 109.65%;
+  descent-override: 28.55%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Alegreya Fallback";
+  src: local("Times New Roman Bold Italic"), local("TimesNewRomanPS-BoldItalicMT"), local("Liberation Serif Bold Italic"), local("Tinos Bold Italic");
+  font-weight: 501 900;
+  font-style: italic;
+  size-adjust: 90.67%;
+  ascent-override: 105.88%;
+  descent-override: 27.57%;
+  line-gap-override: 0%;
+}

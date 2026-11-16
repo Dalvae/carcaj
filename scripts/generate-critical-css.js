@@ -43,6 +43,16 @@ const templateFiles = [
   'template-parts/header-search-bar.php',
   'template-parts/slider.php',
   'template-parts/search-form.php',
+  // Paginas internas: sin esto se dibujan sin estilo y saltan (CLS 0,86 en categorias)
+  'archive.php',
+  'author.php',
+  'search.php',
+  'single.php',
+  'page.php',
+  'template-parts/articles-grid.php',
+  'template-parts/card-article.php',
+  'template-parts/breadcrumbs.php',
+  'template-parts/author-box.php',
 ];
 
 const templateContent = templateFiles

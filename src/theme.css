@@ -25,7 +25,7 @@ html, body {
   --color-custom-grey: #585858;
 
   /* Fonts */
-  --font-alegreya: "Alegreya", serif;
+  --font-alegreya: "Alegreya", "Alegreya Fallback", serif;
   --font-sans: "Alegreya Sans", system-ui, sans-serif;
 
   /* Container */
